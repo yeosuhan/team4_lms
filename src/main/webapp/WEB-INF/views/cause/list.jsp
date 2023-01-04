@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
+<%-- <jsp:include page="/WEB-INF/views/include/staticFiles.jsp"/> --%>
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -11,15 +12,15 @@
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
 	rel="stylesheet">
 
-<link rel="stylesheet" href="cause_list/fonts/icomoon/style.css">
+<link rel="stylesheet" href="<c:url value='/c/fonts/icomoon/style.css'/>">
 
-<link rel="stylesheet" href="cause_list/css/owl.carousel.min.css">
+<link rel="stylesheet" href="<c:url value='/c/css/owl.carousel.min.css'/>">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="cause_list/css/bootstrap.min.css">
+<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
 
 <!-- Style -->
-<link rel="stylesheet" href="cause_list/css/style.css">
+<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
 
 <title>Table #6</title>
 </head>
@@ -47,7 +48,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr scope="row">
+						<tr scope="row" onclick="location.href='http://www.naver.com'">
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">8</td>
 							<td class="column3">뿌꾸밥</td>
@@ -56,7 +57,7 @@
 							<td class="column6">진행중</td>
 
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">7</td>
@@ -65,7 +66,7 @@
 							<td class="column5">신정은</td>
 							<td class="column6">허가</td>
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">6</td>
@@ -74,7 +75,7 @@
 							<td class="column5">신정은</td>
 							<td class="column6">거절</td>
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">5</td>
@@ -84,7 +85,7 @@
 							<td class="column6">허가</td>
 						</tr>
 
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">4</td>
@@ -93,7 +94,7 @@
 							<td class="column5">신정은</td>
 							<td class="column6">거절</td>
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">3</td>
@@ -102,7 +103,7 @@
 							<td class="column5">신정은</td>
 							<td class="column6">허가</td>
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">2</td>
@@ -111,7 +112,7 @@
 							<td class="column5">신정은</td>
 							<td class="column6">거절</td>
 						</tr>
-						<tr>
+						<tr onclick="location.href='http://www.naver.com'">
 
 							<td class="column1">2017-09-29 01:22</td>
 							<td class="column2">1</td>
@@ -133,9 +134,9 @@
 
 
 
-	<script src="cause_list/js/jquery-3.3.1.min.js"></script>
-	<script src="cause_list/js/popper.min.js"></script>
-	<script src="cause_list/js/bootstrap.min.js"></script>
-	<script src="cause_list/js/main.js"></script>
+	<script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
+	<script src="<c:url value='/c/js/popper.min.js'/>"></script>
+	<script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
+	<script src="<c:url value='/c/js/main.js'/>"></script>
 </body>
 </html>
