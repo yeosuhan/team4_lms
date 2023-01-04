@@ -7,6 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>뿌꾸 대학교 lms</title>
 	
+
+    <!-- home -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="home/css/styles.css" rel="stylesheet" />
 	
 	
 	
@@ -27,6 +37,18 @@
     <script src="calendar/js/main.js"></script>
     <script src="calendar/js/calendar.js"></script>
     
+    
+    <!-- Admin Calendar 관련 resources-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="admincalendar/css/style.css">
+    
+    <script src="admincalendar/js/jquery.min.js"></script>
+	<script src="admincalendar/js/popper.js"></script>
+	<script src="admincalendar/js/bootstrap.min.js"></script>
+	<script src="admincalendar/js/main.js"></script>
     
            
    <!-- Bootstrap CSS -->
