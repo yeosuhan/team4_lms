@@ -121,9 +121,5 @@ h2 {
 
 					
 
-<div class="position-fixed bottom-0 end-0 m-4 z-index-master">
-	<a href="https://toruskit.com" class="d-inline-block strong text-white text-decoration-none bg-black bg-opacity-80 p-3 btn-arrow">Made with <strong class="text-decoration-underline">Torus Kit</strong></a>
-</div>
-
 </body>
 </html>

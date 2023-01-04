@@ -19,7 +19,7 @@ public class AMController {
 	@RequestMapping(value = "/am", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		return "index";
+		return "adminindex";
 	}
 	
 }
