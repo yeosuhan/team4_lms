@@ -13,12 +13,12 @@
    <annotation-driven />
 
    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-   <resources mapping="/**" location="/WEB-INF/resources/*" />
-   <resources mapping="/js/**" location="/WEB-INF/resources/*/js/" />
-   <resources mapping="/css/**" location="/WEB-INF/resources/*/css/" />
-   <resources mapping="/images/**" location="/WEB-INF/resources/*/images/" />
-   <resources mapping="/font-awesome/**" location="/WEB-INF/resources/*/font-awesome/" />
-   <resources mapping="/assets/**" location="/WEB-INF/resources/*/assets/" />
+   <resources mapping="/m/**" location="/WEB-INF/resources/member/"/>
+   <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/"/>
+   <resources mapping="/cd/**" location="/WEB-INF/resources/cause_detail/"/>
+   <resources mapping="/h/**" location="/WEB-INF/resources/home/"/>
+   <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/"/>
+   
 
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,6 +30,7 @@
    <context:component-scan base-package="com.team4.myapp.controller"/> 
    <context:component-scan base-package="com.team4.myapp"/>
    <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
+   <context:component-scan base-package="com.team4.myapp.cause.controller"/>
    
    <view-controller path="/" view-name="home"/>
    

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.myapp.cause.dao.ICauseRepository">
+	
+	<insert id="insertFutureAttendance">
+		<![CDATA[
+			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID) 
+			VALUES(ATTENDANCE_SEQ.nextval, sysdate, #{attendanceStatus}, 0, #{memberId}); 
+		]]>	
+	</insert>
+	
+	<insert id="insertCause" parameterType="com.team4.myapp.cause.model.Cause">
+		<![CDATA[
+			INSERT INTO CAUSE(CAUSE_ID, CONTENT, STATUS, CATEGORY_ID, ATTENDANCE_ID, MEMBER_ID) 
+			VALUES (cause_seq.nextval, #{content}, #{status}, #{categoryId} #{attendanceId}, #{memberId})
+		]]>
+	</insert>
+
+
+</mapper>

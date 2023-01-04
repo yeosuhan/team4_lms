@@ -18,7 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Attendance {
 	private int attendanceId;
-	private String memeberId;
+	private String memberId;
 	private Date attendanceDate;
 	private Timestamp start;
 	private Timestamp end;

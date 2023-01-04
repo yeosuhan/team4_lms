@@ -1058,7 +1058,7 @@ function renderPagination(wizard, options, state)
             buttonTemplate = "<li><a href=\"#{0}\" role=\"menuitem\">{1}</a></li>",
             buttons = "";
 
-        if (!options.forceMoveForward)
+        if (options.forceMoveForward)
         {
             buttons += buttonTemplate.format("previous", options.labels.previous);
         }

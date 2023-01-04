@@ -11,20 +11,9 @@ $(function(){
             previous: "Backward"
         }
     });
-    $('.wizard > .steps li a').click(function(){
-    	$(this).parent().addClass('checked');
-		$(this).parent().prevAll().addClass('checked');
-		$(this).parent().nextAll().removeClass('checked');
-    });
-    // Custome Jquery Step Button
-    $('.forward').click(function(){
-    	$("#wizard").steps('next');
-    })
-    $('.backward').click(function(){
-        $("#wizard").steps('previous');
-    })
     // Select Dropdown
     $('html').click(function() {
+    	console.log("Aa");
         $('.select .dropdown').hide(); 
     });
     $('.select').click(function(event){
