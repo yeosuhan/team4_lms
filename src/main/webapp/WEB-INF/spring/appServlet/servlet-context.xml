@@ -13,9 +13,9 @@
    <annotation-driven />
 
    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-   <resources mapping="/**" location="/WEB-INF/resources/" />
-   <resources mapping="/js/**" location="/WEB-INF/resources/js/" />
-   <resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+   <resources mapping="/**" location="/WEB-INF/resources/*" />
+   <resources mapping="/js/**" location="/WEB-INF/resources/*/js/" />
+   <resources mapping="/css/**" location="/WEB-INF/resources/*/css/" />
    <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
    <resources mapping="/font-awesome/**" location="/WEB-INF/resources/font-awesome/" />
    <resources mapping="/assets/**" location="/WEB-INF/resources/assets/" />
@@ -27,8 +27,8 @@
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
    
-<!--    <context:component-scan base-package="com.coderby.myapp.board.controller"/> -->
-<!--    <context:component-scan base-package="com.coderby.myapp.member.controller"/> -->
+   <context:component-scan base-package="com.team4.myapp"/>
+   <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
    
    <view-controller path="/" view-name="home"/>
    
@@ -39,6 +39,10 @@
       </beans:property>
    </beans:bean>
 	
+	<!-- json 응답을 위함 @ResponseBody -->
+	 <beans:bean id="jacksonMessageConverter" 
+	 class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+
 	
 	
 </beans:beans>
