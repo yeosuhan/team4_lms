@@ -15,6 +15,12 @@
    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
    <resources mapping="/m/**" location="/WEB-INF/resources/member/" />
    <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
+   <resources mapping="/**" location="/WEB-INF/resources/*" />
+   <resources mapping="/js/**" location="/WEB-INF/resources/*/js/" />
+   <resources mapping="/css/**" location="/WEB-INF/resources/*/css/" />
+   <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+   <resources mapping="/font-awesome/**" location="/WEB-INF/resources/font-awesome/" />
+   <resources mapping="/assets/**" location="/WEB-INF/resources/assets/" />
    
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,6 +31,9 @@
 	<context:component-scan base-package="com.team4.myapp.member.controller"/>
 	<context:component-scan base-package="com.team4.myapp.cause.controller"/>
 
+   <context:component-scan base-package="com.team4.myapp"/>
+   <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
+   
    <view-controller path="/" view-name="home"/>
    
    <beans:bean id="multipartResolver" 
@@ -34,6 +43,8 @@
       </beans:property>
    </beans:bean>
 	
-	
-	
+	<!-- json 응답을 위함 @ResponseBody -->
+	 <!-- <beans:bean id="jacksonMessageConverter" 
+	 class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/> -->
+
 </beans:beans>

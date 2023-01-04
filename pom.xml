@@ -101,6 +101,13 @@
 			<version>1.11.2</version>
 		</dependency>
 		
+		<!-- json 타입의 응답을 위함 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
