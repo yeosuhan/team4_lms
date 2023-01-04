@@ -6,7 +6,7 @@
 <div style="height: 100px; background-color: blue;">
 </div>
 
- <div class="container-fluid" style="background-color: green;">
+ <div class="container-fluid" style="background-color: green; height: 700px;">
  
  	
  	

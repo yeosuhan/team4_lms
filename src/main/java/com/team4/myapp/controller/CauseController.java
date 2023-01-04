@@ -12,4 +12,10 @@ public class CauseController {
 		System.out.println("aa");
 		return "cause/cause_detail";
 	}
+	
+	@RequestMapping(value = "/example", method = RequestMethod.GET)
+	public String test() {
+		System.out.println("example");
+		return "manager/manager_main";
+	}
 }

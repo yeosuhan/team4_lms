@@ -95,7 +95,7 @@
 									첨부파일
 								</div>
 								<div class="form-holder">
-									 <input type="file" id="cause_file" name="cause_detail_file"/>
+									 <input type="file" class="cause_file" name="cause_detail_file"/>
 								</div>
 							</div>			
 						</div>
@@ -106,42 +106,83 @@
                 <h2></h2>
                 <section>
                     <div class="inner">
-						<div class="image-holder">
-							<img src="cause_detail/images/form-wizard-2.jpg" alt="">
+						<div id="image-holder" style="width: 400px">
+							<div id="here">
+							
+							</div>
 						</div>
 						<div class="form-content">
 							<div class="form-header">
-								<h3>등록 대기중</h3>
-							</div>
-							<p>Please fill with additional info</p>
-							<div class="form-row">
-								<div class="form-holder w-100">
-									<input type="text" placeholder="Address" class="form-control">
-								</div>
+								<h3>승인 대기중</h3>
 							</div>
 							<div class="form-row">
 								<div class="form-holder">
-									<input type="text" placeholder="City" class="form-control">
+									출석 유형
 								</div>
-								<div class="form-holder">
-									<input type="text" placeholder="Zip Code" class="form-control">
-								</div>
-							</div>
-
-							<div class="form-row">
 								<div class="select">
 									<div class="form-holder">
-										<div class="select-control">Your country</div>
+										<div class="select-control">선택하세요</div>
 										<i class="zmdi zmdi-caret-down"></i>
 									</div>
 									<ul class="dropdown">
-										<li rel="United States">United States</li>
-										<li rel="United Kingdom">United Kingdom</li>
-										<li rel="Viet Nam">Viet Nam</li>
+										<li rel="결석">결석</li>
+										<li rel="조회">조퇴</li>
+										<li rel="지각">지각</li>
 									</ul>
 								</div>
-								<div class="form-holder"></div>
 							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									세부 유형
+								</div>
+								
+								<div class="select">
+									<div class="form-holder">
+										<div class="select-control">선택하세요</div>
+										<i class="zmdi zmdi-caret-down"></i>
+									</div>
+									<ul class="dropdown">
+				<!-- <li rel=${category.categoryName} value="${category.categoryId}">${category.categoryName}</li> -->
+										<li rel="병원">병원</li>
+										<li rel="경조사">경조사</li>
+										<li rel="공가">공가</li>
+										<li rel="지하철연착">지하철연착</li>
+										<li rel="기타" value="">기타</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									날짜
+								</div>
+								<div class="form-holder">
+									<input type="date" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									이름
+								</div>
+								<div class="form-holder">
+									뿌꾸
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									내용
+								</div>
+								<div class="form-holder">
+									<textarea name="cause_content" maxlength="300" class="form-control" style=" resize: none; height: 70px"></textarea>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									첨부파일
+								</div>
+								<div class="form-holder">
+									 <input type="file" class="cause_img"  />
+								</div>
+							</div>							
 						</div>
 					</div>
                 </section>
@@ -156,19 +197,62 @@
 						<div class="form-content">
 							<div class="form-header">
 								<h3>사유서 신청완료</h3>
-							</div>
-							<p>Send an optional message</p>
+							</div>			
 							<div class="form-row">
-								<div class="form-holder w-100">
-									<textarea name="" id="" placeholder="Your messagere here!" class="form-control" style="height: 99px;"></textarea>
+								<div class="form-holder">
+									출석 유형
+								</div>
+								<div class="form-holder">
+								<!-- 값 받아오기 -->
+									결석
 								</div>
 							</div>
-							<div class="checkbox-circle mt-24">
-								<label>
-									<input type="checkbox" checked>  Please accept <a href="#">terms and conditions ?</a>
-									<span class="checkmark"></span>
-								</label>
+							<div class="form-row">
+								<div class="form-holder">
+									세부 유형
+								</div>
+								
+								<div class="form-holder">
+								<!-- 값 받아오기 -->
+									병원
+								</div>
 							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									
+									날짜
+								</div>
+								<div class="form-holder">
+								<!-- 값 받아오기 -->
+									2023-01-04
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									이름
+								</div>
+								<div class="form-holder">
+								<!-- 값 받아오기 -->
+									뿌꾸
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									내용
+								</div>
+								<div class="form-holder">
+								<!-- 값 받아오기 -->
+									병원 다녀왔어요
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-holder">
+									첨부파일
+								</div>
+								<div class="form-holder">
+									<!-- 이미지 띄우기 -->
+								</div>
+							</div>		
 						</div>
 					</div>
                 </section>
