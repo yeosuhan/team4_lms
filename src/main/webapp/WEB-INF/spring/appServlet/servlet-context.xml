@@ -17,6 +17,9 @@
    <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
    <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
    <resources mapping="/cd/**" location="/WEB-INF/resources/calendar/" />
+   <resources mapping="/h/**" location="/WEB-INF/resources/home2/" />
+   
+   
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <beans:property name="prefix" value="/WEB-INF/views/" />
