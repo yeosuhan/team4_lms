@@ -28,23 +28,20 @@ public class AttendanceService implements IAttendanceService {
 		// 지각처리
 		if(ts.getHours() >= 9 && ts.getMinutes() > 0) {
 			attendance.setAttendanceStatus(2);
-			attendance.setSubmitStatus(0);
 		}
 		
 		//2시 이후 출석 시 결석 처리
 		else if(ts.getHours() >= 2) {
 			attendance.setAttendanceStatus(0);
-			attendance.setSubmitStatus(0);
 		}
 		
 		// 정상 출석 처리
 		else {
 			attendance.setAttendanceStatus(1);
-			attendance.setSubmitStatus(0);
 		}
 
+		attendance.setSubmitStatus(0);
 		attendanceRepository.insertAttendance(attendance);
-
 	}
 
 	@Override

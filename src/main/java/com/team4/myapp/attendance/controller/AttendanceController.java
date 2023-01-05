@@ -33,19 +33,19 @@ public class AttendanceController {
 		attendanceService.insertAttendance(a1);
 		System.out.println("출석 됨!!!!");
 		
-		return "redirect:/test";
+		return "redirect:/attendance/main";
 	}
 	
 	
 	// 유저의 출결 현황 조회
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@RequestMapping(value = "/attendance/main", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		System.out.println("여기 2 ~~~~~~");
 		
 		return "calendar/userCalendar";
 	}
 	
-	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기
+	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기 !!!! 월별로 가져오기 !!! {month}
 	@ResponseBody
 	@RequestMapping(value = "/attendance/list", method = RequestMethod.GET)
 	public List<CalendarDto> getUserAttendanceList() {	
