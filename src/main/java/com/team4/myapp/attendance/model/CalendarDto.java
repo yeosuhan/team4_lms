@@ -1,4 +1,4 @@
-package com.team4.myapp.attendance.controller.dto;
+package com.team4.myapp.attendance.model;
 
 import java.sql.Timestamp;
 

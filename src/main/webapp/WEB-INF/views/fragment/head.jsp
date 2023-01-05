@@ -10,7 +10,7 @@
 	
 
     <!-- home -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<c:url value='/h/assets/favicon.ico'/>" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -27,7 +27,7 @@
 	<!--  calendar 관련 resources-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="calendar/fonts/icomoon/style.css"> 
+    <link rel="stylesheet" href="<c:url value='cd/fonts/icomoon/style.css'/>" />
     <link href="<c:url value='/cd/fullcalendar/packages/core/main.css'/>" rel="stylesheet" />
     <link href= "<c:url value='cd/fullcalendar/packages/daygrid/main.css'/>" rel="stylesheet" />
     
