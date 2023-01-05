@@ -1,12 +1,7 @@
-<%@ page contentType="text/html; charset=utf-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setBundle basename="i18n/board"/>
-<!DOCTYPE html> 
-<html>
-<jsp:include page="/WEB-INF/views/include/staticFiles.jsp"/>
-<body>
-<jsp:include page="/WEB-INF/views/include/bodyHeader.jsp"/>
+<%@ include file="/WEB-INF/views/fragment/head.jsp" %>
+<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 <div class="container">
    <div class="pg-opt">
         <div class="row">
@@ -57,6 +52,4 @@
    </form>
    </div>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/fragment/footer.jsp" %>
