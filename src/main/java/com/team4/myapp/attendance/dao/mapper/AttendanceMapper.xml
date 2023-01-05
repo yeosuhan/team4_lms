@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
+	
+	<insert id="insertAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
+		<![CDATA[
+			insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
+			
+			values(ATTENDANCE_SEQ.nextval, SYSDATE , CURRENT_TIMESTAMP, #{attendanceStatus}, #{submitStatus} , #{memberId})
+		]]>
+	</insert>
+	
+	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
+		<![CDATA[
+			select 
+			ATTENDANCE_ID as attendanceId, 
+			CHECK_IN as checkIn,
+			CHECK_OUT as checkOut,
+			ATTENDANCE_DATE as attendanceDate, 
+			ATTENDANCE_STATUS as attendanceStatus, 
+			SUBMIT_STATUS as submitStatus, 
+			MEMBER_ID as memberId
+			
+			from attendance
+			where member_id = #{memberId}
+		]]>
+	</select>
+	
+</mapper>

@@ -18,7 +18,7 @@
    <resources mapping="/cd/**" location="/WEB-INF/resources/cause_detail/"/>
    <resources mapping="/h/**" location="/WEB-INF/resources/home/"/>
    <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/"/>
-   
+   <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
 
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -26,7 +26,9 @@
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
    
-<!--    <context:component-scan base-package="com.coderby.myapp.board.controller"/> -->
+	<context:component-scan base-package="com.team4.myapp.member.controller"/>
+	<context:component-scan base-package="com.team4.myapp.cause.controller"/>
+
    <context:component-scan base-package="com.team4.myapp"/>
    <context:component-scan base-package="com.team4.myapp.cause.controller"/>
    <context:component-scan base-package="com.team4.myapp.attandance.controller"/>
@@ -41,5 +43,22 @@
    </beans:bean>
 	
 	
+	<!-- json 응답을 위함 @ResponseBody -->
+   <beans:bean
+      class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+      <beans:property name="messageConverters">
+         <beans:list>
+            <beans:bean
+               class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+               <beans:property name="supportedMediaTypes">
+                  <beans:list>
+                     <beans:value>text/html;charset=UTF-8</beans:value>
+                     <beans:value>application/json;charset=UTF-8</beans:value>
+                  </beans:list>
+               </beans:property>
+            </beans:bean>
+         </beans:list>
+      </beans:property>
+   </beans:bean>
 	
 </beans:beans>

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	console.log("!!!");
 		$.ajax({
 			type : 'GET',  //get방식으로 통신
-			url : "/myapp/attendance/list", 
+			url : "/attendance/list", 
 			dataType:"json",
 			error : function() { //통신 실패시
 				console.log('통신실패!');

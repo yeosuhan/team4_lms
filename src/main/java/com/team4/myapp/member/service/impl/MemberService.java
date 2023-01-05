@@ -1,0 +1,24 @@
+package com.team4.myapp.member.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.team4.myapp.member.dao.IMemberRepository;
+import com.team4.myapp.member.model.Member;
+import com.team4.myapp.member.service.IMemberService;
+@Service
+public class MemberService implements IMemberService {
+
+	@Autowired
+	IMemberRepository memberDao;
+	
+	@Override
+	public Member selectMember(String memberId) {
+		return memberDao.selectMember(memberId);
+	}
+	@Override
+	public String getPassword(String memberId) {
+		return memberDao.getPassword(memberId);
+	}
+
+}

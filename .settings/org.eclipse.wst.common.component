@@ -3,9 +3,16 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+=======
+>>>>>>> branch 'main' of https://github.com/oti-team4/team4_lms
         <property name="java-output-path" value="/team4_lms/target/classes"/>
+<<<<<<< HEAD
         <property name="context-root" value="/"/>
+=======
+        <property name="context-root" value="myapp"/>
+>>>>>>> branch 'main' of https://github.com/oti-team4/team4_lms
     </wb-module>
 </project-modules>
