@@ -43,7 +43,7 @@ public class MemberController {
 					System.out.println(member.getMemberName());
 					System.out.println(member.getIdentity());
 					System.out.println(member.getLectureId());
-					return "cause/list";
+					return "redirect:/attendance/main";
 				} else {
 					model.addAttribute("message", "WRONG_PASSWORD");
 				}
