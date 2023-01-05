@@ -1,6 +1,7 @@
-.class
+*.class
 .jar
 /test/
 /.DS_Store
 /target/
 pom.properties
+jdbc.properties
