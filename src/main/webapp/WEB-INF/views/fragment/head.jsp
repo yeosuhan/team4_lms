@@ -18,7 +18,7 @@
      <!-- Core theme CSS (includes Bootstrap)-->
     <link href='<c:url value="/h/css/style.css"/>' rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>     
-    <script src="/js/scripts.js"></script>
+    <script src="h/js/scripts.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 	
 	

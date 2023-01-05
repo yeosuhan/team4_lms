@@ -1,4 +1,4 @@
-package com.team4.myapp.attendance.domain;
+package com.team4.myapp.attendance.model;
 
 
 import java.util.Date;

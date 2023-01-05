@@ -1,5 +1,7 @@
 package com.team4.myapp.cause.model;
 
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -13,6 +15,7 @@ public class Cause {
 	private int causeId;
 	private String content;
 	private int status;
+	private Date causeDate;
 	private int categoryId;
 	private MultipartFile file;
 	private byte[] fileData;
