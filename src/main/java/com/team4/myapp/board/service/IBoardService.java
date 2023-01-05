@@ -7,7 +7,7 @@ import com.team4.myapp.board.vo.BoardUploadFile;
 
 public interface IBoardService {
 	void insertArticle(Board boardId);
-	void insertArticle(Board boardId, BoardUploadFile file);
+	void insertFileArticle(Board boardId);
 	
 	List<Board> selectArticleListByCategory(int categoryId, int page);
 	

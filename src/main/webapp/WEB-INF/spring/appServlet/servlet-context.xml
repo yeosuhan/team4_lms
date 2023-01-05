@@ -14,16 +14,20 @@
 
    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
    <resources mapping="/m/**" location="/WEB-INF/resources/member/" />
-   <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
-   
+   <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />  
    <resources mapping="/b/**" location="/WEB-INF/resources/boardres/" />
-   
 
+   <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+   <resources mapping="/cd/**" location="/WEB-INF/resources/calendar/" />
+   
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <beans:property name="prefix" value="/WEB-INF/views/" />
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
+   
+	<context:component-scan base-package="com.team4.myapp.member.controller"/>
+	<context:component-scan base-package="com.team4.myapp.cause.controller"/>
 
    <context:component-scan base-package="com.team4.myapp"/>
    <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
@@ -37,7 +41,23 @@
          <beans:value>50000000</beans:value>
       </beans:property>
    </beans:bean>
-	
-	
+
+	<!-- json 응답을 위함 @ResponseBody -->
+   <beans:bean
+      class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+      <beans:property name="messageConverters">
+         <beans:list>
+            <beans:bean
+               class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+               <beans:property name="supportedMediaTypes">
+                  <beans:list>
+                     <beans:value>text/html;charset=UTF-8</beans:value>
+                     <beans:value>application/json;charset=UTF-8</beans:value>
+                  </beans:list>
+               </beans:property>
+            </beans:bean>
+         </beans:list>
+      </beans:property>
+   </beans:bean>
 	
 </beans:beans>

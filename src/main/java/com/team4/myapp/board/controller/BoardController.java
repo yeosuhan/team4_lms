@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.service.IBoardService;
 import com.team4.myapp.board.vo.Board;
-import com.team4.myapp.board.vo.BoardUploadFile;
 
 @Controller
 public class BoardController {
@@ -28,15 +27,13 @@ public class BoardController {
 	
 	// 작성 폼 열기
 	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
-	public String writeArticle(Locale locale, Model model) {
-		System.out.println("게시글 작성");
-		
+	public String writeArticle(Locale locale, Model model) {	
 		return "board/writeform";
 	}
 
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	public String writeArticle(Board board, BindingResult results, RedirectAttributes redirectAttrs) {
-		logger.info("/board/write : " + board.toString());
+		//logger.info("/board/write : " + board.toString());
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
@@ -44,13 +41,11 @@ public class BoardController {
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
 				logger.info("/board/write : " + mfile.getOriginalFilename());
-				BoardUploadFile file = new BoardUploadFile();
-				file.setFileName(mfile.getOriginalFilename());
-				file.setFileSize(mfile.getSize());
-				file.setFileContentType(mfile.getContentType());
-				file.setFileData(mfile.getBytes());
-				logger.info("/board/write : " + file.toString());
-				boardService.insertArticle(board, file);
+				board.setFileName(mfile.getOriginalFilename());
+				board.setFileSize(mfile.getSize());
+				board.setFileContentType(mfile.getContentType());
+				board.setFileData(mfile.getBytes());
+				boardService.insertFileArticle(board);
 			}else {
 				boardService.insertArticle(board);
 			}

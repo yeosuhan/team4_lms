@@ -12,7 +12,7 @@ public interface IBoardRepository {
 	int selectMaxFileId();
 	
 	void insertArticle(Board board);
-	void insertFileData(BoardUploadFile file);
+	void insertFileData(Board board);
 	
 	List<Board> selectArticleListByCategory(@Param("categoryId") int categoryId, @Param("start") int start, @Param("end") int end);
 	

@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/webapp/WEB-INF/views/board1.jsp=UTF-8
+=======
+encoding//src/main/webapp/WEB-INF/views/member/login.jsp=UTF-8
+>>>>>>> branch 'main' of https://github.com/oti-team4/team4_lms.git

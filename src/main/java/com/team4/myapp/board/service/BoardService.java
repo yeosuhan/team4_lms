@@ -18,19 +18,13 @@ public class BoardService implements IBoardService {
 
 	@Transactional
 	public void insertArticle(Board board) {
-		board.setBoardId(boardRepository.selectMaxArticleNo()+1);
 		boardRepository.insertArticle(board);
 	}
 	
 	@Transactional
-	public void insertArticle(Board board, BoardUploadFile file) {
-		board.setBoardId(boardRepository.selectMaxArticleNo()+1);
-		boardRepository.insertArticle(board);
-        if(file != null && file.getFileName() != null && !file.getFileName().equals("")) {
-        	file.setBoardId(board.getBoardId());
-        	file.setFileId(boardRepository.selectMaxFileId()+1);
-        	boardRepository.insertFileData(file);
-        }
+	public void insertFileArticle(Board board) {
+        	boardRepository.insertFileData(board);
+        //}
 	}
 
 	@Override
@@ -69,7 +63,7 @@ public class BoardService implements IBoardService {
         if(file != null && file.getFileName() != null && !file.getFileName().equals("")) {
         	file.setBoardId(board.getBoardId());
         	file.setFileId(boardRepository.selectMaxFileId()+1);
-        	boardRepository.insertFileData(file);
+        	//////boardRepository.insertFileData(file);
         }
 	}
 	
@@ -93,7 +87,7 @@ public class BoardService implements IBoardService {
         		boardRepository.updateFileData(file);
         	}else {
         		file.setFileId(boardRepository.selectMaxFileId()+1);
-        		boardRepository.insertFileData(file);
+        		///////boardRepository.insertFileData(file);
         	}
         }
 	}

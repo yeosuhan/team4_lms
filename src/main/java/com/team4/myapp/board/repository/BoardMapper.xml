@@ -85,9 +85,19 @@
 	<![CDATA[
 		INSERT INTO 
 		board 
+			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, VIEW_COUNT, HEART_COUNT,  FILE_DOWNLOAD_COUNT, BOARD_TYPE, MEMBER_ID)  
+		VALUES 
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, 0, 0, 0, #{boardType}, #{memberId})
+	]]>	
+	</insert>
+	
+	<insert id="insertFileData" parameterType="com.team4.myapp.board.vo.Board">
+	<![CDATA[
+		INSERT INTO 
+		board 
 			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, VIEW_COUNT, HEART_COUNT, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, FILE_DOWNLOAD_COUNT, BOARD_TYPE, MEMBER_ID)  
 		VALUES 
-			(#{boardId}, #{title}, #{content}, SYSDATE, #{viewCount}, #{heartCount}, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, #{fileDownloadCount}, #{boardType}, #{memberId})
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, 0, 0, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, 0, #{boardType}, #{memberId})
 	]]>	
 	</insert>
 	
@@ -100,15 +110,7 @@
 	
 	
 	
-	<insert id="insertFileData" parameterType="com.team4.myapp.board.vo.BoardUploadFile">
-	<![CDATA[
-		INSERT INTO 
-		board_upload_file 
-			(file_id, board_id, file_name, file_size, file_content_type, file_data) 
-		VALUES 
-			(#{fileId}, #{boardId}, #{fileName}, #{fileSize}, #{fileContentType}, #{fileData})
-	]]>
-	</insert>
+	
 	
 	<select id="getFile" parameterType="int" resultType="com.team4.myapp.board.vo.BoardUploadFile">
 	<![CDATA[

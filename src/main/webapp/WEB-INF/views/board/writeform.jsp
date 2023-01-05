@@ -23,28 +23,13 @@
     </div>
    <div class="content">
    <form action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data" class="form-horizontal">
-   <div class="form-group">
-      <label class="control-label col-sm-2" for="name"><fmt:message key="CATEGORY"/></label>
-      <div class="col-sm-4">
-        <select name="categoryId" id="categoryId" class="form-control" required>       
-           <option value="1"  ${1 eq requestScope.categoryId ? "selected" : ""}>게시판</option>
-           <option value="2"  ${2 eq requestScope.categoryId ? "selected" : ""}>자료실</option>
-           <option value="3"  ${3 eq requestScope.categoryId ? "selected" : ""}>갤러리</option>
-        </select>
-      </div>
-    </div>
+   
    <div class="form-group">
       <label class="control-label col-sm-2" for="name"><fmt:message key="WRITER"/></label>
       <div class="col-sm-2">
-        <input type="text" name="writer" id="name" value="${sessionScope.name}" ${!empty sessionScope.name ? "readonly" : "" } class="form-control">
+        <input type="text" name="memberId" id="memberId" value="${sessionScope.name}" ${!empty sessionScope.name ? "readonly" : "" } class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="email"><fmt:message key="EMAIL"/></label>
-      <div class="col-sm-4">
-        <input type="text" name="email" id="email" value="${sessionScope.email}" ${!empty sessionScope.email ? "readonly" : "" } class="form-control" required>
-      </div>
-    </div>  
     <div class="form-group">
       <label class="control-label col-sm-2" for="title"><fmt:message key="SUBJECT"/></label>
       <div class="col-sm-8">
@@ -65,7 +50,7 @@
     </div>
     <div class="form-group">
        <div class="col-sm-offset-2 col-sm-8">
-         <input type="hidden" name="boardId" value="${board.boardId}">
+         <input type="hidden" name="boardType" value="community">
          <input type="submit" id="i_submit" class="btn btn-info" value="<fmt:message key="SAVE"/>"> <input type="reset" class="btn btn-info" value="<fmt:message key="CANCEL"/>">
       </div>
    </div>
