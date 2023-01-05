@@ -24,5 +24,4 @@
 		WHERE member_id=#{memberid}
 	]]>
 </select>
-
 </mapper>

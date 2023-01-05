@@ -13,7 +13,7 @@ public class MainController {
 	// 메인 화면
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {	
-		return "home2";
+		return "home";
 	}
 	
 }

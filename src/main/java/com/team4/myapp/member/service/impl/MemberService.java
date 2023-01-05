@@ -20,5 +20,10 @@ public class MemberService implements IMemberService {
 	public String getPassword(String memberId) {
 		return memberDao.getPassword(memberId);
 	}
-
+	@Override
+	public Member selectLecture() {
+		return memberDao.selectLecture();
+	}
+	
+	
 }

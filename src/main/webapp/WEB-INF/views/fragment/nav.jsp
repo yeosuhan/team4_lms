@@ -18,7 +18,7 @@
 	                        <li class="nav-item"><a class="nav-link" href="#about">커뮤니티</a></li>
 	                        <li class="nav-item"><a class="nav-link" href="#team">자료실</a></li>
 	                        <li class="nav-item"><a class="nav-link" href="#contact">로그인</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#contact">로그아웃</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="<c:url value='/member/logout'/>">로그아웃</a></li>
 	                    </ul>
 	                </div>
 	            </div>

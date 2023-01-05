@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
-<head>
-	<title>Home</title>
-</head>
-<body>
-<h1>
-	Hello world!  
-</h1>
-<button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button>
-<button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button>
-<button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button>
-<P>  The time on the server is ${serverTime}. </P>
-</body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
+
+<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
+
+        <header class="masthead" style="border-bottom-color: green;">
+            <div class="container">
+                <div class="masthead-subheading">Welcome To Our Studio!</div>
+                <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+            </div>
+        </header>
+
+<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
