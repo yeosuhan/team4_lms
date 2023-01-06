@@ -156,6 +156,18 @@ public class BoardController {
 		return "redirect:/board/detail/"+board.getBoardId();
 	}
 	
+	@RequestMapping(value="/board/delete", method=RequestMethod.POST)
+	public String deleteArticle(Board board, HttpSession session, Model model) {
+		try {	
+			boardService.deleteArticle(board.getBoardId()); //, board.getReplyNumber());
+			return "redirect:/board/list/" + board.getBoardType() + "/" + (Integer)session.getAttribute("page");			
+		}catch(Exception e){
+			model.addAttribute("message", e.getMessage());
+			e.printStackTrace();
+			return "error/runtime";
+		}
+	}
+	
 	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기
 	//@ResponseBody
 	//@RequestMapping(value = "/attendance/list", method = RequestMethod.GET)

@@ -125,7 +125,6 @@
 		.btn {
 		  border-radius: 3px;
 		  border: 1px;
-		  height: 30px;
 		  font-weight: bold;
 		  position: relative;
 		}
@@ -512,9 +511,32 @@
             <button class="new button" onclick="location.href='/board/update/${board.boardId}'"> 
       			<i class="fa-solid fa-pen" style="color:#A4A4A4"></i>
            </button>
-            <button class="new button"> 
+            <button class="new button" data-toggle="modal" data-target="#deleteModal"> 
       			<img src="https://i.ibb.co/Lv6TqBG/waste-bin.png" />
            </button>
+           <div class="modal fade" id="deleteModal" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							삭제 확인
+							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">X</span>
+							</button>
+						</div>
+						<div class="modal-body">해당 게시물을 삭제하시겠습니까?</div>
+						<div class="modal-footer">
+							<form action='<c:url value="/board/delete"/>' class="form-inline" method="post">
+								<input type="hidden" name="boardId" value="${board.boardId}">
+								<input type="hidden" name="boardType" value="${board.boardType}">
+								<a href="#">
+									<button type="submit" class="btn btn-danger">삭제</button>											
+								</a>											
+								<button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">취소</button>										
+							</form>
+						</div>	
+					</div>
+				</div>
+			</div>
           </div> 
         </div>
       </div>
