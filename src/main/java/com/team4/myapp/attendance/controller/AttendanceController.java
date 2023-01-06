@@ -1,9 +1,9 @@
 package com.team4.myapp.attendance.controller;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,46 +12,77 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team4.myapp.attendance.controller.dto.CalendarDto;
 import com.team4.myapp.attendance.model.Attendance;
+import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
-
-
 
 @Controller
 public class AttendanceController {
-	
+
 	@Autowired
 	IAttendanceService attendanceService;
-	
+
 	// 출근 처리
-	@RequestMapping(value = "/attendance/in", method = RequestMethod.GET)
-	public String checkIn() {
-		System.out.println("ddddddddddddddddddddddddddddd");
+	@RequestMapping(value = "/attendance/checkin", method = RequestMethod.POST)
+	public String checkIn(HttpSession session) {
 		Attendance a1 = new Attendance();
-		a1.setMemberId("je");
-		
-		attendanceService.insertAttendance(a1);
+		String memberId = (String) session.getAttribute("memberid");
+		a1.setMemberId(memberId);
+
+		attendanceService.insertChekIn(a1);
 		System.out.println("출석 됨!!!!");
-		
+
 		return "redirect:/attendance/main";
 	}
-	
-	
+
 	// 유저의 출결 현황 조회
 	@RequestMapping(value = "/attendance/main", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		System.out.println("여기 2 ~~~~~~");
-		
+	public String home(HttpSession session, Locale locale, Model model) {
+		String memberId = (String) session.getAttribute("memberid");
+		int checkin = 0;
+		String checkout = null;
+		// 출근 여부 확인
+		try {
+			checkin = attendanceService.selectId(memberId);
+			model.addAttribute("checkin", true);
+		} catch (Exception e) {
+			checkin = 0;
+			model.addAttribute("checkin", false);
+		}
+
+		// 퇴근 여부 확인
+		checkout = attendanceService.selectCheckOut(memberId);
+		if (checkout == null)
+			model.addAttribute("checkout", false);
+		else {
+			checkout = "있음";
+			model.addAttribute("checkout", true);
+		}
+
+		// 외출 여부 확인
+
+		// 복귀 여부 확인
+		System.out.println("aid : " + checkin);
+		System.out.println("time : " + checkout);
+
 		return "calendar/userCalendar";
 	}
-	
-	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기 !!!! 월별로 가져오기 !!! {month}
+
+	// 유저의 출결 현황 조회 - 출결 데이터 json으로 반환하기 !!!! 월별로 가져오기 !!! {month}
 	@ResponseBody
 	@RequestMapping(value = "/attendance/list", method = RequestMethod.GET)
-	public List<CalendarDto> getUserAttendanceList() {	
-		return attendanceService.selectMemberAttendance("je" , 1);
+	public List<CalendarDto> getUserAttendanceList(HttpSession session) {
+		String memberId = (String) session.getAttribute("memberid");
+		return attendanceService.selectMemberAttendance(memberId, 1);
 	}
-	
+
+	// 퇴근 처리
+	@RequestMapping(value = "/attendance/checkout", method = RequestMethod.POST)
+	public String checkOut(HttpSession session) {
+		// 퇴근 처리 로직
+		String memberId = (String) session.getAttribute("memberid");
+		attendanceService.insertCheckOut(memberId);
+		return "redirect:/attendance/main";
+	}
 
 }
