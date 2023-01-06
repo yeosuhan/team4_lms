@@ -43,7 +43,7 @@ public class MemberController {
 					System.out.println(member.getMemberName());
 					System.out.println(member.getIdentity());
 					System.out.println(member.getLectureId());
-					return "cause/list";
+					return "redirect:/attendance/main";
 				} else {
 					model.addAttribute("message", "WRONG_PASSWORD");
 				}
@@ -58,6 +58,6 @@ public class MemberController {
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
-		return "member/login";
+		return "/member/login";
 	}
 }
