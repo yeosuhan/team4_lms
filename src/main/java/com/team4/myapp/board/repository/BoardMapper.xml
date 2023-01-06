@@ -8,18 +8,14 @@
 	<![CDATA[
 	SELECT 
 	    board_id 				AS "boardId", 
-	    category_id 			AS "categoryId", 
-	    writer					AS "writer", 
-	    email					AS "email", 
 	    title					AS "title", 
-	    write_date				AS "writeDate", 
-	    master_id 				AS "masterId", 
-	    reply_number 			AS "replyNumber", 
-	    reply_step				AS "replyStep", 
-	    read_count				AS "readCount"
+	    board_date				AS "boardDate", 
+	    view_count				AS "viewCount", 
+	    member_id				AS "memberId", 
+	    file_download_count		AS "fileDownloadCount"
 	FROM board
-	WHERE category_id=#{categoryId}
-	ORDER BY master_id DESC, reply_number, reply_step
+	WHERE board_type=#{boardType}
+	ORDER BY board_id DESC
 	OFFSET #{start}-1 ROWS
 	FETCH FIRST 10 ROWS ONLY
 	]]>
@@ -28,31 +24,28 @@
 	<select id="selectArticle" parameterType="int" resultType="com.team4.myapp.board.vo.Board">
 	<![CDATA[
 		SELECT 
-			board.board_id				AS "boardId", 
-			category_id					AS "categoryId", 
-			writer						AS "writer", 
-			email						AS "email", 
-			title						AS "title", 
-			content						AS "content", 
-			read_count					AS "readCount", 
-			write_date					AS "writeDate", 
-			master_id					AS "masterId", 
-			reply_number				AS "replyNumber", 
-			reply_step					AS "replyStep", 
-			board_upload_file.file_id		AS "fileId", 
-			board_upload_file.file_name		AS "fileName", 
-			board_upload_file.file_size		AS "fileSize",
-			board_upload_file.file_content_type	AS "fileContentType"
-		FROM board LEFT OUTER JOIN board_upload_file 
-			ON board.board_id=board_upload_file.board_id 
-		WHERE board.board_id=#{boardId}
+		    board_id 				AS "boardId", 
+		    title					AS "title", 
+		    content					AS "content", 
+		    board_date				AS "boardDate", 
+		    view_count				AS "viewCount", 
+		    heart_count				AS "heartCount", 
+		    file_name				AS "fileName",
+		    file_data				AS "fileData",
+		    file_content_type		AS "fileContentType",
+		    file_size				AS "fileSize",
+		    file_download_count		AS "fileDownloadCount",
+		    board_type				AS "boardType",
+		    member_id				AS "memberId"		
+		FROM board 
+		WHERE board_id=#{boardId}
 	]]>
 	</select>
 	
 	<update id="updateReadCount" parameterType="int">
 	<![CDATA[
 		UPDATE board 
-			SET read_count = read_count+1 
+			SET view_count = view_count+1 
 		WHERE board_id=#{boardId}
 	]]>
 	</update>
@@ -73,21 +66,13 @@
 	]]>
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-		
 	<insert id="insertArticle" parameterType="com.team4.myapp.board.vo.Board">
 	<![CDATA[
 		INSERT INTO 
 		board 
-			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, VIEW_COUNT, HEART_COUNT,  FILE_DOWNLOAD_COUNT, BOARD_TYPE, MEMBER_ID)  
+			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, BOARD_TYPE, MEMBER_ID)  
 		VALUES 
-			(board_seq.nextval, #{title}, #{content}, SYSDATE, 0, 0, 0, #{boardType}, #{memberId})
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{boardType}, #{memberId})
 	]]>	
 	</insert>
 	
@@ -95,23 +80,12 @@
 	<![CDATA[
 		INSERT INTO 
 		board 
-			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, VIEW_COUNT, HEART_COUNT, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, FILE_DOWNLOAD_COUNT, BOARD_TYPE, MEMBER_ID)  
+			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, BOARD_TYPE, MEMBER_ID)  
 		VALUES 
-			(board_seq.nextval, #{title}, #{content}, SYSDATE, 0, 0, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, 0, #{boardType}, #{memberId})
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, #{boardType}, #{memberId})
 	]]>	
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<select id="getFile" parameterType="int" resultType="com.team4.myapp.board.vo.BoardUploadFile">
 	<![CDATA[
 		SELECT 
@@ -232,11 +206,11 @@
 	]]>
 	</select>
 	
-	<select id="selectTotalArticleCountByCategoryId" parameterType="int" resultType="int">
+	<select id="selectTotalArticleCountByCategoryId" parameterType="string" resultType="int">
 	<![CDATA[
 		SELECT COUNT(board_id) AS "count"
 		FROM board 
-		WHERE category_id=#{categoryId}	
+		WHERE board_type=#{boardType}	
 	]]>
 	</select>
 	

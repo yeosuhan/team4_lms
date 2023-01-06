@@ -9,7 +9,7 @@ public interface IBoardService {
 	void insertArticle(Board boardId);
 	void insertFileArticle(Board boardId);
 	
-	List<Board> selectArticleListByCategory(int categoryId, int page);
+	List<Board> selectArticleListByCategory(String boardType, int page);
 	
 	Board selectArticle(int boardId);
 	
@@ -27,7 +27,7 @@ public interface IBoardService {
 	void deleteArticle(int boardId, int replyNumber);
 	
 	int selectTotalArticleCount();
-	int selectTotalArticleCountByCategoryId(int categoryId);
+	int selectTotalArticleCountByCategoryId(String boardType);
 	
 	List<Board> searchListByContentKeyword(String keyword, int page);
 	int selectTotalArticleCountByKeyword(String keyword);

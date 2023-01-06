@@ -28,9 +28,9 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public List<Board> selectArticleListByCategory(int categoryId, int page) {
+	public List<Board> selectArticleListByCategory(String boardType, int page) {
 		int start = (page-1)*10 + 1;
-		return boardRepository.selectArticleListByCategory(categoryId, start, start+9); // 오라클은 BETWEEN a AND b에서 a와 b모두 포함하므로 9를 더함
+		return boardRepository.selectArticleListByCategory(boardType, start, start+9); // 오라클은 BETWEEN a AND b에서 a와 b모두 포함하므로 9를 더함
 	}
 
 	@Transactional
@@ -116,8 +116,8 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public int selectTotalArticleCountByCategoryId(int categoryId) {
-		return boardRepository.selectTotalArticleCountByCategoryId(categoryId);
+	public int selectTotalArticleCountByCategoryId(String boardType) {
+		return boardRepository.selectTotalArticleCountByCategoryId(boardType);
 	}
 
 	@Override

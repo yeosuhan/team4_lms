@@ -14,7 +14,7 @@ public interface IBoardRepository {
 	void insertArticle(Board board);
 	void insertFileData(Board board);
 	
-	List<Board> selectArticleListByCategory(@Param("categoryId") int categoryId, @Param("start") int start, @Param("end") int end);
+	List<Board> selectArticleListByCategory(@Param("boardType") String boardType, @Param("start") int start, @Param("end") int end);
 	
 	Board selectArticle(int boardId);
 	BoardUploadFile getFile(int fileId);
@@ -36,7 +36,7 @@ public interface IBoardRepository {
 	void deleteArticleByMasterId(int boardId);
 	
 	int selectTotalArticleCount();
-	int selectTotalArticleCountByCategoryId(int categoryId);
+	int selectTotalArticleCountByCategoryId(String boardType);
 
 	int selectTotalArticleCountByKeyword(String keyword);
 	List<Board> searchListByContentKeyword(@Param("keyword") String keyword, @Param("start") int start, @Param("end") int end);

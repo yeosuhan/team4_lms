@@ -1,5 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<fmt:setBundle basename="i18n/board"/>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 <div class="container">
@@ -17,8 +15,19 @@
         </div>
     </div>
    <div class="content">
+   <hr/><h1 class="headline"><fmt:message key="REFERENCE"/></h1><hr/>
+   <div class="row">
+            <div class="col-md-8 pc">
+                <h2><fmt:message key="WRITE_NEW_ARTICLE"/></h2>
+            </div>
+            <div class="col-md-4">
+                <ol class="breadcrumb">
+                    <li><fmt:message key="BOARD"/>/</li>
+                    <li class="active"><fmt:message key="WRITE_NEW_ARTICLE"/></li>
+                </ol>
+            </div>
+        </div>
    <form action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data" class="form-horizontal">
-   
    <div class="form-group">
       <label class="control-label col-sm-2" for="name"><fmt:message key="WRITER"/></label>
       <div class="col-sm-2">
@@ -45,8 +54,9 @@
     </div>
     <div class="form-group">
        <div class="col-sm-offset-2 col-sm-8">
-         <input type="hidden" name="boardType" value="community">
-         <input type="submit" id="i_submit" class="btn btn-info" value="<fmt:message key="SAVE"/>"> <input type="reset" class="btn btn-info" value="<fmt:message key="CANCEL"/>">
+         <input type="hidden" name="boardType" value="reference">
+         <input type="submit" id="i_submit" class="btn btn-warning" value="<fmt:message key="SAVE"/>"> 
+         <input type="reset" class="btn btn-warning" value="<fmt:message key="CANCEL"/>" onclick="history.back()">
       </div>
    </div>
    </form>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
 
 <%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
@@ -525,51 +525,52 @@
     
       <div class="message">
         <div class="mes-date">
-          January 4, 2023
+          <fmt:formatDate value="${board.boardDate}" pattern="YYYY-MM-dd"/>
         </div>
         <div class="title">
-          게시글 제목: Old Fashioned Recipe For Preventing Allergies And Chemical
+          게시글 제목: ${board.title}
           <div class="title-icons">
 
           </div>
         </div>
         <div class="from">
-          <span class="who">작성자: </span>ashraf@glaze.com
+          <span class="who">작성자: </span>${board.memberId}
         </div>
         <div class="text-right">
-          <span class="who">조회수: </span>0
-          <span class="who">다운로드 수: </span>0
+          <span class="who">조회수: </span>${board.viewCount}
+          <span class="who">다운로드 수: </span>${board.fileDownloadCount}
         </div>
         <div class="message-from">
-          <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, voluptas pariatur repellat veritatis atque, tempora quasi quas facere impedit aliquam libero qui iure cumque incidunt facilis soluta necessitatibus laboriosam nemo. Delectus architecto
-            sed, excepturi natus iste vel quidem officia corrupti repudiandae!</p>
-          <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, deleniti eaque eligendi minus maxime tempora eiusi.</p>
-          <p>Have a nice day</p>
-          <p>Ashraf</p>
+          <p> ${board.content}</p>
         </div>
         <div class="attachment-last">
           <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
           <div class="att-write">
             첨부 파일 (80MB)
           </div>
-          <button class="btn1 buton0"> View All
+          <button class="btn1 buton0"> View
           <span class="tag"></span>
           </button>
 
-          <button class="btn1 buton9"> Download All
+          <button class="btn1 buton9"> Download
           </button>
 
         </div>
         <div class="son-images">
           <div class="inside-img">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
-            <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
-            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
-            <img src="https://images.unsplash.com/photo-1450609283058-0ec52fa7eac4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
+            <c:if test="${!empty board.fileName}">
+				<tr>
+					<td><fmt:message key="FILE"/></td>
+					<td>
+					<c:set var="len" value="${fn:length(board.fileName)}"/>
+					<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>
+					<c:if test="${(fileContentType eq '.JPG') or (fileContentType eq 'JPEG') or (fileContentType eq '.PNG') or (fileContentType eq '.GIF')}"><img src='<c:url value="/file/${board.fileData}"/>' class="img-thumbnail"><br></c:if>
+					<a href='<c:url value="/file/${board.fileData}"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
+					</td>
+				</tr>
+			</c:if>
 
           </div>
-          <button class="son-buton"> 20+
-          </button>
         </div>
         <button class="btn2 butona"> Reply (0)
              <span class="tag"> 

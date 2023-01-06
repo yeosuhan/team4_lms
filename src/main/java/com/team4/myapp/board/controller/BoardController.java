@@ -1,6 +1,9 @@
 package com.team4.myapp.board.controller;
 
+import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +37,6 @@ public class BoardController {
 
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	public String writeArticle(Board board, BindingResult results, RedirectAttributes redirectAttrs) {
-		//logger.info("/board/write : " + board.toString());
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
@@ -53,7 +56,39 @@ public class BoardController {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "redirect:/board/write";
+		return "redirect:/board/list/"+board.getBoardType();
+	}
+	
+	@RequestMapping("/board/list/{boardType}/{page}")
+	public String getListByCategory(@PathVariable String boardType, @PathVariable int page, HttpSession session, Model model) {
+		session.setAttribute("page", page);
+		model.addAttribute("boardType", boardType);
+
+		List<Board> boardList = boardService.selectArticleListByCategory(boardType, page);
+		model.addAttribute("boardList", boardList);
+
+		// paging start
+		int bbsCount = boardService.selectTotalArticleCountByCategoryId(boardType);
+		int totalPage = 0;
+		if(bbsCount > 0) {
+			totalPage= (int)Math.ceil(bbsCount/10.0);
+		}
+		model.addAttribute("totalPageCount", totalPage);
+		model.addAttribute("page", page);
+		return "board/boardlist";
+	}
+
+	@RequestMapping("/board/list/{boardType}")
+	public String getListByCategory(@PathVariable String boardType, HttpSession session, Model model) {
+		return getListByCategory(boardType, 1, session, model);
+	}
+
+	@RequestMapping("/board/detail/{boardId}")
+	public String getBoardDetails(@PathVariable int boardId, Model model) {		
+		Board board = boardService.selectArticle(boardId);
+		model.addAttribute("board", board);
+		model.addAttribute("boardType", board.getBoardType());
+		return "board/boarddetail";
 	}
 	
 	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기

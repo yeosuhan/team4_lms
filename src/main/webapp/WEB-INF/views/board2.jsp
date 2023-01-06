@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<html>
-<head>
+<%@ include file="/WEB-INF/views/fragment/head.jsp" %>
+
+<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 	<title>board</title>
 	<style>
 	@import url("https://fonts.googleapis.com/css2?family=Noticia+Text&display=swap");
@@ -106,8 +106,6 @@ p {
 }
 	
 	</style>
-</head>
-<body>
 	<h1 class="headline">게시글 제목</h1>
 <div class="article-meta">
 	<svg id="author-avatar" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
@@ -156,5 +154,4 @@ p {
 <p>Quae, cumque blanditiis? Nisi rem ullam, ducimus qui praesentium, temporibus mollitia ex voluptatibus aut accusamus reprehenderit soluta eius expedita dicta adipisci debitis repudiandae quibusdam laborum possimus cupiditate quidem doloribus quas.</p>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum vitae debitis reiciendis nam molestias, iure, recusandae magnam cupiditate ut dolore aliquam nesciunt ipsum sit illum nihil quibusdam mollitia veritatis maiores.</p>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/views/fragment/footer.jsp" %>

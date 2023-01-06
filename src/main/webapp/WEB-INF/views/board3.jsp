@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
+<%@ include file="/WEB-INF/views/fragment/head.jsp" %>
+
+<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
+
 	<title>board</title>
 	<style>
 	body {
@@ -39,8 +40,7 @@ h2 {
 }
 	
 	</style>
-</head>
-<body>
+
 	<div class="overflow-hidden">
 	<div class="container position-relative">
 		<article class="z-index-1 position-relative">
@@ -121,5 +121,5 @@ h2 {
 
 					
 
-</body>
-</html>
+
+<%@ include file="/WEB-INF/views/fragment/footer.jsp" %>

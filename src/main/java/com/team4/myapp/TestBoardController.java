@@ -19,7 +19,7 @@ public class TestBoardController {
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		return "board4";
+		return "board1";
 	}
 	
 }
