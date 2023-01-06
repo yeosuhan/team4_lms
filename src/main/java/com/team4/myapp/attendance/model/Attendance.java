@@ -19,8 +19,8 @@ public class Attendance {
 	private int attendanceId;
 	private String memberId;
 	private Date attendanceDate;
-	private Timestamp start;
-	private Timestamp end;
+	private Timestamp checkIn;
+	private Timestamp checkOut;
 	private int attendanceStatus;
 	private int submitStatus;
 

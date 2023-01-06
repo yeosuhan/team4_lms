@@ -1,4 +1,4 @@
-package com.team4.myapp.cause.model;
+package com.team4.myapp.cause.model.dto;
 
 import java.sql.Date;
 
@@ -11,16 +11,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude="fileData")
-public class Cause {
-	private int causeId;
+public class CauseDto {
+	//작성폼에서 날라온 데이터
 	private String content;
-	private int status;
+	private Date attendanceDate;
 	private int categoryId;
 	private MultipartFile file;
-	private byte[] fileData;
-	private String fileName;
-	private long fileSize;
-	private String fileContentType;
+//	private byte[] fileData;
+//	private String fileName;
+//	private long fileSize;
+	private int attendanceStatus;
+//	private String fileContentType;
 	private int attendanceId;
 	private String memberId;
 }

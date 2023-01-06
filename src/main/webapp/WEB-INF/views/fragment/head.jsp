@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-	<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>뿌꾸 대학교 lms</title>
-	
+   <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <title>뿌꾸 대학교 lms</title>
+   
 
     <!-- home -->
-    <link rel="icon" type="image/x-icon" href="home/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<c:url value='/h/assets/favicon.ico'/>" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -21,34 +21,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>     
     <script src="<c:url value='/h/js/scripts.js'/>"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-	
-	
-	
-	<!--  calendar 관련 resources-->
+   
+   
+   
+   <!--  calendar 관련 resources-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="calendar/fonts/icomoon/style.css"> 
-    <link href='calendar/fullcalendar/packages/core/main.css' rel='stylesheet' />
-    <link href='calendar/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="<c:url value='cd/fonts/icomoon/style.css'/>" />
+    <link href="<c:url value='/cd/fullcalendar/packages/core/main.css'/>" rel="stylesheet" />
+    <link href= "<c:url value='cd/fullcalendar/packages/daygrid/main.css'/>" rel="stylesheet" />
     
-    <script src="calendar/js/jquery-3.3.1.min.js"></script>
-    <script src="calendar/js/popper.min.js"></script>
-    <script src="calendar/js/bootstrap.min.js"></script>
+    <script src="<c:url value='/cd/js/jquery-3.3.1.min.js'/>"></script>
+    <script src="<c:url value='/cd/js/popper.min.js'/>"></script>
+    <script src="<c:url value='/cd/js/bootstrap.min.js'/>"></script>
 
-    <script src='calendar/fullcalendar/packages/core/main.js'></script>
-    <script src='calendar/fullcalendar/packages/interaction/main.js'></script>
-    <script src='calendar/fullcalendar/packages/daygrid/main.js'></script>
-    <script src="calendar/js/main.js"></script>
-    <script src="calendar/js/calendar.js"></script>
+    <script src="<c:url value='/cd/fullcalendar/packages/core/main.js'/>"></script>
+    <script src="<c:url value='/cd/fullcalendar/packages/interaction/main.js'/>"></script>
+    <script src="<c:url value='/cd/fullcalendar/packages/daygrid/main.js'/>"></script>
+    <script src="<c:url value='/cd/js/main.js'/>"></script>
+    <script src="<c:url value='/cd/js/calendar.js'/>"></script>
     
-    
-           
+    <!-- cause_list -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="<c:url value='/c/fonts/icomoon/style.css'/>">
+   <link rel="stylesheet" href="<c:url value='/c/css/owl.carousel.min.css'/>">
+   <script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
+   <script src="<c:url value='/c/js/popper.min.js'/>"></script>
+   <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
+   <script src="<c:url value='/c/js/main.js'/>"></script>
+   
    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="calendar/css/bootstrap.min.css">   
-    <!-- Style -->
-    <link rel="stylesheet" href="calendar/css/style.css">	
-	
-	<!--  -->
-	
-	
-	</head>
+   <link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
+   
+   <!-- Style -->
+   <link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="<c:url value='/cd/css/bootstrap.min.css'/>">
+   <!-- Style -->
+   <link rel="stylesheet" href="<c:url value='/cd/css/style.css'/>">
+   
+   
+</head>

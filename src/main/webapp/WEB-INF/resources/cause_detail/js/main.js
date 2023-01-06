@@ -42,6 +42,8 @@ $(function(){
 })
 
 
+
+
     //이미지 미리보기
  /*   $('#cause_file').on('change', function() {
 	    ext = $(this).val().split('.').pop().toLowerCase(); //확장자

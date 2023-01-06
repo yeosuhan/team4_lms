@@ -1,24 +1,25 @@
 package com.team4.myapp.attendance.service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team4.myapp.attendance.controller.dto.CalendarDto;
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
-import org.apache.ibatis.annotations.Param;
+
 
 @Service
 public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IAttendanceRepository attendanceRepository;
+	
 
 	@Override
 	public void insertAttendance(Attendance attendance) {
@@ -59,5 +60,17 @@ public class AttendanceService implements IAttendanceService {
 		}
 		return clist;
 	}
+	
+	//출석ID 가져오기
+	@Override
+	public int selectAttendanceId(String memberId, Date attendanceDate) {
+		
+		return attendanceRepository.selectAttendanceId(memberId, attendanceDate);
+	}
 
+	//날짜와 출석유형 조회하기
+	@Override
+	public Attendance selectDataAndCategory(int attendanceId) {
+		return attendanceRepository.selectDataAndCategory(attendanceId);
+	}
 }

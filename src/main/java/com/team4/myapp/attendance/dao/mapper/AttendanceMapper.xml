@@ -27,4 +27,28 @@
 		]]>
 	</select>
 	
+	<select id="selectAttendanceId" parameterType="map" resultType="int">
+		<![CDATA[
+			SELECT ATTENDANCE_ID AS attendanceId
+			FROM ATTENDANCE
+			WHERE MEMBER_ID = #{memberId} and ATTENDANCE_DATE=#{attendanceDate}
+		]]>
+	</select>
+	
+	<insert id="insertFutureAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
+		<![CDATA[
+			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID) 
+			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId})
+		]]>
+	</insert>
+	
+	<select id="selectDataAndCategory" parameterType="int" resultType="com.team4.myapp.attendance.model.Attendance">
+		<![CDATA[
+			SELECT ATTENDANCE_ID AS attendanceId,
+					ATTENDANCE_DATE AS attendanceDate,
+					ATTENDANCE_STATUS AS attendanceStatus
+			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
+		]]>
+	</select>
+	
 </mapper>

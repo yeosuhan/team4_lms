@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<form action="<c:url value='/cause/write'/>" method="post" id="wizard">
+		<form action="<c:url value='/cause/write'/>" method="post"  enctype="multipart/form-data" id="wizard">
 			<div class="inner">
 				<div class="image-holder">
 					<!-- <img src="cause_detail/images/form-wizard-1.jpg" alt="">  -->
@@ -32,21 +33,28 @@
 					<div class="form-header">
 						<h3>사유서 신청</h3>
 					</div>
-
 					<div class="form-row">
 						<div class="form-holder">출석 유형</div>
+						
 						<div class="form-holder">
-							<select>
-								<option>결석</option>
-								<option>지각</option>
-								<option>조퇴</option>
-							</select>
+							<c:choose>
+								<c:when test="${attendanceId != 0}">
+									<input type="text" name="attendanceStatus" value="${dateAndCategory.attendanceStatus}"/>
+								</c:when>
+								<c:otherwise>
+									<select name="attendanceStatus">
+										<option value="0">결석</option>
+										<option value="2">지각</option>
+										<option value="3">조퇴</option>
+									</select>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">세부 유형</div>
 						<div class="form-holder">
-							<select>
+							<select name="categoryId">
 								<c:forEach var="category" items="${categoryList}">
 									<option value="${category.categoryId}" id="categoryId">${category.categoryName}</option>
 								</c:forEach>
@@ -56,12 +64,19 @@
 					<div class="form-row">
 						<div class="form-holder">날짜</div>
 						<div class="form-holder">
-							<input type="date" name="causeData" class="form-control" />
+							<c:choose>
+								<c:when test="${attendanceId != 0}">
+									<input type="text" name="attendanceDate" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${dateAndCategory.attendanceDate}"/>"/>
+								</c:when>
+								<c:otherwise>
+									<input type="date" name="attendanceDate" class="form-control" />
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">이름</div>
-						<div class="form-holder">뿌꾸</div>
+						<div class="form-holder">${sessionScope.membername}</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">내용</div>
@@ -73,9 +88,11 @@
 					<div class="form-row">
 						<div class="form-holder">첨부파일</div>
 						<div class="form-holder">
-							<input type="file" class="cause_file" name="fileData" />
+							<input type="file" name="file" />
 						</div>
 					</div>
+					<input type="hidden" name="memberId" value="${sessionScope.memberid}"/>
+					<input type="hidden" name="attendanceId" value="${attendanceId}"/>
 					<input type="submit" value="제출하기"/>
 				</div>
 			</div>
