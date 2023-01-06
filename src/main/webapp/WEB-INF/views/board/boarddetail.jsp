@@ -15,7 +15,6 @@
 		  overflow: hidden;
 		}
 		.dashboard {
-		  height: 100vh;
 		  display: flex;
 		}
 		.left {
@@ -150,7 +149,6 @@
 		.tag {
 		  position: absolute;
 		  left: 8px;
-		  top: 10px;
 		}
 		.plus > img {
 		  width: 16px;
@@ -274,8 +272,7 @@
 		.new {
 		  border-radius: 4px;
 		  border: none;
-		  width: 40px;
-		  height: 30px;
+
 		  background-color: #edeef5;
 		}
 		.check {
@@ -427,7 +424,6 @@
 		.btn1 {
 		  border-radius: 3px;
 		  border: 1px;
-		  height: 25px;
 		  font-weight: bold;
 		}
 		.inside-img > img {
@@ -496,23 +492,25 @@
 		}
 				
 	</style>
+	<div class="container">
 	<div class="dashboard">
   <div class="right-side">
   <br/><br/> 
     <div class="right-header">
-    <br/><br/><br/><br/>     
+    <br/><br/>   
       <hr class="new-hr">
       <div class="right-bottom">
         <div class="check">        
-          <h2>자료실</h2>         
+          <h2><c:if test="${board.boardType=='reference'}"><fmt:message key="REFERENCE"/></c:if>
+   			<c:if test="${board.boardType=='community'}"><fmt:message key="COMMUNITY"/></c:if></h2>         
         </div>
         <div class="search-arrow">
           <div class="buttons">
-            <button class="new button"> 
+            <button class="new button" onclick="location.reload()"> 
       			<img src="https://i.ibb.co/X4j3TZR/reload.png" />
            </button>
-            <button class="new button"> 
-      			<img src="https://i.ibb.co/L60Yr87/eye.png" />
+            <button class="new button" onclick="location.href='/board/update/${board.boardId}'"> 
+      			<i class="fa-solid fa-pen" style="color:#A4A4A4"></i>
            </button>
             <button class="new button"> 
       			<img src="https://i.ibb.co/Lv6TqBG/waste-bin.png" />
@@ -524,11 +522,16 @@
     <div class="right-body">
     
       <div class="message">
-        <div class="mes-date">
-          <fmt:formatDate value="${board.boardDate}" pattern="YYYY-MM-dd"/>
+        <div class="mes-date row">
+        <div class="col"> 
+          <fmt:setLocale value="en_us" scope="session"/>
+          <fmt:formatDate value="${board.boardDate}" dateStyle="full"/> 
+          </div> 
+        	<div class="text-right col"><b> No. ${board.boardId}</b></div>    
+        	
         </div>
         <div class="title">
-          게시글 제목: ${board.title}
+        	  제목: ${board.title}
           <div class="title-icons">
 
           </div>
@@ -546,26 +549,34 @@
         <div class="attachment-last">
           <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
           <div class="att-write">
-            첨부 파일 (80MB)
+            	첨부 파일 (80MB)
           </div>
-          <button class="btn1 buton0"> View
+          <button class="btn1 buton0" data-toggle="modal" data-target="#viewModal"> View
           <span class="tag"></span>
           </button>
 
-          <button class="btn1 buton9"> Download
+          <button class="btn1 buton9" onclick="location.href='<c:url value="/board/download/${board.boardId}/cnt"/>'"> Download
           </button>
-
+          
         </div>
         <div class="son-images">
           <div class="inside-img">
             <c:if test="${!empty board.fileName}">
 				<tr>
-					<td><fmt:message key="FILE"/></td>
 					<td>
 					<c:set var="len" value="${fn:length(board.fileName)}"/>
-					<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>
-					<c:if test="${(fileContentType eq '.JPG') or (fileContentType eq 'JPEG') or (fileContentType eq '.PNG') or (fileContentType eq '.GIF')}"><img src='<c:url value="/file/${board.fileData}"/>' class="img-thumbnail"><br></c:if>
-					<a href='<c:url value="/file/${board.fileData}"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
+					<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>					
+					<c:if test="${(filetype eq '.JPG') or (filetype eq '.JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}">					
+						<img src='<c:url value="/board/download/${board.boardId}"/>' class="img-thumbnail"><br>
+						<div class="modal fade" id="viewModal">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<img src='<c:url value="/board/download/${board.boardId}"/>' style="width:800px">
+								</div>
+							</div>
+						</div>
+					</c:if>
+					<a href='<c:url value="/board/download/${board.boardId}/cnt"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
 					</td>
 				</tr>
 			</c:if>
@@ -582,5 +593,5 @@
     </div>
   </div>
   </div>
-
+</div>
 <%@ include file="/WEB-INF/views/fragment/footer.jsp" %>

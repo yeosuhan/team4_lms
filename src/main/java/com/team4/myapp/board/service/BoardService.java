@@ -40,8 +40,14 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public BoardUploadFile getFile(int fileId) {
-		return boardRepository.getFile(fileId);
+	public Board getFile(int boardId) {
+		return boardRepository.selectArticle(boardId);
+	}
+	
+	@Override
+	public Board getFileCount(int boardId) {
+		boardRepository.updateDownloadCount(boardId);
+		return boardRepository.selectArticle(boardId);
 	}
 	
 	@Transactional
@@ -67,28 +73,11 @@ public class BoardService implements IBoardService {
         }
 	}
 	
-	@Override
-	public String getPassword(int boardId) {
-		return boardRepository.getPassword(boardId);
-	}
-
-	@Override
+	@Transactional
 	public void updateArticle(Board board) {
 		boardRepository.updateArticle(board);
-	}
-
-	@Transactional
-	public void updateArticle(Board board, BoardUploadFile file) {
-		boardRepository.updateArticle(board);
-        if(file != null && file.getFileName() != null && !file.getFileName().equals("")) {
-        	file.setBoardId(board.getBoardId());
-
-        	if(file.getFileId()>0) {
-        		boardRepository.updateFileData(file);
-        	}else {
-        		file.setFileId(boardRepository.selectMaxFileId()+1);
-        		///////boardRepository.insertFileData(file);
-        	}
+        if(board.getFile() != null && board.getFileName() != null && !board.getFileName().equals("")) {
+        	boardRepository.updateFileData(board);
         }
 	}
 	

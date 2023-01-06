@@ -20,14 +20,13 @@ public interface IBoardRepository {
 	BoardUploadFile getFile(int fileId);
 		
 	void updateReadCount(int boardId);
+	void updateDownloadCount(int boardId);
 
 	void updateReplyNumber(@Param("masterId") int masterId, @Param("replyNumber") int replyNumber);
 	void replyArticle(Board boardId);
 	
-	String getPassword(int boardId);
-	
 	void updateArticle(Board board);
-	void updateFileData(BoardUploadFile file);
+	void updateFileData(Board board);
 	
 	void deleteFileData(int boardId);
 	void deleteReplyFileData(int boardId);

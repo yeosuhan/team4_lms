@@ -15,7 +15,8 @@
         </div>
     </div>
    <div class="content">
-   <hr/><h1 class="headline"><fmt:message key="REFERENCE"/></h1><hr/>
+   <hr/><h1 class="headline"><c:if test="${board.boardType=='reference'}"><fmt:message key="REFERENCE"/></c:if>
+   		<c:if test="${board.boardType=='community'}"><fmt:message key="COMMUNITY"/></c:if></h1><hr/>
    <div class="row">
             <div class="col-md-8 pc">
                 <h2><fmt:message key="WRITE_NEW_ARTICLE"/></h2>

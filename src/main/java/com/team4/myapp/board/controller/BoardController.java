@@ -1,5 +1,6 @@
 package com.team4.myapp.board.controller;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,6 +11,10 @@ import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.service.IBoardService;
 import com.team4.myapp.board.vo.Board;
+import com.team4.myapp.board.vo.BoardUploadFile;
 
 @Controller
 public class BoardController {
@@ -43,7 +49,6 @@ public class BoardController {
 			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
-				logger.info("/board/write : " + mfile.getOriginalFilename());
 				board.setFileName(mfile.getOriginalFilename());
 				board.setFileSize(mfile.getSize());
 				board.setFileContentType(mfile.getContentType());
@@ -89,6 +94,66 @@ public class BoardController {
 		model.addAttribute("board", board);
 		model.addAttribute("boardType", board.getBoardType());
 		return "board/boarddetail";
+	}
+	
+	@RequestMapping("/board/download/{boardId}")
+	public ResponseEntity<byte[]> getFile(@PathVariable int boardId) {
+		Board board= boardService.getFile(boardId);
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mtypes = board.getFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(board.getFileSize());
+		headers.setContentDispositionFormData("attachment", board.getFileName(), Charset.forName("UTF-8"));
+		return new ResponseEntity<byte[]>(board.getFileData(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping("/board/download/{boardId}/cnt")
+	public ResponseEntity<byte[]> getFileCount(@PathVariable int boardId) {
+		Board board= boardService.getFileCount(boardId);
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mtypes = board.getFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(board.getFileSize());
+		headers.setContentDispositionFormData("attachment", board.getFileName(), Charset.forName("UTF-8"));
+		return new ResponseEntity<byte[]>(board.getFileData(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/board/update/{boardId}", method=RequestMethod.GET)
+	public String updateArticle(@PathVariable int boardId, Model model) {
+		//List<BoardCategory> categoryList = categoryService.selectAllCategory();
+		//model.addAttribute("categoryList", categoryList);
+		Board board = boardService.selectArticle(boardId);
+		//model.addAttribute("boardType", board.getBoardType());
+		model.addAttribute("board", board);
+		return "board/updateform";
+	}
+
+	@RequestMapping(value="/board/update", method=RequestMethod.POST)
+	public String updateArticle(Board board, RedirectAttributes redirectAttrs) {
+		//String dbPassword = boardService.getPassword(board.getBoardId());
+		//if(!board.getPassword().equals(dbPassword)) {
+//			throw new RuntimeException("게시글 비밀번호가 다릅니다.");
+			//redirectAttrs.addFlashAttribute("passwordError", "게시글 비밀번호가 다릅니다");
+			//return "redirect:/board/update/" + board.getBoardId();
+		//}
+		try{
+			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
+			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
+			MultipartFile mfile = board.getFile();
+			if(mfile!=null && !mfile.isEmpty()) {
+				//BoardUploadFile file = new BoardUploadFile();
+				board.setFileName(mfile.getOriginalFilename());
+				board.setFileSize(mfile.getSize());
+				board.setFileContentType(mfile.getContentType());
+				board.setFileData(mfile.getBytes());
+			}
+			boardService.updateArticle(board);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "redirect:/board/detail/"+board.getBoardId();
 	}
 	
 	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기

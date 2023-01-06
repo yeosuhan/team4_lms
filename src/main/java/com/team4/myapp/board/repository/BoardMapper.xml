@@ -50,6 +50,14 @@
 	]]>
 	</update>
 	
+	<update id="updateDownloadCount" parameterType="int">
+	<![CDATA[
+		UPDATE board 
+			SET FILE_DOWNLOAD_COUNT = FILE_DOWNLOAD_COUNT+1 
+		WHERE board_id=#{boardId}
+	]]>
+	</update>
+	
 	<select id="selectMaxArticleNo" parameterType="int" resultType="int">
 	<![CDATA[
 		SELECT 
@@ -120,37 +128,30 @@
 			(#{boardId}, #{categoryId}, #{writer}, #{email}, #{password}, #{title}, #{content}, SYSDATE, #{masterId}, #{replyNumber}, #{replyStep})
 	]]>
 	</insert>
-		
-	<select id="getPassword" parameterType="int" resultType="string">
-	<![CDATA[
-		SELECT password 
-		FROM board 
-		WHERE board_id=#{boardId}
-	]]>
-	</select>
-	
+
 	<update id="updateArticle" parameterType="com.team4.myapp.board.vo.Board">
 	<![CDATA[
 		UPDATE 
 			board 
 		SET 
-			category_id=#{categoryId}, writer=#{writer}, 
-			email=#{email}, title=#{title}, 
-			content=#{content}, write_date=SYSDATE 
+			board_type=#{boardType}, 
+			title=#{title}, 
+			content=#{content}, BOARD_DATE=SYSDATE 
 		WHERE 
 			board_id=#{boardId}
 	]]>
 	</update>
 
-	<update id="updateFileData" parameterType="com.team4.myapp.board.vo.BoardUploadFile">
+	<update id="updateFileData" parameterType="com.team4.myapp.board.vo.Board">
 	<![CDATA[
 	 	UPDATE 
-	 		board_upload_file 
+	 		board
 	 	SET 
 	 		file_name=#{fileName}, file_size=#{fileSize}, 
-			file_content_type=#{fileContentType}, file_data=#{fileData} 
+			file_content_type=#{fileContentType}, file_data=#{fileData}, 
+			FILE_DOWNLOAD_COUNT=0
 	 	WHERE 
-	 		file_id=#{fileId}
+	 		board_id=#{boardId}
 	]]>
 	</update>
 	

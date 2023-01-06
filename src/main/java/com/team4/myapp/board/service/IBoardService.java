@@ -11,17 +11,14 @@ public interface IBoardService {
 	
 	List<Board> selectArticleListByCategory(String boardType, int page);
 	
-	Board selectArticle(int boardId);
-	
-	BoardUploadFile getFile(int fileId);
+	Board selectArticle(int boardId);	
+	Board getFile(int boardId);
+	Board getFileCount(int boardId);
 	
 	void replyArticle(Board board);
 	void replyArticle(Board board, BoardUploadFile file);
-
-	String getPassword(int boardId);
 	
 	void updateArticle(Board board);
-	void updateArticle(Board board, BoardUploadFile file);
 	
 	Board selectDeleteArticle(int boardId);
 	void deleteArticle(int boardId, int replyNumber);
