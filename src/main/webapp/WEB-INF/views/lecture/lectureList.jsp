@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 <div class="content" style="border-bottom: 1px gray solid;">
-	<div class="container">
+	<div class="container" style="margin-top:103px;">
 		<div class="row justify-content-center">
 			<c:forEach var="lecture" items="${lectureList}">
 			<button type="button" class="btn mb-1" style="background-color:#F9F6F1;">${lecture.lectureName}</button>
