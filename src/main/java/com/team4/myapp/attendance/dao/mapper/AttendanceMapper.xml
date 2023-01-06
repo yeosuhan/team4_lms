@@ -3,7 +3,14 @@
 <mapper
 	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
 	
-	<insert id="insertChekIn" parameterType="com.team4.myapp.attendance.model.Attendance" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertAttendance" parameterType="string">
+		<![CDATA[
+			insert into attendance(ATTENDANCE_ID, MEMBER_ID)	
+			values(ATTENDANCE_SEQ.nextval, #{memberId})
+		]]>
+	</insert>
+	
+	<insert id="insertChekIn" parameterType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
 			

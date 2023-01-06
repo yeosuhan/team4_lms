@@ -7,6 +7,8 @@ import com.team4.myapp.attendance.model.CalendarDto;
 
 public interface IAttendanceService {
 	
+	void insertAll();
+	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 
 	void insertChekIn(Attendance attendance);

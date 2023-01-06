@@ -14,12 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.member.dao.IMemberRepository;
 
 @Service
 public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IAttendanceRepository attendanceRepository;
+	
+	@Autowired
+	IMemberRepository memberRepository;
 	
 	@Override
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
@@ -84,6 +88,20 @@ public class AttendanceService implements IAttendanceService {
 		
 		String checkout = attendanceRepository.selectCheckOut(memberId, today);
 		return checkout;
+	}
+
+	// 
+	@Transactional
+	public void insertAll() {
+		// 매일 오전 12시에 스켘줄러에 의해 실행 될 메소드이다.		
+		// 모든 학생 조회
+		List<String> members = memberRepository.selectAllStudent();	
+		
+		System.out.println("attendance service: insertAll() " + members);
+		// 출석 데이터 삽입하기 (결석상태로 초기화)
+		for(String mid : members) {
+			attendanceRepository.insertAttendance(mid);
+		}
 	}
 
 
