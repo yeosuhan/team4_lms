@@ -12,7 +12,6 @@
 		body {
 		  margin: 0;
 		  font-family: Sans-serif;
-		  overflow: hidden;
 		}
 		.dashboard {
 		  display: flex;
@@ -489,6 +488,10 @@
 		::-webkit-scrollbar-thumb:hover {
 		  background: #555;
 		}
+		
+		#thumb:hover {
+		color: blue;
+		}
 				
 	</style>
 	<div class="container">
@@ -520,7 +523,7 @@
 						<div class="modal-header">
 							삭제 확인
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">X</span>
+								<span aria-hidden="true">x</span>
 							</button>
 						</div>
 						<div class="modal-body">해당 게시물을 삭제하시겠습니까?</div>
@@ -530,8 +533,8 @@
 								<input type="hidden" name="boardType" value="${board.boardType}">
 								<a href="#">
 									<button type="submit" class="btn btn-danger">삭제</button>											
-								</a>											
-								<button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">취소</button>										
+								</a>&ensp; 											
+								<button type="button" class="btn btn-success" style="background-color:grey" data-dismiss="modal" aria-label="Close">취소</button>										
 							</form>
 						</div>	
 					</div>
@@ -561,50 +564,58 @@
         <div class="from">
           <span class="who">작성자: </span>${board.memberId}
         </div>
-        <div class="text-right">
-          <span class="who">조회수: </span>${board.viewCount}
-          <span class="who">다운로드 수: </span>${board.fileDownloadCount}
+        <div class="row">
+	        <c:if test="${board.boardType=='community'}">&emsp;좋아요 
+	        	<div class="col">
+	        		<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
+	        		${board.heartCount} 
+	        	</div>
+	        </c:if>
+	        <div class="col text-right">
+	          <span class="who">조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
+	          <c:if test="${board.boardType=='reference'}"><span class="who"> 다운로드 수 </span>
+	          	<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
+	          </c:if>
+	        </div>
         </div>
         <div class="message-from">
           <p> ${board.content}</p>
         </div>
-        <div class="attachment-last">
-          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
-          <div class="att-write">
-            	첨부 파일 (80MB)
-          </div>
-          <button class="btn1 buton0" data-toggle="modal" data-target="#viewModal"> View
-          <span class="tag"></span>
-          </button>
-
-          <button class="btn1 buton9" onclick="location.href='<c:url value="/board/download/${board.boardId}/cnt"/>'"> Download
-          </button>
-          
-        </div>
-        <div class="son-images">
-          <div class="inside-img">
-            <c:if test="${!empty board.fileName}">
-				<tr>
-					<td>
-					<c:set var="len" value="${fn:length(board.fileName)}"/>
-					<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>					
-					<c:if test="${(filetype eq '.JPG') or (filetype eq '.JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}">					
-						<img src='<c:url value="/board/download/${board.boardId}"/>' class="img-thumbnail"><br>
-						<div class="modal fade" id="viewModal">
-							<div class="modal-dialog modal-lg">
-								<div class="modal-content">
-									<img src='<c:url value="/board/download/${board.boardId}"/>' style="width:800px">
+        <c:if test="${board.boardType=='reference'}">
+	        <div class="attachment-last">
+	          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
+	          <div class="att-write">
+	            	첨부 파일 (80MB)
+	          </div>
+	          <button class="btn1 buton0" data-toggle="modal" data-target="#viewModal"> View <span class="tag"></span>
+	          </button>
+	          <button class="btn1 buton9" onclick="location.href='<c:url value="/board/download/${board.boardId}/cnt"/>'"> Download
+	          </button>          
+	        </div>
+	        <div class="son-images">
+	          <div class="inside-img">
+	            <c:if test="${!empty board.fileName}">
+					<tr>
+						<td>
+						<c:set var="len" value="${fn:length(board.fileName)}"/>
+						<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>					
+						<c:if test="${(filetype eq '.JPG') or (filetype eq '.JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}">					
+							<img src='<c:url value="/board/download/${board.boardId}"/>' class="img-thumbnail"><br>
+							<div class="modal fade" id="viewModal">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<img src='<c:url value="/board/download/${board.boardId}"/>' style="width:800px">
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:if>
-					<a href='<c:url value="/board/download/${board.boardId}/cnt"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
-					</td>
-				</tr>
-			</c:if>
-
-          </div>
-        </div>
+						</c:if>
+						<a href='<c:url value="/board/download/${board.boardId}/cnt"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
+						</td>
+					</tr>
+				</c:if>
+	          </div>
+	        </div>
+        </c:if>             
         <button class="btn2 butona"> Reply (0)
              <span class="tag"> 
              <img src="https://i.ibb.co/GQf8frw/reply.png"/>

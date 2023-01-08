@@ -16,16 +16,18 @@ color: grey;
 
 	<div class="container">
 		<div style="border-top: 1px solid gray;">
-			<h2 class="mb-5 mt-3">자료실</h2>
+			<h2 class="mb-5 mt-3"><c:if test="${boardType=='reference'}">자료실</c:if>
+   		<c:if test="${boardType=='community'}">커뮤니티</c:if></h2>
 		</div>
 		<div class="table-responsive" style="border-top: 1px solid gray;"><br/>
-			<form action="<c:url value='/board/search/1'/>" method="get">
+			<form action="<c:url value='/board/search/${boardType}/1'/>" method="get">
 				<div class="pull-right" style="margin-bottom: 5px;">
 					<div class="row">
 						<div class="col-md-8">
 				        <input type="text" name="keyword" class="form-control" placeholder="Search...">
 				        </div>
 				        <div class="col-md-3">
+				        <input type="hidden" name="boardType" value="${boardType}">
 				        <input type="submit" class="btn btn-warning" value="<fmt:message key="SEARCH"/>">
 				        </div>
 				    </div>
@@ -39,7 +41,10 @@ color: grey;
 						<th scope="col">작성자</th>
 						<th scope="col">작성 일자</th>
 						<th scope="col">조회수</th>
-						<th scope="col">다운로드 수</th>
+						<th scope="col">
+							<c:if test="${boardType=='reference'}">다운로드 수</c:if>
+							<c:if test="${boardType=='community'}">좋아요 수</c:if>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,18 +56,20 @@ color: grey;
 							<td class="column3">${board.memberId}</td>
 							<td class="column4"><fmt:formatDate value="${board.boardDate}" pattern="YYYY-MM-dd"/></td>
 							<td class="column5">${board.viewCount}</td>
-							<td class="column6">${board.fileDownloadCount}</td>
+							<td class="column6"><c:if test="${boardType=='reference'}">${board.fileDownloadCount}</c:if></td>
+							<td class="column6"><c:if test="${boardType=='community'}">${board.heartCount}</c:if></td>
 						</tr>
 					</c:forEach>									
 				</tbody>
 			</table>
 			<table class="table">
 		<tr>
-			<td align="left">
+		<td align="left">page</td>
+			<td align="center">
 				<jk:paging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 			</td>
 			<td align="right">
-				<a href='<c:url value="/board/write"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
 			</td>
 		</tr>
 		</table>
