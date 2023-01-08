@@ -111,14 +111,19 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public List<Board> searchListByContentKeyword(String keyword, int page) {
+	public List<Board> searchListByContentKeyword(String keyword, String boardType, int page) {
 		int start = (page-1)*10 + 1;
-		return boardRepository.searchListByContentKeyword("%"+keyword+"%", start, start+9); // 오라클은 BETWEEN a AND b에서 a와 b모두 포함하므로 9를 더함
+		return boardRepository.searchListByContentKeyword("%"+keyword+"%", boardType, start, start+9); // 오라클은 BETWEEN a AND b에서 a와 b모두 포함하므로 9를 더함
 	}
 
 	@Override
-	public int selectTotalArticleCountByKeyword(String keyword) {
-		return boardRepository.selectTotalArticleCountByKeyword("%"+keyword+"%");
+	public int selectTotalArticleCountByKeyword(String keyword, String boardType) {
+		return boardRepository.selectTotalArticleCountByKeyword("%"+keyword+"%", boardType);
+	}
+
+	@Override
+	public void addHeartCount(int boardId) {
+		boardRepository.updateHeartCount(boardId);
 	}
 
 }

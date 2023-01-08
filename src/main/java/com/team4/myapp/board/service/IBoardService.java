@@ -26,6 +26,7 @@ public interface IBoardService {
 	int selectTotalArticleCount();
 	int selectTotalArticleCountByCategoryId(String boardType);
 	
-	List<Board> searchListByContentKeyword(String keyword, int page);
-	int selectTotalArticleCountByKeyword(String keyword);
+	List<Board> searchListByContentKeyword(String keyword, String boardType, int page);
+	int selectTotalArticleCountByKeyword(String keyword, String boardType);
+	void addHeartCount(int boardId);
 }

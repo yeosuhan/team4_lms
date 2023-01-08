@@ -12,6 +12,7 @@
 	    board_date				AS "boardDate", 
 	    view_count				AS "viewCount", 
 	    member_id				AS "memberId", 
+	    heart_count				AS "heartCount", 
 	    file_download_count		AS "fileDownloadCount"
 	FROM board
 	WHERE board_type=#{boardType}
@@ -54,6 +55,15 @@
 	<![CDATA[
 		UPDATE board 
 			SET FILE_DOWNLOAD_COUNT = FILE_DOWNLOAD_COUNT+1 
+		WHERE board_id=#{boardId}
+	]]>
+	</update>
+	
+	<update id="updateHeartCount" parameterType="int">
+	<![CDATA[
+		UPDATE board 
+			SET HEART_COUNT = HEART_COUNT+1,
+			 	view_count = view_count-1 
 		WHERE board_id=#{boardId}
 	]]>
 	</update>
@@ -215,12 +225,13 @@
 	]]>
 	</select>
 	
-	<select id="selectTotalArticleCountByKeyword" parameterType="string" resultType="int">
+	<select id="selectTotalArticleCountByKeyword" parameterType="hashmap" resultType="int">
 	<![CDATA[
 		SELECT 
 			COUNT(*) FROM board
 		WHERE 
-			title LIKE #{keyword} OR content LIKE #{keyword}
+			board_type=#{boardType} AND
+			(title LIKE #{keyword} OR content LIKE #{keyword})
 	]]>
 	</select> 
 
@@ -228,35 +239,26 @@
 	<![CDATA[
 		SELECT 
 			board_id 				AS "boardId", 
-			category_id 			AS "categoryId", 
-			writer					AS "writer", 
-			email					AS "email", 
-			title					AS "title", 
-			write_date				AS "writeDate", 
-			master_id 				AS "masterId", 
-			reply_number 			AS "replyNumber", 
-			reply_step				AS "replyStep", 
-			read_count				AS "readCount"
+		    title					AS "title", 
+		    board_date				AS "boardDate", 
+		    view_count				AS "viewCount", 
+		    member_id				AS "memberId", 
+		    file_download_count		AS "fileDownloadCount"
 	    FROM (
 	    	SELECT 
 	    		board_id, 
-	    		category_id, 
-	    		writer, 
-	    		email, 
-	    		title, 
-	    		write_date, 
-	    		master_id, 
-	    		reply_number, 
-	    		reply_step, 
-	    		read_count, 
+			    title, 
+			    board_date, 
+			    view_count, 
+			    member_id, 
+			    file_download_count,
 	    		rownum AS rnum
 	    	FROM (
 	    		SELECT * FROM board
 	    		WHERE
-	    			title LIKE #{keyword}
-		    		OR 
-		    		content LIKE #{keyword}
-	    		ORDER BY master_id DESC, reply_number, reply_step
+	    			board_type=#{boardType} AND
+					(title LIKE #{keyword} OR content LIKE #{keyword})
+	    		ORDER BY board_id DESC
 	    	)
 	    )
 	    WHERE rnum BETWEEN #{start} AND #{end}

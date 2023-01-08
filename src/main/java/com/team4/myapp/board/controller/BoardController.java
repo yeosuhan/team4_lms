@@ -21,12 +21,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.service.IBoardService;
 import com.team4.myapp.board.vo.Board;
-import com.team4.myapp.board.vo.BoardUploadFile;
 
 @Controller
 public class BoardController {
@@ -36,8 +36,9 @@ public class BoardController {
 	IBoardService boardService;
 	
 	// 작성 폼 열기
-	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
-	public String writeArticle(Locale locale, Model model) {	
+	@RequestMapping(value = "/board/write/{boardType}", method = RequestMethod.GET)
+	public String writeArticle(@PathVariable String boardType, Locale locale, Model model) {
+		model.addAttribute("boardType", boardType);
 		return "board/writeform";
 	}
 
@@ -167,6 +168,36 @@ public class BoardController {
 			return "error/runtime";
 		}
 	}
+	
+	@RequestMapping("/board/search/{boardType}/{page}")
+	public String search(@RequestParam(required=false, defaultValue="") String keyword, @PathVariable String boardType, @PathVariable int page, HttpSession session, Model model) {
+		try {
+			List<Board> boardList = boardService.searchListByContentKeyword(keyword, boardType, page);
+			model.addAttribute("boardList", boardList);
+	
+			// 검색 결과 페이징 처리
+			int bbsCount = boardService.selectTotalArticleCountByKeyword(keyword, boardType);
+			int totalPage = 0;
+
+			if(bbsCount > 0) {
+				totalPage= (int)Math.ceil(bbsCount/10.0);
+			}
+			model.addAttribute("totalPageCount", totalPage);
+			model.addAttribute("page", page);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("boardType", boardType);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "board/boardsearch";
+	}
+	
+	@RequestMapping("/board/like/{boardId}")
+	public String addHeartCount(@PathVariable int boardId) {
+		boardService.addHeartCount(boardId);
+		return "redirect:/board/detail/"+boardId;
+	}
+
 	
 	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기
 	//@ResponseBody
