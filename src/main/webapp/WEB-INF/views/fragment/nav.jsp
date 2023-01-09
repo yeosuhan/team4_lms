@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+ <!-- head 닫힘 -->
+</head>
 <!--  nav 바 -->
 	<body id="page-top">
 	        <!-- Navigation-->

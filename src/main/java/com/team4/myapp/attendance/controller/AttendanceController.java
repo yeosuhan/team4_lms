@@ -25,12 +25,13 @@ public class AttendanceController {
 	// 출근 처리
 	@RequestMapping(value = "/attendance/checkin", method = RequestMethod.POST)
 	public String checkIn(HttpSession session) {
-		Attendance a1 = new Attendance();
 		String memberId = (String) session.getAttribute("memberid");
-		a1.setMemberId(memberId);
-
-		attendanceService.insertChekIn(a1);
-		System.out.println("출석 됨!!!!");
+		String checkin = null;
+		checkin = attendanceService.selectCheckIn(memberId);
+		if (checkin == null) {
+			attendanceService.updateChekIn(memberId);
+			System.out.println("출석 됨!!!!");
+		}
 
 		return "redirect:/attendance/main";
 	}
@@ -39,14 +40,13 @@ public class AttendanceController {
 	@RequestMapping(value = "/attendance/main", method = RequestMethod.GET)
 	public String home(HttpSession session, Locale locale, Model model) {
 		String memberId = (String) session.getAttribute("memberid");
-		int checkin = 0;
+		String checkin = null;
 		String checkout = null;
 		// 출근 여부 확인
 		try {
-			checkin = attendanceService.selectId(memberId);
+			checkin = attendanceService.selectCheckIn(memberId);
 			model.addAttribute("checkin", true);
 		} catch (Exception e) {
-			checkin = 0;
 			model.addAttribute("checkin", false);
 		}
 
@@ -79,10 +79,21 @@ public class AttendanceController {
 	// 퇴근 처리
 	@RequestMapping(value = "/attendance/checkout", method = RequestMethod.POST)
 	public String checkOut(HttpSession session) {
-		// 퇴근 처리 로직
 		String memberId = (String) session.getAttribute("memberid");
-		attendanceService.insertCheckOut(memberId);
+		String checkout = null;
+		checkout = attendanceService.selectCheckOut(memberId);
+		if (checkout == null) {
+			attendanceService.updateCheckOut(memberId);
+		}
+
 		return "redirect:/attendance/main";
 	}
+	
+	// 조퇴 처리
+	/*@RequestMapping(value="/attendance/leave", method = RequestMethod.POST)
+	public String leaveEarly(HttpSession session) {
+		
+		return"";
+	}*/
 
 }
