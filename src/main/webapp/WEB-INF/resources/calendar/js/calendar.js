@@ -1,5 +1,3 @@
-//const calendarEl = document.getElementById('calendar');
-
 document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
 	var list = [];
@@ -29,12 +27,4 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 
-	/*
-	 * var calendar = new FullCalendar.Calendar(calendarEl, { plugins : [
-	 * 'interaction', 'dayGrid' ], defaultDate : '2023-01-03', editable : true,
-	 * eventLimit : true, // allow "more" link when too many events events :
-	 * list });
-	 * 
-	 * calendar.render();
-	 */
 });
