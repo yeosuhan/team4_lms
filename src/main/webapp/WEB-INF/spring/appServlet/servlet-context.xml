@@ -20,21 +20,15 @@
    <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
    <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/" />
    <resources mapping="/h/**" location="/WEB-INF/resources/home/" />
-    <resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />
-   
+    <resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />   
    
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <beans:property name="prefix" value="/WEB-INF/views/" />
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
-   
-	<context:component-scan base-package="com.team4.myapp.member.controller"/>
-	<context:component-scan base-package="com.team4.myapp.cause.controller"/>
 
    <context:component-scan base-package="com.team4.myapp"/>
-   <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
-   <context:component-scan base-package="com.team4.myapp.lecture.controller"/>
    
    <view-controller path="/" view-name="home"/>
    

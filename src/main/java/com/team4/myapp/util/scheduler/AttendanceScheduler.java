@@ -1,4 +1,4 @@
-package com.team4.myapp.scheduler;
+package com.team4.myapp.util.scheduler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,18 +16,19 @@ public class AttendanceScheduler {
 	@Autowired
 	IAttendanceService attendanceService;
 
-	@Scheduled(cron = "* * * * * 2-6") // 초 분 시 일 월 요일
+	// // 초 분 시 일 월 요일
+	@Scheduled(cron = "0 0 6 * * 1-5")
 	public void test() {
-		/*try {
+		try {
 			attendanceService.insertAll();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-*/
-		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.KOREA);
         String today = sdf.format(new Date());
         
-        System.out.println(today);*/
+        System.out.println(today);
 		System.out.println("오늘 출석 데이터 삽입 됨~~");
 
 	}

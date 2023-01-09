@@ -88,5 +88,12 @@ public class AttendanceController {
 
 		return "redirect:/attendance/main";
 	}
+	
+	// 조퇴 처리
+	/*@RequestMapping(value="/attendance/leave", method = RequestMethod.POST)
+	public String leaveEarly(HttpSession session) {
+		
+		return"";
+	}*/
 
 }
