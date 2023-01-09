@@ -16,14 +16,14 @@ public class AttendanceScheduler {
 	@Autowired
 	IAttendanceService attendanceService;
 
-	@Scheduled(cron = "0 0 12 * * 2-6") // 초 분 시 일 월 요일
+	@Scheduled(cron = "* * 9 * * 2-6") // 초 분 시 일 월 요일
 	public void test() {
-		try {
+		/*try {
 			attendanceService.insertAll();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+*/
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String today = sdf.format(new Date());
         

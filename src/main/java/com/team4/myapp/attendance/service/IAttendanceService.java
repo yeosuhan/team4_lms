@@ -11,11 +11,11 @@ public interface IAttendanceService {
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 
-	void insertChekIn(Attendance attendance);
+	void updateChekIn(String memberId);
 	
-	void insertCheckOut(String memberId);
+	void updateCheckOut(String memberId);
 	
-	int selectId(String memberId);
+	String selectCheckIn(String memberId);
 	
 	String selectCheckOut(String memberId);
 }

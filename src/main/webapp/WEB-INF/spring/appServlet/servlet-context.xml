@@ -18,7 +18,7 @@
    <resources mapping="/m/**" location="/WEB-INF/resources/member/" />
    <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
    <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
-   <resources mapping="/cd/**" location="/WEB-INF/resources/calendar/" />
+   <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/" />
    <resources mapping="/h/**" location="/WEB-INF/resources/home/" />
    
    

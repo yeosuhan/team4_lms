@@ -45,11 +45,14 @@
 						lead-in to additional content.</p>
 					<div class="row" style="background-color: green; height: 100px;">
 						<div class="col-sm-6" style="background-color: yellow;">							
-							<form action="/attendance/out" method="POST">
+							<form action="" method="POST">
 								<button type="submit" class="btn btn-primary"align-content:center;">외출</button>
 							</form>
-							<form action="/attendance/out" method="POST">
+							<form action="" method="POST">
 								<button type="submit" class="btn btn-primary"align-content:center;">복귀</button>
+							</form>
+							<form action="/attendance/out" method="POST">
+								<button type="submit" class="btn btn-primary"align-content:center;">조퇴</button>
 							</form>
 						</div>
 						<div class="col-sm-6" style="background-color: red;"></div>
