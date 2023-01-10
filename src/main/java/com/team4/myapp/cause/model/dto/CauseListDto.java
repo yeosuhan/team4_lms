@@ -16,7 +16,8 @@ public class CauseListDto {
 	private int attendanceId;
 	private Date writeDate;
 	private String memberId;
-	private String causeStatus;
+	private int causeStatus;
+	private String causeStatusString;
 	private int attendanceStatus;
 	private String attendanceStatusString;
 	private String memberName;
@@ -30,5 +31,16 @@ public class CauseListDto {
 			this.attendanceStatusString = "조퇴";
 		}
 		return attendanceStatusString;
+	}
+	
+	public String submitStatus(int causeStatus) {
+		if(causeStatus == 0) {
+			this.causeStatusString = "처리 대기중";
+		} else if(causeStatus == 1) {
+			this.causeStatusString = "허가";
+		} else if(causeStatus == 2) {
+			this.causeStatusString = "반려";
+		}
+		return causeStatusString;
 	}
 }

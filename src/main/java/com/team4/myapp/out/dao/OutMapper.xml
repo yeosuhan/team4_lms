@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.myapp.out.dao.IOutRepository">
+
+	<select id="selectCheckOut" parameterType="map"
+		resultType="com.team4.myapp.out.model.OutDto">
+			<![CDATA[
+				select 
+				    to_char(CHECK_IN, 'YYYY/MM/dd HH24:mi:ss') as checkIn , 
+				    to_char(CHECK_OUT, 'YYYY/MM/dd HH24:mi:ss') as checkOut 	
+				    
+			    from(
+			        select * 
+			        from out
+			        where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = #{today}
+			        order by check_in desc
+			    
+			    )
+   				where rownum = 1   	
+			]]>
+	</select>
+	
+	<insert id="insertCheckIn" parameterType="string">
+		<![CDATA[
+			insert into out(OUT_ID, MEMBER_ID, CHECK_IN)	
+			values(OUT_SEQ.nextval, #{memberId}, CURRENT_TIMESTAMP)
+		]]>
+	</insert>
+	
+	<update id="updateCheckOut" parameterType="string">
+		<![CDATA[
+			update out
+			set CHECK_OUT = CURRENT_TIMESTAMP	
+			where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
+		]]>
+	</update>
+</mapper>

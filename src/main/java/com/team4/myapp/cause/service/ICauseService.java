@@ -11,5 +11,6 @@ public interface ICauseService {
 	void insertCause(CauseDto causeDto);
 
 	List<CauseListDto> selectCauseList(String memberId, int page);
+	List<CauseListDto> selectCauseListAdmin(int page);
 	
 }

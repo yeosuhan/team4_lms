@@ -13,7 +13,7 @@ public interface IAttendanceService {
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 	
-	Optional<Integer> selectAttendanceId(String memberId, Date attendanceDate);
+	int selectAttendanceId(String memberId, Date attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
 
 	void updateChekIn(String memberId);
@@ -21,6 +21,7 @@ public interface IAttendanceService {
 	
 	String selectCheckIn(String memberId);
 	String selectCheckOut(String memberId);
+	void leaveEarly(String memberId);
 
-	int selectId(String memberId);
+	int selectId(String memberId); 
 }

@@ -31,18 +31,30 @@ for(int i=startPage; i<=endPage; i++) {
 		out.print("<li class=\"active\">");
 	}else {
 		out.print("<li>");
+		out.print("<a href=\""+contextPath + boardType+(startPage-1)+"\" aria-label=\"Previous\">");
+		out.print("◀</a>");
+		out.print("</li>");
 	}
-	out.print("<a href=\"" + contextPath + boardType+"/" + (i) + "\">");
-	out.print(i);
-	out.print("</a>");		
-	out.println("</li>");
-} 
-if(nowPageBlock<totalPageBlock) {
-	out.print("<li>");
-	out.print("<a href=\"" + contextPath + boardType+"/" + (endPage+1) + "\" aria-label=\"Next\">");
-	out.print("▶</a>");
-	out.println("</li>");
-}
-out.println("</ul>");
-out.println("</nav>");
+	for(int i=startPage; i<=endPage; i++){
+		out.print(" ");
+		if(i==nowPage){
+			out.print("<li class=\"active\">");
+			
+		} else{
+			out.print("<li>");
+		}
+		out.print("<a href=\""+contextPath+boardType+(i)+"\">");
+		out.print(i);
+		out.print("</a>");
+		out.print("</li>");
+	}
+	if(nowPageBlock<totalPageBlock){
+		out.print("<li>");
+		out.print("<a href=\""+contextPath+boardType+(endPage+1)+"\" aria-label=\"Next\">");
+		out.print("▶</a>");
+		out.println("</li>");
+	}
+	out.println("</ul>");
+	out.println("</nav>");
+
 %>

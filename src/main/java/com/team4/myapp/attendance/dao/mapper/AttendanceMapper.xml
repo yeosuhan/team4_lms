@@ -3,10 +3,19 @@
 <mapper
 	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
 	
-	<select id="selectId" parameterType="map" resultType="int">
+	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
-			select ATTENDANCE_ID  from attendance
-			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+			select 
+			ATTENDANCE_ID as attendanceId, 
+			CHECK_IN as checkIn,
+			CHECK_OUT as checkOut,
+			ATTENDANCE_DATE as attendanceDate, 
+			ATTENDANCE_STATUS as attendanceStatus, 
+			SUBMIT_STATUS as submitStatus, 
+			MEMBER_ID as memberId
+			
+			from attendance
+			where member_id = #{memberId}
 		]]>
 	</select>
 	
@@ -27,19 +36,49 @@
 		]]>
 	</update>
 	
-	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
+	<update id="updateCheckOut" parameterType="map">
+
+		update attendance
+		set CHECK_OUT = CURRENT_TIMESTAMP
+		<if test="attendanceStatus >= 0">
+			, ATTENDANCE_STATUS =
+			#{attendanceStatus}
+		</if>
+		where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE,
+		'YYYY-MM-DD')
+		= #{today})
+
+	</update>
+	
+	<select id="selectId" parameterType="map" resultType="int">
 		<![CDATA[
-			select 
-			ATTENDANCE_ID as attendanceId, 
-			CHECK_IN as checkIn,
-			CHECK_OUT as checkOut,
-			ATTENDANCE_DATE as attendanceDate, 
-			ATTENDANCE_STATUS as attendanceStatus, 
-			SUBMIT_STATUS as submitStatus, 
-			MEMBER_ID as memberId
-			
+			select ATTENDANCE_ID  from attendance
+			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+		]]>
+	</select>
+	
+	<select id="selectAttendanceId" parameterType="map" resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  FROM ATTENDANCE
+			WHERE (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{attendanceDate})
+		]]>
+	</select>
+	
+	<select id="selectCheckIn" parameterType="map"
+      resultType="string">
+      <![CDATA[
+         select to_char(CHECK_IN, 'YYYY/MM/dd HH24:mi:ss')       
+         from attendance
+         where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+      ]]>
+   </select>
+   
+	<select id="selectCheckOut" parameterType="map"
+		resultType="string">
+		<![CDATA[
+			select to_char(CHECK_OUT) 			
 			from attendance
-			where member_id = #{memberId}
+			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</select>
 	
@@ -57,43 +96,5 @@
 					ATTENDANCE_STATUS AS attendanceStatus
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
-	</select>
-	
-	<update id="insertCheckOut" parameterType="map" >
-		<![CDATA[
-			update attendance 
-			set CHECK_OUT = CURRENT_TIMESTAMP
-			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
-		]]>
-	</update>
-	
-	<select id="selectCheckIn" parameterType="map"
-      resultType="string">
-      <![CDATA[
-         select to_char(CHECK_IN, 'YYYY/MM/dd HH24:mi:ss')       
-         from attendance
-         where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
-      ]]>
-   </select>
-	
-	<select id="selectCheckOut" parameterType="map" resultType="string">
-		<![CDATA[
-			select to_char(CHECK_OUT) 			
-			from attendance
-			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
-		]]>
-	</select>
-
-	<update id="updateCheckOut" parameterType="map">
-
-		update attendance
-		set CHECK_OUT = CURRENT_TIMESTAMP
-		<if test="attendanceStatus >= 0">
-			, ATTENDANCE_STATUS =
-			#{attendanceStatus}
-		</if>
-		where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE,
-		'YYYY-MM-DD')
-		= #{today})
-	</update>
+	</select>	
 </mapper>
