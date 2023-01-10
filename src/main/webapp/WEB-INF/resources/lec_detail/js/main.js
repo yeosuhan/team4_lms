@@ -74,7 +74,7 @@
 					events : events,
 					month : months[month],
 					day : day,
-					year: year
+					year : year
 				}, date_click);
 				row.append(curr_date);
 			}
@@ -96,21 +96,25 @@
 		$(".events-container").show(250);
 		$(".active-date").removeClass("active-date");
 		$(this).addClass("active-date");
-		
+
 		$.ajax({
 			type : 'GET',
 			url : "/lecture",
-			data : {day: event.data.day, month: event.data.month, year: event.data.year},
+			data : {
+				day : event.data.day,
+				month : event.data.month,
+				year : event.data.year
+			},
 			dataType : "json",
 			error : function() {
 				console.log('통신실패');
 			},
 			success : function(data) {
 				console.log("성공~");
-				show_events(data);	
+				show_events(data);
 			}
-		});	
-//		show_events(event.data.events, event.data.month, event.data.day);
+		});
+		// show_events(event.data.events, event.data.month, event.data.day);
 	}
 
 	// Event handler for when a month is clicked
@@ -156,15 +160,15 @@
 
 	// Display all events of the selected date in card views
 	function show_events(data) {
-		var attendance = 0; //출석
+		var attendance = 0; // 출석
 		var late = 0; // 지각
 		var absence = 0; // 결석
-		for(var i=0; i<data.length; i++) {
-			if(data[i].attendanceStatus==1) {
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].attendanceStatus == 1) {
 				attendance++;
-			} else if(data[i].attendanceStatus==0) {
+			} else if (data[i].attendanceStatus == 0) {
 				absence++;
-			} else if(data[i].attendanceStatus==2) {
+			} else if (data[i].attendanceStatus == 2) {
 				late++;
 			}
 		}
@@ -187,18 +191,26 @@
 		// If there are no events for this date, notify the user
 		var event_card = $("<div class='event-card'></div>");
 		var event_body = $("<div class='event-body'></div>");
-		
-		var event_name = $("<div class='event-name' style='font-size:15px;'>출석률 : " + (attendance/data.length*100) + " | 출석: " + attendance
-				+ "명 결석: " + absence + "명 지각: " + late + "명</div>");
+		var AttPer = (attendance / data.length * 100);
+		if (data.length == 0) {
+			AttPer = 0;
+		}
+		var event_name = $("<div class='event-name' style='font-size:15px;'>출석률 : "
+				+ parseInt(AttPer)
+				+ "% | 출석: "
+				+ attendance
+				+ "명 결석: "
+				+ absence + "명 지각: " + late + "명</div>");
 		$(event_card).append(event_name);
 		console.log("총 인원: " + data.length);
 		console.log("출석한 사람: " + attendance);
-		for(var i=0; i<data.length; i++) {
+		for (var i = 0; i < data.length; i++) {
 			console.log(data[i]);
-			var event_content = $("<div class='event-content'>"+data[i].memberName + " - " + data[i].title+"</div>");
+			var event_content = $("<div class='event-content'>"
+					+ data[i].memberName + " - " + data[i].title + "</div>");
 			$(event_body).append(event_content);
 		}
-		
+
 		$(".events-container").append(event_card);
 		$(".events-container").append(event_body);
 	}
@@ -215,76 +227,6 @@
 		}
 		return events;
 	}
-
-	// Given data for events in JSON format
-	var event_data = {
-		"events" : [ {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10,
-			"cancelled" : true
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10,
-			"cancelled" : true
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10,
-			"cancelled" : true
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10,
-			"cancelled" : true
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10,
-			"cancelled" : true
-		}, {
-			"occasion" : " Repeated Test Event ",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 10
-		}, {
-			"occasion" : " Test Event",
-			"invited_count" : 120,
-			"year" : 2020,
-			"month" : 5,
-			"day" : 11
-		} ]
-	};
 
 	const months = [ "January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December" ];

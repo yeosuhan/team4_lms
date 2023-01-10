@@ -58,6 +58,7 @@ public class MemberController {
 					if(member.getIdentity().equals("professor")) {
 						List<Lecture> lectureList = lectureService.selectAllLecture();
 						model.addAttribute("lectureList", lectureList);
+						System.out.println(lectureList);
 						return "lecture/lectureList";
 					} else {
 						return "redirect:/attendance/main";
