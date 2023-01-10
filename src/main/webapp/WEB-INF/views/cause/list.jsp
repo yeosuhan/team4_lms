@@ -1,12 +1,22 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/c/fonts/icomoon/style.css'/>">
+<link rel="stylesheet" href="<c:url value='/c/css/owl.carousel.min.css'/>">
+<script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/c/js/popper.min.js'/>"></script>
+<script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/c/js/main.js'/>"></script>
+
+
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 
 <div class="content" style="border-bottom: 1px gray solid;">
 
-	<div class="container" style="background-color: white">
+	<div class="container">
 		<div style="border-top: 1px solid gray;">
 			<h2 class="mb-5 mt-3">사유 리스트</h2>
 		</div>
@@ -14,12 +24,11 @@
 			<table class="table">
 				<tr>
 					<td align="left">
-						<tag:paging totalPageCount="${totalPageCount}" nowPage="${page}"/>
+						<tag:paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" />
 					</td>
 					<td align="right">
-						<a href='<c:url value="/cause/wrtie"/>'>
-							<button type="button" class="btn btn-info">
-							</button>
+						<a href='<c:url value="/cause/write"/>'>
+							<button type="button" class="btn btn-info">사유서 작성</button>
 						</a>
 					</td>
 					<td>
@@ -47,7 +56,7 @@
 							<td class="column2">${causeListDto.causeId}</td>	
 							<td class="column3">${causeListDto.content}</td>
 							<td class="column4">${causeListDto.attendanceStatusString}</td>
-							<td class="column5">${causeListDto.causeStatus}</td>
+							<td class="column5">${causeListDto.causeStatusString}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

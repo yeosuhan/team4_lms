@@ -32,7 +32,7 @@ public class CauseService implements ICauseService{
 		if(causeDto.getAttendanceId() == 0) {
 			//DB에 먼저 attendanceId 만들기
 			attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), causeDto.getAttendanceDate());
-			aId = attendanceRepository.selectId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString()).get().intValue();
+			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString());
 			cause.setAttendanceId(aId);
 		} else {
 			cause.setAttendanceId(causeDto.getAttendanceId());
@@ -55,8 +55,14 @@ public class CauseService implements ICauseService{
 		
 		causeRepository.insertCause(cause);
 	}
+	
+	//전체 행수 구하기
+	@Override
+	public int selectCauseCount(String memberId) {
+		return causeRepository.selectCauseCount(memberId);
+	} 
 
-	//사유서 리스트 보기
+	//사유서 리스트 보기(학생)
 	@Transactional
 	public List<CauseListDto> selectCauseList(String memberId, int page) {
 		//페이징 처리
@@ -64,18 +70,31 @@ public class CauseService implements ICauseService{
 		
 		List<CauseListDto> list = causeRepository.selectCauseList(memberId, start, start+4);
 		for(CauseListDto i : list) {
-			String  s = i.attendanceStatus(i.getAttendanceStatus());
-			i.setAttendanceStatusString(s);
+			String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+			String s2 = i.submitStatus(i.getCauseStatus());
+			i.setAttendanceStatusString(s1);
+			i.setCauseStatusString(s2);
 		}
 		
 		return list;
 	}
 
-	//전체 행수 구하기
-	@Override
-	public int selectCauseCount(String memberId) {
-		return causeRepository.selectCauseCount(memberId);
-	} 
+	//사유서 리스트 보기(관리자)
+	@Transactional
+	public List<CauseListDto> selectCauseListAdmin(int page) {
+		//페이징 처리
+		int start = ((page-1) * 5) +1;
+		
+		List<CauseListDto> list = causeRepository.selectCauseAdmin(start, start+4);
+		for(CauseListDto i : list) {
+			String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+			String s2 = i.submitStatus(i.getCauseStatus());
+			i.setAttendanceStatusString(s1);
+			i.setAttendanceStatusString(s2);
+		}
+		
+		return list;
+	}
 	
 	
 

@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
-
-	<select id="selectMemberAttendance" parameterType="map"
-		resultType="com.team4.myapp.attendance.model.Attendance">
+	
+	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			select 
 			ATTENDANCE_ID as attendanceId, 
@@ -20,23 +19,23 @@
 		]]>
 	</select>
 	
-	<insert id="insertAttendance" parameterType="string">
+	<insert id="insertAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
-			insert into attendance(ATTENDANCE_ID, MEMBER_ID)	
-			values(ATTENDANCE_SEQ.nextval, #{memberId})
+			insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
+			values(ATTENDANCE_SEQ.nextval, SYSDATE , CURRENT_TIMESTAMP, #{attendanceStatus}, #{submitStatus} , #{memberId})
 		]]>
 	</insert>
-		
+	
 	<update id="updateCheckIn" parameterType="map">
 		<![CDATA[
 			update attendance 
 			set 
 			CHECK_IN  = #{attendance.checkIn},
 			ATTENDANCE_STATUS = #{attendance.attendanceStatus}
-			where (MEMBER_ID = #{attendance.memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})		
+			where (MEMBER_ID = #{attendance.memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</update>
-
+	
 	<update id="updateCheckOut" parameterType="map">
 
 		update attendance
@@ -50,12 +49,18 @@
 		= #{today})
 
 	</update>
-
+	
 	<select id="selectId" parameterType="map" resultType="int">
 		<![CDATA[
-			select ATTENDANCE_ID 
-			from attendance
+			select ATTENDANCE_ID  from attendance
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+		]]>
+	</select>
+	
+	<select id="selectAttendanceId" parameterType="map" resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  FROM ATTENDANCE
+			WHERE (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{attendanceDate})
 		]]>
 	</select>
 	
@@ -91,5 +96,5 @@
 					ATTENDANCE_STATUS AS attendanceStatus
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
-	</select>
+	</select>	
 </mapper>

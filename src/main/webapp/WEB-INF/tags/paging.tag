@@ -1,6 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ tag body-content="empty"%>
 <%@ attribute name="totalPageCount" type="java.lang.Integer" required="true"%>
+<%@ attribute name="boardType" type="java.lang.String" required="true"%>
 <%@ attribute name="nowPage" type="java.lang.Integer" required="true"%>
 <%
 	int totalPageBlock = (int)(Math.ceil(totalPageCount/5.0));
@@ -20,7 +21,7 @@
 	out.println("<ul class=\"pagination\">");
 	if(nowPageBlock>1){
 		out.print("<li>");
-		out.print("<a href=\""+contextPath + "/cause/list/"+(startPage-1)+"\" aria-label=\"Previous\">");
+		out.print("<a href=\""+contextPath + boardType+(startPage-1)+"\" aria-label=\"Previous\">");
 		out.print("◀</a>");
 		out.print("</li>");
 	}
@@ -32,14 +33,14 @@
 		} else{
 			out.print("<li>");
 		}
-		out.print("<a href=\""+contextPath+"/cause/list/"+(i)+"\">");
+		out.print("<a href=\""+contextPath+boardType+(i)+"\">");
 		out.print(i);
 		out.print("</a>");
 		out.print("</li>");
 	}
 	if(nowPageBlock<totalPageBlock){
 		out.print("<li>");
-		out.print("<a href=\""+contextPath+"/cause/list/"+(endPage+1)+"\" aria-label=\"Next\">");
+		out.print("<a href=\""+contextPath+boardType+(endPage+1)+"\" aria-label=\"Next\">");
 		out.print("▶</a>");
 		out.println("</li>");
 	}
