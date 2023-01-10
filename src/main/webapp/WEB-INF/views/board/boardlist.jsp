@@ -65,23 +65,23 @@ color: grey;
 				</tbody>
 			</table>
 			<table class="table">
-		<tr>
-		<td align="left">page</td>
-			<td align="center">
-				<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
-			</td>
-			<td align="right">
-				<c:if test="${boardType=='community'}">
-					<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
-				</c:if>
-				<c:if test="${boardType=='reference'}">
-					<c:if test="${sessionScope.membername=='admin'}">
-						<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
-					</c:if>
-				</c:if>
-			</td>
-		</tr>
-		</table>
+				<tr>
+					<td align="left">page</td>
+					<td align="center">
+						<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+					</td>
+					<td align="right">
+						<c:if test="${boardType=='community'}">
+							<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+						</c:if>
+						<c:if test="${boardType=='reference'}">
+							<c:if test="${sessionScope.memberid=='admin'}">
+								<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+							</c:if>
+						</c:if>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>
