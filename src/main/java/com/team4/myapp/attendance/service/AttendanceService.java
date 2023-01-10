@@ -16,6 +16,7 @@ import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
+import com.team4.myapp.util.date.Today;
 
 @Service
 public class AttendanceService implements IAttendanceService {
@@ -26,23 +27,17 @@ public class AttendanceService implements IAttendanceService {
 	@Autowired
 	IMemberRepository memberRepository;
 	
-	private String getToday() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-		String today = sdf.format(new Date());
-		
-		return today;
-	}
-	
 	// 근무시간 충족 여부 검사
 	private boolean calWorkingTime(String memberId) {
-		// 근무시간 게산 로직 필요
 		// 5 시간 이상 근무 시 true 리턴한다.
 		Date date = null;
         try {
-        	String str = attendanceRepository.selectCheckIn(memberId, getToday());
+        	// 출근 시간 조회
+        	String str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
         	System.out.println("str : " + str);
         	SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			date = format.parse(str);
+			System.out.println("str : " + date);
 		} catch (ParseException e) {
 			System.out.println("calWorkingTime() 에러 ");
 			e.printStackTrace();
@@ -81,7 +76,7 @@ public class AttendanceService implements IAttendanceService {
 		Attendance attendance = new Attendance();
 		attendance.setMemberId(memberId);
 
-		String today = getToday();
+		String today = Today.getToday();
 
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		attendance.setCheckIn(ts);
@@ -105,7 +100,7 @@ public class AttendanceService implements IAttendanceService {
 	@Transactional
 	public void updateCheckOut(String memberId) {
 		// memberId, 날짜로 출석 id 찾아서 퇴근 값 넣기
-		String today = getToday();
+		String today = Today.getToday();
 		// 퇴근 버튼 누른 시점에서  퇴근시간 - 출근시간 >= 5 여야 출석 인정 됨
 		boolean result = calWorkingTime(memberId);
 		
@@ -119,7 +114,7 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public String selectCheckIn(String memberId) {
-		String today = getToday();
+		String today = Today.getToday();
 
 		String checkin = attendanceRepository.selectCheckIn(memberId, today);		
 		return checkin;
@@ -127,7 +122,7 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public String selectCheckOut(String memberId) {
-		String today = getToday();
+		String today = Today.getToday();
 
 		String checkout = attendanceRepository.selectCheckOut(memberId, today);
 		return checkout;
@@ -135,7 +130,7 @@ public class AttendanceService implements IAttendanceService {
 
 	@Transactional
 	public void insertAll() {
-		String today = getToday();
+		String today = Today.getToday();
 
 		// 매일 오전 12시에 스켘줄러에 의해 실행 될 메소드이다.
 		// 모든 학생 조회
@@ -150,4 +145,17 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
+	@Override
+	public void leaveEarly(String memberId) {
+		boolean result = calWorkingTime(memberId);
+		String today = Today.getToday();
+		System.out.println(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		if(!result) { // 출근 시간 미달인 경우
+			System.out.println(" 미달~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			attendanceRepository.updateCheckOut(memberId, 0, today);
+		}
+		else {
+			attendanceRepository.updateCheckOut(memberId, 3, today);
+		}
+	}
 }

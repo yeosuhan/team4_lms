@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
+import com.team4.myapp.out.service.IOutService;
 
 @Controller
 public class AttendanceController {
 
 	@Autowired
 	IAttendanceService attendanceService;
+	
+	@Autowired
+	IOutService outService;
 
 	// 출근 처리
 	@RequestMapping(value = "/attendance/checkin", method = RequestMethod.POST)
@@ -60,8 +63,11 @@ public class AttendanceController {
 		}
 
 		// 외출 여부 확인
-
+		boolean goOut = outService.goOut(memberId);
+		model.addAttribute("goOut", goOut);
+		
 		// 복귀 여부 확인
+		System.out.println("goOut : " + goOut);
 		System.out.println("aid : " + checkin);
 		System.out.println("time : " + checkout);
 
@@ -89,11 +95,16 @@ public class AttendanceController {
 		return "redirect:/attendance/main";
 	}
 	
-	// 조퇴 처리
-	/*@RequestMapping(value="/attendance/leave", method = RequestMethod.POST)
+	// 조퇴 처리 
+	@RequestMapping(value="/attendance/leave", method = RequestMethod.POST)
 	public String leaveEarly(HttpSession session) {
-		
-		return"";
-	}*/
+		String memberId = (String) session.getAttribute("memberid");
+		attendanceService.leaveEarly(memberId);
+		return "redirect:/attendance/main";
+	}
+	
+	// 외출 처리
+	
+	// 복귀 처리
 
 }
