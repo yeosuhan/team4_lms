@@ -70,7 +70,7 @@ color: grey;
 				<jk:paging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 			</td>
 			<td align="right">
-				<a href='<c:url value="/board/write"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
 			</td>
 		</tr>
 		</table>

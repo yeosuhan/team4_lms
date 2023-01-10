@@ -25,4 +25,14 @@
 	]]>
 </select>
 
+<select id="selectAllStudent" resultType="string">
+	<![CDATA[
+		SELECT
+			member_id
+		FROM
+			members
+		where IDENTITY = 'student'
+	]]>
+</select>
+
 </mapper>

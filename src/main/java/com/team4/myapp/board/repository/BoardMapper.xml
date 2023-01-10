@@ -8,7 +8,7 @@
 	<![CDATA[
 	SELECT 
 	    board_id 				AS "boardId", 
-	    title					AS "title", 
+	    board_title					AS "title", 
 	    board_date				AS "boardDate", 
 	    view_count				AS "viewCount", 
 	    member_id				AS "memberId", 
@@ -26,8 +26,8 @@
 	<![CDATA[
 		SELECT 
 		    board_id 				AS "boardId", 
-		    title					AS "title", 
-		    content					AS "content", 
+		    board_title					AS "title", 
+		    board_content					AS "content", 
 		    board_date				AS "boardDate", 
 		    view_count				AS "viewCount", 
 		    heart_count				AS "heartCount", 
@@ -88,7 +88,7 @@
 	<![CDATA[
 		INSERT INTO 
 		board 
-			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, BOARD_TYPE, MEMBER_ID)  
+			(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE, MEMBER_ID)  
 		VALUES 
 			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{boardType}, #{memberId})
 	]]>	
@@ -98,7 +98,7 @@
 	<![CDATA[
 		INSERT INTO 
 		board 
-			(BOARD_ID, TITLE, CONTENT, BOARD_DATE, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, BOARD_TYPE, MEMBER_ID)  
+			(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, BOARD_TYPE, MEMBER_ID)  
 		VALUES 
 			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, #{boardType}, #{memberId})
 	]]>	
@@ -145,7 +145,7 @@
 			board 
 		SET 
 			board_type=#{boardType}, 
-			title=#{title}, 
+			board_title=#{title}, 
 			content=#{content}, BOARD_DATE=SYSDATE 
 		WHERE 
 			board_id=#{boardId}
@@ -231,7 +231,7 @@
 			COUNT(*) FROM board
 		WHERE 
 			board_type=#{boardType} AND
-			(title LIKE #{keyword} OR content LIKE #{keyword})
+			(BOARD_TITLE LIKE #{keyword} OR BOARD_CONTENT LIKE #{keyword})
 	]]>
 	</select> 
 
@@ -239,17 +239,19 @@
 	<![CDATA[
 		SELECT 
 			board_id 				AS "boardId", 
-		    title					AS "title", 
+		    BOARD_TITLE				AS "title", 
 		    board_date				AS "boardDate", 
 		    view_count				AS "viewCount", 
+		    heart_count				AS "heartCount",
 		    member_id				AS "memberId", 
 		    file_download_count		AS "fileDownloadCount"
 	    FROM (
 	    	SELECT 
 	    		board_id, 
-			    title, 
+			    BOARD_TITLE, 
 			    board_date, 
 			    view_count, 
+			    heart_count,
 			    member_id, 
 			    file_download_count,
 	    		rownum AS rnum
@@ -257,7 +259,7 @@
 	    		SELECT * FROM board
 	    		WHERE
 	    			board_type=#{boardType} AND
-					(title LIKE #{keyword} OR content LIKE #{keyword})
+					(BOARD_TITLE LIKE #{keyword} OR BOARD_CONTENT LIKE #{keyword})
 	    		ORDER BY board_id DESC
 	    	)
 	    )

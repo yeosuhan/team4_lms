@@ -50,52 +50,40 @@
     <script src="<c:url value='/cal/js/main.js'/>"></script>
     <script src="<c:url value='/cal/js/calendar.js'/>"></script>
 
-     <!-- Admin Calendar 관련 resources-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+<!-- cause_list -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="<c:url value='/c/fonts/icomoon/style.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/c/css/owl.carousel.min.css'/>">
+<script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/c/js/popper.min.js'/>"></script>
+<script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/c/js/main.js'/>"></script>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href='<c:url value="/admincalendar/css/style.css"/>'>
-	    
-    <script src="admincalendar/js/jquery.min.js"></script>
-	<script src="admincalendar/js/popper.js"></script>
-	<script src="admincalendar/js/bootstrap.min.js"></script>
-	<script src="admincalendar/js/main.js"></script>
-	
-	<!-- cause_list -->
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link
-		href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet"
-		href="<c:url value='/c/fonts/icomoon/style.css'/>">
-	<link rel="stylesheet"
-		href="<c:url value='/c/css/owl.carousel.min.css'/>">
-	<script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
-	<script src="<c:url value='/c/js/popper.min.js'/>"></script>
-	<script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
-	<script src="<c:url value='/c/js/main.js'/>"></script>
-	
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
-	
-	<!-- Style -->
-	<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="<c:url value='/cd/css/bootstrap.min.css'/>">
-	<!-- Style -->
-	<link rel="stylesheet" href="<c:url value='/cd/css/style.css'/>">
+<!-- lectue detail -->
 
-	<!-- lectue detail -->
-	
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="<c:url value='/ld/css/style.css'/>" />
-	<script src="<c:url value='/ld/js/jquery.min.js'/>" /></script>
-	<script src="<c:url value='/ld/js/popper.js'/>" /></script>
-	<script src="<c:url value='/ld/js/bootstrap.min.js'/>" /></script>
-	<script src="<c:url value='/ld/js/main.js'/>" /></script>
-	
-	
-	</head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="<c:url value='/ld/css/style.css'/>" />
+<script src="<c:url value='/ld/js/jquery.min.js'/>" /></script>
+<script src="<c:url value='/ld/js/popper.js'/>" /></script>
+<script src="<c:url value='/ld/js/bootstrap.min.js'/>" /></script>
+<script src="<c:url value='/ld/js/main.js'/>" /></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
+
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="<c:url value='/cal/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
+
