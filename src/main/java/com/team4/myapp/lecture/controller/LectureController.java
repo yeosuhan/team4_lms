@@ -20,8 +20,10 @@ public class LectureController {
 	@Autowired
 	ILectureService lectureService;
 	
-	@RequestMapping(value = "/lecture/{id}", method = RequestMethod.GET)
-	public String getLectureDetail(@PathVariable int id) {
+	@RequestMapping(value = "/lecture/{id}", method = RequestMethod.POST)
+	public String getLectureDetail(@PathVariable int id, HttpSession session) {
+		String lectureId = (String) session.getAttribute("lectureId");
+		System.out.println(lectureId);
 		return "lecture/index";
 	}
 	

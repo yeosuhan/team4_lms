@@ -34,7 +34,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@RequestMapping(value="/member/login", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/main", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		Member member = memberService.selectMember(memberId);
 		if(member != null) {
@@ -47,11 +47,14 @@ public class MemberController {
 					session.setAttribute("membername",member.getMemberName());
 					session.setAttribute("identity", member.getIdentity());
 					session.setAttribute("lectureid", member.getLectureId());
-					
+
+					System.out.println("-----------------------------------------------------------");
+					System.out.println("로그인을 하셨습니다.");
 					System.out.println("memberId: " + memberId);
 					System.out.println("membername: " + member.getMemberName());
 					System.out.println("identity: " + member.getIdentity());
 					System.out.println("lectureid: " + member.getLectureId());
+					System.out.println("-----------------------------------------------------------");
 					if(member.getIdentity().equals("professor")) {
 						List<Lecture> lectureList = lectureService.selectAllLecture();
 						model.addAttribute("lectureList", lectureList);
