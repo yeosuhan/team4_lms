@@ -52,12 +52,10 @@ public class AttendanceService implements IAttendanceService {
        System.out.println("total hours ~~~  : " + total);
 		if(total < 5) {		
 			return false;
-		}
-		
+		}		
 		return true;
 	}
 
-	@Override
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
 		List<Attendance> alist = attendanceRepository.selectMemberAttendance(memberId, month);
 		
@@ -71,8 +69,7 @@ public class AttendanceService implements IAttendanceService {
 		}
 		return clist;
 	}
-	
-	@Override
+		
 	public void updateChekIn(String memberId) {
 		Attendance attendance = new Attendance();
 		attendance.setMemberId(memberId);
@@ -98,7 +95,6 @@ public class AttendanceService implements IAttendanceService {
 		attendanceRepository.updateCheckIn(attendance, today);
 	}
 
-	@Transactional
 	public void updateCheckOut(String memberId) {
 		// memberId, 날짜로 출석 id 찾아서 퇴근 값 넣기
 		String today = Today.getToday();
@@ -113,7 +109,6 @@ public class AttendanceService implements IAttendanceService {
 	}
 	
 
-	@Override
 	public int selectId(String memberId) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
 		String today = sdf.format(new Date());
@@ -122,7 +117,6 @@ public class AttendanceService implements IAttendanceService {
 		return attendanceId.get();
 	}
 	
-	@Override
 	public String selectCheckIn(String memberId) {
 		String today = Today.getToday();
 
@@ -130,7 +124,6 @@ public class AttendanceService implements IAttendanceService {
 		return checkin;
 	}
 
-	@Override
 	public String selectCheckOut(String memberId) {
 		String today = Today.getToday();	
 		String checkout = attendanceRepository.selectCheckOut(memberId, today);
@@ -138,13 +131,11 @@ public class AttendanceService implements IAttendanceService {
 	}
 	
 	//출석ID 가져오기
-	@Override
 	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
 		return attendanceRepository.selectAttendanceId(memberId, attendanceDate.toString());
 	}
 
 	//날짜와 출석유형 조회하기
-	@Override
 	public Attendance selectDataAndCategory(int attendanceId) {
 		return attendanceRepository.selectDataAndCategory(attendanceId);
 	}
@@ -152,7 +143,6 @@ public class AttendanceService implements IAttendanceService {
 	@Transactional
 	public void insertAll() {
 		String today = Today.getToday();
-
 		// 매일 오전 12시에 스켘줄러에 의해 실행 될 메소드이다.
 		// 모든 학생 조회
 		// 만약 휴가 신청할 경우 출석 데이터가 미리 존재하는 경우도 있다. <- 처리 필요
@@ -166,7 +156,7 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
-	@Override
+	// 조퇴 처리
 	public void leaveEarly(String memberId) {
 		boolean result = calWorkingTime(memberId);
 		String today = Today.getToday();
