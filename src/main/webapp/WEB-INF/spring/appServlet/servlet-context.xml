@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -16,23 +18,17 @@
    <resources mapping="/m/**" location="/WEB-INF/resources/member/" />
    <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
    <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
-   <resources mapping="/cd/**" location="/WEB-INF/resources/calendar/" />
+   <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/" />
    <resources mapping="/h/**" location="/WEB-INF/resources/home/" />
-    <resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />
-   
+    <resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />   
    
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <beans:property name="prefix" value="/WEB-INF/views/" />
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
-   
-	<context:component-scan base-package="com.team4.myapp.member.controller"/>
-	<context:component-scan base-package="com.team4.myapp.cause.controller"/>
 
    <context:component-scan base-package="com.team4.myapp"/>
-   <context:component-scan base-package="com.team4.myapp.attendance.controller"/>
-   <context:component-scan base-package="com.team4.myapp.lecture.controller"/>
    
    <view-controller path="/" view-name="home"/>
    
@@ -61,4 +57,6 @@
       </beans:property>
    </beans:bean>
 	
+	<!-- 스케줄러 사용하기 위한 설정 -->
+	<task:annotation-driven/>	
 </beans:beans>

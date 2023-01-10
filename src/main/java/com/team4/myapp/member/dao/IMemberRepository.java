@@ -6,4 +6,5 @@ public interface IMemberRepository {
 	Member selectMember(String memberId);
 	String getPassword(String memberId);
 	Member selectLecture();
+	List<String> selectAllStudent();
 }
