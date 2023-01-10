@@ -30,24 +30,6 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
 
-
-<!--  calendar 관련 resources-->
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<c:url value='cd/fonts/icomoon/style.css'/>" />
-<link href="<c:url value='/cal/fullcalendar/packages/core/main.css'/>" rel="stylesheet" />
-<link href= "<c:url value='cal/fullcalendar/packages/daygrid/main.css'/>" rel="stylesheet" />
-
-<script src="<c:url value='/cal/js/jquery-3.3.1.min.js'/>"></script>
-<script src="<c:url value='/cal/js/popper.min.js'/>"></script>
-<script src="<c:url value='/cal/js/bootstrap.min.js'/>"></script>
-
-<script src="<c:url value='/cal/fullcalendar/packages/core/main.js'/>"></script>
-<script src="<c:url value='/cal/fullcalendar/packages/interaction/main.js'/>"></script>
-<script src="<c:url value='/cal/fullcalendar/packages/daygrid/main.js'/>"></script>
-<script src="<c:url value='/cal/js/main.js'/>"></script>
-<script src="<c:url value='/cal/js/calendar.js'/>"></script>
-
 <!-- cause_list -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -64,23 +46,24 @@
 <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
 <script src="<c:url value='/c/js/main.js'/>"></script>
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
-
-<!-- Style -->
-<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<c:url value='/cal/css/bootstrap.min.css'/>">
-<!-- Style -->
-<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
-
 <!-- lectue detail -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="<c:url value='/ld/css/style.css'/>" />
 <script src="<c:url value='/ld/js/jquery.min.js'/>" /></script>
 <script src="<c:url value='/ld/js/popper.js'/>" /></script>
 <script src="<c:url value='/ld/js/bootstrap.min.js'/>" /></script>
 <script src="<c:url value='/ld/js/main.js'/>" /></script>
 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
 
-</head>
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="<c:url value='/cal/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
+

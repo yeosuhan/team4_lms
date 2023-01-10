@@ -3,13 +3,29 @@
 <mapper
 	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
 	
+	<select id="selectId" parameterType="map" resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  from attendance
+			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+		]]>
+	</select>
+	
 	<insert id="insertAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
-			
 			values(ATTENDANCE_SEQ.nextval, SYSDATE , CURRENT_TIMESTAMP, #{attendanceStatus}, #{submitStatus} , #{memberId})
 		]]>
 	</insert>
+	
+	<update id="updateCheckIn" parameterType="map">
+		<![CDATA[
+			update attendance 
+			set 
+			CHECK_IN  = #{attendance.checkIn},
+			ATTENDANCE_STATUS = #{attendance.attendanceStatus}
+			where (MEMBER_ID = #{attendance.memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+		]]>
+	</update>
 	
 	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
@@ -51,13 +67,14 @@
 		]]>
 	</update>
 	
-	<select id="selectId" parameterType="map" resultType="int">
-		<![CDATA[
-			select ATTENDANCE_ID 		
-			from attendance
-			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
-		]]>
-	</select>
+	<select id="selectCheckIn" parameterType="map"
+      resultType="string">
+      <![CDATA[
+         select to_char(CHECK_IN, 'YYYY/MM/dd HH24:mi:ss')       
+         from attendance
+         where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
+      ]]>
+   </select>
 	
 	<select id="selectCheckOut" parameterType="map" resultType="string">
 		<![CDATA[
@@ -66,5 +83,17 @@
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</select>
-	
+
+	<update id="updateCheckOut" parameterType="map">
+
+		update attendance
+		set CHECK_OUT = CURRENT_TIMESTAMP
+		<if test="attendanceStatus >= 0">
+			, ATTENDANCE_STATUS =
+			#{attendanceStatus}
+		</if>
+		where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE,
+		'YYYY-MM-DD')
+		= #{today})
+	</update>
 </mapper>

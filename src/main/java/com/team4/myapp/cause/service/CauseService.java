@@ -2,6 +2,7 @@ package com.team4.myapp.cause.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class CauseService implements ICauseService{
 		if(causeDto.getAttendanceId() == 0) {
 			//DB에 먼저 attendanceId 만들기
 			attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), causeDto.getAttendanceDate());
-			aId = attendanceRepository.selectId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString());
+			aId = attendanceRepository.selectId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString()).get().intValue();
 			cause.setAttendanceId(aId);
 		} else {
 			cause.setAttendanceId(causeDto.getAttendanceId());
