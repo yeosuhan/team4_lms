@@ -17,7 +17,7 @@ public class AttendanceScheduler {
 	IAttendanceService attendanceService;
 
 	// // 초 분 시 일 월 요일
-	@Scheduled(cron = "0 0 6 * * 1-5")
+	@Scheduled(cron = "0 0 9 * * 1-5")
 	public void test() {
 		try {
 			attendanceService.insertAll();
@@ -25,7 +25,7 @@ public class AttendanceScheduler {
 			System.out.println(e.getMessage());
 		}
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.KOREA);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String today = sdf.format(new Date());
         
         System.out.println(today);
