@@ -1,17 +1,19 @@
 package com.team4.myapp.attendance.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.team4.myapp.attendance.controller.dto.CalendarDto;
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
+import com.team4.myapp.attendance.model.CalendarDto;
 
 
 @Service
@@ -88,9 +90,8 @@ public class AttendanceService implements IAttendanceService {
 	
 	//출석ID 가져오기
 	@Override
-	public int selectAttendanceId(String memberId, Date attendanceDate) {
-		
-		return attendanceRepository.selectAttendanceId(memberId, attendanceDate);
+	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
+		return attendanceRepository.selectId(memberId, attendanceDate.toString());
 	}
 
 	//날짜와 출석유형 조회하기

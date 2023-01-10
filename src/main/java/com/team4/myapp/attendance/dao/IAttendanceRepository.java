@@ -16,8 +16,6 @@ public interface IAttendanceRepository {
 	int selectId(@Param("memberId") String memberId, @Param("today") String today);
 	String selectCheckOut(@Param("memberId") String memberId, @Param("today") String today);
 	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") Date attendanceDate);
-	
-	int selectAttendanceId(@Param("memberId") String memberId, @Param("attendanceDate") Date attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
 
 }

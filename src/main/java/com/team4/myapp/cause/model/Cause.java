@@ -23,4 +23,5 @@ public class Cause {
 	private String fileContentType;
 	private int attendanceId;
 	private String memberId;
+	private Date writeDate;
 }

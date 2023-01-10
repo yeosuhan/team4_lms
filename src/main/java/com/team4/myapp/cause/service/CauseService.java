@@ -1,16 +1,18 @@
 package com.team4.myapp.cause.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
-import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.cause.dao.ICauseRepository;
 import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
+import com.team4.myapp.cause.model.dto.CauseListDto;
 
 @Service
 public class CauseService implements ICauseService{
@@ -29,7 +31,7 @@ public class CauseService implements ICauseService{
 		if(causeDto.getAttendanceId() == 0) {
 			//DB에 먼저 attendanceId 만들기
 			attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), causeDto.getAttendanceDate());
-			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), causeDto.getAttendanceDate());
+			aId = attendanceRepository.selectId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString());
 			cause.setAttendanceId(aId);
 		} else {
 			cause.setAttendanceId(causeDto.getAttendanceId());
@@ -51,6 +53,29 @@ public class CauseService implements ICauseService{
 		}
 		
 		causeRepository.insertCause(cause);
-	}    
+	}
+
+	//사유서 리스트 보기
+	@Transactional
+	public List<CauseListDto> selectCauseList(String memberId, int page) {
+		//페이징 처리
+		int start = ((page-1) * 5) +1;
+		
+		List<CauseListDto> list = causeRepository.selectCauseList(memberId, start, start+4);
+		for(CauseListDto i : list) {
+			String  s = i.attendanceStatus(i.getAttendanceStatus());
+			i.setAttendanceStatusString(s);
+		}
+		
+		return list;
+	}
+
+	//전체 행수 구하기
+	@Override
+	public int selectCauseCount(String memberId) {
+		return causeRepository.selectCauseCount(memberId);
+	} 
+	
+	
 
 }
