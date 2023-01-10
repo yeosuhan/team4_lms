@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
+import com.team4.myapp.util.date.Today;
+
 
 @Service
 public class AttendanceService implements IAttendanceService {
@@ -25,21 +28,14 @@ public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IMemberRepository memberRepository;
-	
-	private String getToday() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-		String today = sdf.format(new Date());
 		
-		return today;
-	}
-	
 	// 근무시간 충족 여부 검사
 	private boolean calWorkingTime(String memberId) {
 		// 근무시간 게산 로직 필요
 		// 5 시간 이상 근무 시 true 리턴한다.
 		Date date = null;
         try {
-        	String str = attendanceRepository.selectCheckIn(memberId, getToday());
+        	String str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
         	System.out.println("str : " + str);
         	SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			date = format.parse(str);
@@ -64,24 +60,24 @@ public class AttendanceService implements IAttendanceService {
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
 //		String startDate = 
 		List<Attendance> alist = attendanceRepository.selectMemberAttendance(memberId, month);
-
+		
 		System.out.println("selectMemberAttendance ~~~~~~~~~~~~~~~~~");
 		System.out.println(alist);
-
+		
 		List<CalendarDto> clist = new ArrayList<CalendarDto>();
-
+		
 		for (Attendance a : alist) {
 			clist.add(CalendarDto.toCalendarDto(a));
 		}
 		return clist;
 	}
-
+	
 	@Override
 	public void updateChekIn(String memberId) {
 		Attendance attendance = new Attendance();
 		attendance.setMemberId(memberId);
 
-		String today = getToday();
+		String today = Today.getToday();
 
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		attendance.setCheckIn(ts);
@@ -105,7 +101,7 @@ public class AttendanceService implements IAttendanceService {
 	@Transactional
 	public void updateCheckOut(String memberId) {
 		// memberId, 날짜로 출석 id 찾아서 퇴근 값 넣기
-		String today = getToday();
+		String today = Today.getToday();
 		// 퇴근 버튼 누른 시점에서  퇴근시간 - 출근시간 >= 5 여야 출석 인정 됨
 		boolean result = calWorkingTime(memberId);
 		
@@ -116,10 +112,20 @@ public class AttendanceService implements IAttendanceService {
 		}
 		else attendanceRepository.updateCheckOut(memberId, -1, today);
 	}
+	
 
 	@Override
+	public int selectId(String memberId) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		String today = sdf.format(new Date());
+		
+		Optional<Integer> attendanceId = attendanceRepository.selectId(memberId, today);
+		return attendanceId.get();
+	}
+	
+	@Override
 	public String selectCheckIn(String memberId) {
-		String today = getToday();
+		String today = Today.getToday();
 
 		String checkin = attendanceRepository.selectCheckIn(memberId, today);		
 		return checkin;
@@ -127,15 +133,28 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public String selectCheckOut(String memberId) {
-		String today = getToday();
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		String today = sdf.format(new Date());
+		
 		String checkout = attendanceRepository.selectCheckOut(memberId, today);
 		return checkout;
 	}
+	
+	//출석ID 가져오기
+	@Override
+	public Optional<Integer> selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
+		return attendanceRepository.selectId(memberId, attendanceDate.toString());
+	}
 
+	//날짜와 출석유형 조회하기
+	@Override
+	public Attendance selectDataAndCategory(int attendanceId) {
+		return attendanceRepository.selectDataAndCategory(attendanceId);
+	}
+	
 	@Transactional
 	public void insertAll() {
-		String today = getToday();
+		String today = Today.getToday();
 
 		// 매일 오전 12시에 스켘줄러에 의해 실행 될 메소드이다.
 		// 모든 학생 조회
@@ -149,5 +168,4 @@ public class AttendanceService implements IAttendanceService {
 			}
 		}
 	}
-
 }

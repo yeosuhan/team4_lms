@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
-<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 <script>
 $(document).ready(function(){
 	$("p").hide();
@@ -8,6 +7,7 @@ $(document).ready(function(){
 	});
 });
 </script>
+<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 
 <div class="container">
    <div class="pg-opt">

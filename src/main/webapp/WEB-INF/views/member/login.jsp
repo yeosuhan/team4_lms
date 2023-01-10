@@ -33,7 +33,7 @@
 					<div class="login-wrap p-0">
 						<h3 class="mb-4 text-center">로그인 하세요</h3>
 						<c:if test="${empty sessionScope.userid}">
-							<form action="<c:url value='/member/login'/>" method="post"
+							<form action="<c:url value='/admin/main'/>" method="post"
 								class="form-horizontal">
 								<div class="form-group">
 									<input type="text" name=memberId class="form-control" placeholder="Username"

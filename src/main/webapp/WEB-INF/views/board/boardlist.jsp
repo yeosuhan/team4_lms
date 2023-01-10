@@ -1,7 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="jk" tagdir="/WEB-INF/tags"%>
-<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
+
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <style>
 #detail{
@@ -11,23 +10,24 @@ color: grey;
   color: orange;
 }
 </style>
+<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 <div class="content" style="border-bottom: 1px gray solid;">
 
 	<div class="container">
 		<div style="border-top: 1px solid gray;">
-			<h2 class="mb-5 mt-3"><c:if test="${boardType=='reference'}">자료실</c:if>
-   		<c:if test="${boardType=='community'}">커뮤니티</c:if></h2>
+			<h1 class="mb-5 mt-3"><c:if test="${boardType=='reference'}">자료실</c:if>
+   		<c:if test="${boardType=='community'}">커뮤니티</c:if></h1>
 		</div>
 		<div class="table-responsive" style="border-top: 1px solid gray;"><br/>
 			<form action="<c:url value='/board/search/${boardType}/1'/>" method="get">
-				<div class="pull-right" style="margin-bottom: 5px;">
-					<div class="row">
-						<div class="col-md-8">
-				        <input type="text" name="keyword" class="form-control" placeholder="Search...">
+				<div class="pull-right row" style="margin-bottom: 5px;">
+				<div class="col"></div>
+					<div class="col pull-right row">
+						<div class="col-md-9">
+				        <input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요">
 				        </div>
-				        <div class="col-md-3">
-				        <input type="hidden" name="boardType" value="${boardType}">
+				        <div class="col-md-2">
 				        <input type="submit" class="btn btn-warning" value="<fmt:message key="SEARCH"/>">
 				        </div>
 				    </div>
@@ -56,8 +56,10 @@ color: grey;
 							<td class="column3">${board.memberId}</td>
 							<td class="column4"><fmt:formatDate value="${board.boardDate}" pattern="YYYY-MM-dd"/></td>
 							<td class="column5">${board.viewCount}</td>
-							<td class="column6"><c:if test="${boardType=='reference'}">${board.fileDownloadCount}</c:if></td>
-							<td class="column6"><c:if test="${boardType=='community'}">${board.heartCount}</c:if></td>
+							<td class="column6">
+								<c:if test="${boardType=='reference'}">${board.fileDownloadCount}</c:if>
+								<c:if test="${boardType=='community'}">${board.heartCount}</c:if>
+							</td>
 						</tr>
 					</c:forEach>									
 				</tbody>
@@ -66,7 +68,7 @@ color: grey;
 		<tr>
 		<td align="left">page</td>
 			<td align="center">
-				<jk:paging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+				<jk:bpaging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 			</td>
 			<td align="right">
 				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>

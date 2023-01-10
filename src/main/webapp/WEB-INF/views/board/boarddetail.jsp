@@ -2,8 +2,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
 
-<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
-
 	<style>
 		* {
 		  box-sizing: border-box;
@@ -300,6 +298,11 @@
 		.buttons {
 		  display: flex;
 		}
+		
+		.button {
+		    padding: 0.65rem 1.9rem;
+		}
+		
 		.middle-buttons {
 		  display: flex;
 		}
@@ -494,6 +497,8 @@
 		}
 				
 	</style>
+	<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
+	
 	<div class="container">
 	<div class="dashboard">
   <div class="right-side">
@@ -572,8 +577,8 @@
 	        	</div>
 	        </c:if>
 	        <div class="col text-right">
-	          <span class="who">조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
-	          <c:if test="${board.boardType=='reference'}"><span class="who"> 다운로드 수 </span>
+	          <span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
+	          <c:if test="${board.boardType=='reference'}"><span> 다운로드 수 </span>
 	          	<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
 	          </c:if>
 	        </div>

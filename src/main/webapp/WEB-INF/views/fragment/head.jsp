@@ -68,13 +68,13 @@
 
 <!-- lectue detail -->
 
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="<c:url value='/ld/css/style.css'/>" />
 <script src="<c:url value='/ld/js/jquery.min.js'/>" /></script>
 <script src="<c:url value='/ld/js/popper.js'/>" /></script>
 <script src="<c:url value='/ld/js/bootstrap.min.js'/>" /></script>
-<script src="<c:url value='/ld/js/main.js'/>" /></script>
+<script src="<c:url value='/ld/js/main.js'/>" /></script>  -->
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
