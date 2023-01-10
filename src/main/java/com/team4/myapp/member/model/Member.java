@@ -6,6 +6,7 @@ public class Member {
 	private String password;
 	private String identity;
 	private int lectureId;
+	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -36,6 +37,7 @@ public class Member {
 	public void setLectureId(int lectureId) {
 		this.lectureId = lectureId;
 	}
+
 	
 	
 	

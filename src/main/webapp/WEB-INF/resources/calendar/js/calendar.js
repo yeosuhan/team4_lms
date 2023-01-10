@@ -1,18 +1,11 @@
-function getContextPath() {
-		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-		  return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
-};
-
 document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
 	var list = [];
-	
-	
-	
+
 	console.log("!!!");
 	$.ajax({
-		type : 'GET', // get방식으로 통신
-		url : getContextPath() + "/attendance/list",
+		type : 'GET',	 // get방식으로 통신
+		url : "/attendance/list",
 		dataType : "json",
 		error : function() { // 통신 실패시
 			console.log('통신실패!');

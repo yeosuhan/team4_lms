@@ -23,5 +23,6 @@ public class Attendance {
 	private Timestamp checkOut;
 	private int attendanceStatus;
 	private int submitStatus;
+	private String memberName;
 
 }
