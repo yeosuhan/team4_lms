@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
  <!-- head 닫힘 -->
@@ -17,7 +16,10 @@
 	                </button>
 	                <div class="collapse navbar-collapse" id="navbarResponsive">
 	                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-	                        <li class="nav-item"><a class="nav-link" href="/cause/list/1">사유서 관리</a></li>
+	                    	<c:choose>
+	                    		<c:when test="${sessionScope.memberid  eq 'admin'}"><li class="nav-item"><a class="nav-link" href="/cause/admin/list/1">사유서 관리</a></li></c:when>
+	                    		<c:otherwise><li class="nav-item"><a class="nav-link" href="/cause/list/1">사유서 관리</a></li></c:otherwise>
+	                    	</c:choose>
 	                        <li class="nav-item"><a class="nav-link" href="/board/list/community">커뮤니티</a></li>
 	                        <li class="nav-item"><a class="nav-link" href="/board/list/reference">자료실</a></li>
 	                        <li class="nav-item"><a class="nav-link" href="/member/login">로그인</a></li>

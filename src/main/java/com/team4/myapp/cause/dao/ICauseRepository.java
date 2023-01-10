@@ -10,6 +10,8 @@ import com.team4.myapp.cause.model.dto.CauseListDto;
 
 public interface ICauseRepository {
 	int selectCauseCount(String memberId);
+	int selectCount();
+	CauseListDto selectCauseDetail(int causeId);
 	
 	void insertCause(Cause cause);
 	
