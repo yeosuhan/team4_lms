@@ -15,4 +15,6 @@ public interface ICauseRepository {
 	
 	List<CauseListDto> selectCauseList(@Param("memberId") String memberId,
 			@Param("start")int start, @Param("end") int end);
+	
+	List<CauseListDto> selectCauseAdmin(@Param("start")int start, @Param("end") int end);
 }
