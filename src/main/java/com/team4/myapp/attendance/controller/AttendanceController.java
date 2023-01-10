@@ -75,7 +75,7 @@ public class AttendanceController {
 		String memberId = (String) session.getAttribute("memberid");
 		return attendanceService.selectMemberAttendance(memberId, 1);
 	}
-
+	
 	// 퇴근 처리
 	@RequestMapping(value = "/attendance/checkout", method = RequestMethod.POST)
 	public String checkOut(HttpSession session) {
@@ -84,5 +84,5 @@ public class AttendanceController {
 		attendanceService.insertCheckOut(memberId);
 		return "redirect:/attendance/main";
 	}
-
+	
 }

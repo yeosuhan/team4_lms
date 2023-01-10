@@ -47,6 +47,11 @@ public class MemberController {
 					session.setAttribute("membername",member.getMemberName());
 					session.setAttribute("identity", member.getIdentity());
 					session.setAttribute("lectureid", member.getLectureId());
+					
+					System.out.println("memberId: " + memberId);
+					System.out.println("membername: " + member.getMemberName());
+					System.out.println("identity: " + member.getIdentity());
+					System.out.println("lectureid: " + member.getLectureId());
 					if(member.getIdentity().equals("professor")) {
 						List<Lecture> lectureList = lectureService.selectAllLecture();
 						model.addAttribute("lectureList", lectureList);

@@ -11,4 +11,20 @@
 			lecture
 	]]>
 </select>
+<select id="selectAttendanceList" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
+	<![CDATA[
+		SELECT 
+			member_name AS memberName,
+			attendance_date AS attendanceDate,
+			attendance_status AS attendanceStatus			
+		FROM 
+			attendance a, members m
+		WHERE
+			a.member_id=m.member_id
+		AND
+			to_char(a.attendance_date,'YYYY-MM-DD')=#{today}
+		AND
+			lecture_id=#{lectureId}
+	]]>
+</select>
 </mapper>
