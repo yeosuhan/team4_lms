@@ -58,7 +58,6 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
-//		String startDate = 
 		List<Attendance> alist = attendanceRepository.selectMemberAttendance(memberId, month);
 		
 		System.out.println("selectMemberAttendance ~~~~~~~~~~~~~~~~~");
@@ -142,8 +141,8 @@ public class AttendanceService implements IAttendanceService {
 	
 	//출석ID 가져오기
 	@Override
-	public Optional<Integer> selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
-		return attendanceRepository.selectId(memberId, attendanceDate.toString());
+	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
+		return attendanceRepository.selectAttendanceId(memberId, attendanceDate.toString());
 	}
 
 	//날짜와 출석유형 조회하기

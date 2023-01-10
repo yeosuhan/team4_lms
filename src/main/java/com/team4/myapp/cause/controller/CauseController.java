@@ -97,9 +97,31 @@ public class CauseController {
 		
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("page",page);
+		model.addAttribute("boardType", "/cause/list/");
 		
 		return "cause/list";
-		
 	}
+	
+	//사유서 목록 보기 (관리자)
+//	@RequestMapping(value="cause/admin/list", method = RequestMethod.GET)
+//	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
+//		//리스트 불러오기
+//		session.setAttribute("page", page);
+//		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
+//		model.addAttribute("causeList", causeList);
+//		
+//		
+//		//전체 페이지 구하기(5페이지씩 구분)
+//		int bbsCount = causeService.selectCauseListAdmin(memberId);
+//		int totalPageCount=0;
+//		if(bbsCount > 0) {
+//			totalPageCount = (int)Math.ceil(bbsCount/5.0);
+//		}
+//		
+//		model.addAttribute("totalPageCount",totalPageCount);
+//		model.addAttribute("page",page);
+//		
+//		return "cause/list";
+//	}
 	
 }

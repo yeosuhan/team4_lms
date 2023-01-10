@@ -10,6 +10,13 @@
 		]]>
 	</select>
 	
+	<select id="selectAttendanceId" parameterType="map" resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  FROM ATTENDANCE
+			WHERE (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{attendanceDate})
+		]]>
+	</select>
+	
 	<insert id="insertAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
@@ -59,14 +66,6 @@
 		]]>
 	</select>
 	
-	<update id="insertCheckOut" parameterType="map" >
-		<![CDATA[
-			update attendance 
-			set CHECK_OUT = CURRENT_TIMESTAMP
-			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
-		]]>
-	</update>
-	
 	<select id="selectCheckIn" parameterType="map"
       resultType="string">
       <![CDATA[
@@ -85,7 +84,6 @@
 	</select>
 
 	<update id="updateCheckOut" parameterType="map">
-
 		update attendance
 		set CHECK_OUT = CURRENT_TIMESTAMP
 		<if test="attendanceStatus >= 0">
