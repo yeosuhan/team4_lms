@@ -44,7 +44,8 @@ $(document).ready(function(){
 	   <div class="form-group">
 	      <label class="control-label col-sm-2" for="name"><fmt:message key="WRITER"/></label>
 	      <div class="col-sm-2">
-	      	<input type="text" name="memberId" id="memberId" class="form-control" value="${board.memberId}" readonly>
+	      	<input type="text" name="memberName" id="memberName" value="${sessionScope.membername}" ${!empty sessionScope.membername ? "readonly" : "" } class="form-control">
+	      	<input type="hidden" name="memberId" id="memberId" class="form-control" value="${board.memberId}">
 	      </div>
 	    </div>
 	    <div class="form-group">

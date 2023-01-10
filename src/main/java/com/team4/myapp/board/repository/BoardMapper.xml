@@ -146,7 +146,7 @@
 		SET 
 			board_type=#{boardType}, 
 			board_title=#{title}, 
-			content=#{content}, BOARD_DATE=SYSDATE 
+			board_content=#{content}, BOARD_DATE=SYSDATE 
 		WHERE 
 			board_id=#{boardId}
 	]]>

@@ -70,7 +70,7 @@ color: grey;
 			<td align="left">page</td>
 			<td align="left">
 			<c:if test="${totalPageCount==0}">검색 결과가 없습니다. </c:if>
-				<jk:bpaging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+				<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 			</td>
 			<td align="right">
 				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>

@@ -68,10 +68,17 @@ color: grey;
 		<tr>
 		<td align="left">page</td>
 			<td align="center">
-				<jk:bpaging boardType="${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+				<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 			</td>
 			<td align="right">
-				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				<c:if test="${boardType=='community'}">
+					<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				</c:if>
+				<c:if test="${boardType=='reference'}">
+					<c:if test="${sessionScope.membername=='admin'}">
+						<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+					</c:if>
+				</c:if>
 			</td>
 		</tr>
 		</table>

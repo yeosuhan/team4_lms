@@ -507,7 +507,7 @@
     <br/><br/>   
       <hr class="new-hr">
       <div class="right-bottom">
-        <div class="check">        
+        <div class="check">
           <h2><c:if test="${board.boardType=='reference'}"><fmt:message key="REFERENCE"/></c:if>
    			<c:if test="${board.boardType=='community'}"><fmt:message key="COMMUNITY"/></c:if></h2>         
         </div>
@@ -515,13 +515,17 @@
           <div class="buttons">
             <button class="new button" onclick="location.reload()"> 
       			<img src="https://i.ibb.co/X4j3TZR/reload.png" />
-           </button>
-            <button class="new button" onclick="location.href='/board/update/${board.boardId}'"> 
-      			<i class="fa-solid fa-pen" style="color:#A4A4A4"></i>
-           </button>
-            <button class="new button" data-toggle="modal" data-target="#deleteModal"> 
-      			<img src="https://i.ibb.co/Lv6TqBG/waste-bin.png" />
-           </button>
+           </button> 
+           <c:if test="${sessionScope.memberid eq board.memberId}">       
+	            <button class="new button" onclick="location.href='/board/update/${board.boardId}'"> 
+	      			<i class="fa-solid fa-pen" style="color:#A4A4A4"></i>
+	           </button>  
+	       </c:if> 
+	       <c:if test="${sessionScope.memberid eq board.memberId}">       
+	            <button class="new button" data-toggle="modal" data-target="#deleteModal"> 
+	      			<img src="https://i.ibb.co/Lv6TqBG/waste-bin.png" />
+	           </button>
+           </c:if> 
            <div class="modal fade" id="deleteModal" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">

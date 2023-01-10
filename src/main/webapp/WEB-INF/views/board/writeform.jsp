@@ -33,7 +33,8 @@
 	   <div class="form-group">
 	      <label class="control-label col-sm-2" for="name"><fmt:message key="WRITER"/></label>
 	      <div class="col-sm-2">
-	        <input type="text" name="memberId" id="memberId" value="${sessionScope.memberId}" ${!empty sessionScope.memberId ? "readonly" : "" } class="form-control">
+	        <input type="text" name="memberName" id="memberName" value="${sessionScope.membername}" ${!empty sessionScope.membername ? "readonly" : "" } class="form-control">
+	      	<input type="hidden" name="memberId" id="memberId" value="${sessionScope.memberid}" ${!empty sessionScope.memberid ? "readonly" : "" } class="form-control">
 	      </div>
 	    </div>
 	    <div class="form-group">
