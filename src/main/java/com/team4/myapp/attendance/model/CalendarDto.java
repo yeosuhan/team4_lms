@@ -20,6 +20,7 @@ public class CalendarDto {
 	private int attendanceId;
 	private int attendanceStatus;
 	private int submitStatus;
+	private String memberName;
 	
 	public static CalendarDto toCalendarDto(Attendance attendance) {
 		String status = "";
@@ -35,6 +36,6 @@ public class CalendarDto {
 		}
 		
 		return new CalendarDto(attendance.getCheckIn(), attendance.getCheckOut(), status, 
-				attendance.getAttendanceId(), attendance.getAttendanceStatus(), attendance.getSubmitStatus());
+				attendance.getAttendanceId(), attendance.getAttendanceStatus(), attendance.getSubmitStatus(), attendance.getMemberName());
 	}
 }

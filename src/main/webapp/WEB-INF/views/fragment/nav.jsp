@@ -18,11 +18,11 @@
 	                <div class="collapse navbar-collapse" id="navbarResponsive">
 	                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 	                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#portfolio">사유서 관리</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#about">커뮤니티</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#team">자료실</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#contact">로그인</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#contact">로그아웃</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/cause/list">사유서 관리</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/board/list/community">커뮤니티</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/board/list/reference">자료실</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/member/login">로그인</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="<c:url value='/member/logout'/>">로그아웃</a></li>
 	                    </ul>
 	                </div>
 	            </div>
