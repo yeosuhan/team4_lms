@@ -57,6 +57,8 @@
 
 	<context:component-scan
 		base-package="com.team4.myapp.attendance.service"></context:component-scan>
+	<context:component-scan base-package="com.team4.myapp.cause.service"/> 
+	<context:component-scan base-package="com.team4.myapp.reasoncategory.service"/> 
 	<context:component-scan
 		base-package="com.team4.myapp.member.service" />
 		<context:component-scan
@@ -70,4 +72,6 @@
 		base-package="com.team4.myapp.attendance.dao" />
 		<mybatis-spring:scan
 		base-package="com.team4.myapp.out.dao" />
+		<mybatis-spring:scan base-package="com.team4.myapp.cause.dao"/> 
+	<mybatis-spring:scan base-package="com.team4.myapp.reasoncategory.dao"/>
 </beans>

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,13 @@ public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IMemberRepository memberRepository;
-	
+
 	// 근무시간 충족 여부 검사
 	private boolean calWorkingTime(String memberId) {
 		// 5 시간 이상 근무 시 true 리턴한다.
 		Date date = null;
         try {
+
         	// 출근 시간 조회
         	String str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
         	System.out.println("str : " + str);
@@ -57,20 +59,19 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
-//		String startDate = 
 		List<Attendance> alist = attendanceRepository.selectMemberAttendance(memberId, month);
-
+		
 		System.out.println("selectMemberAttendance ~~~~~~~~~~~~~~~~~");
 		System.out.println(alist);
-
+		
 		List<CalendarDto> clist = new ArrayList<CalendarDto>();
-
+		
 		for (Attendance a : alist) {
 			clist.add(CalendarDto.toCalendarDto(a));
 		}
 		return clist;
 	}
-
+	
 	@Override
 	public void updateChekIn(String memberId) {
 		Attendance attendance = new Attendance();
@@ -106,12 +107,21 @@ public class AttendanceService implements IAttendanceService {
 		
 		// 근무시간 미달 여부 검사
 		if(!result) {
-			System.out.println(" ******************************************");
 			attendanceRepository.updateCheckOut(memberId, 0, today);
 		}
 		else attendanceRepository.updateCheckOut(memberId, -1, today);
 	}
+	
 
+	@Override
+	public int selectId(String memberId) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		String today = sdf.format(new Date());
+		
+		Optional<Integer> attendanceId = attendanceRepository.selectId(memberId, today);
+		return attendanceId.get();
+	}
+	
 	@Override
 	public String selectCheckIn(String memberId) {
 		String today = Today.getToday();
@@ -122,12 +132,23 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public String selectCheckOut(String memberId) {
-		String today = Today.getToday();
-
+		String today = Today.getToday();	
 		String checkout = attendanceRepository.selectCheckOut(memberId, today);
 		return checkout;
 	}
+	
+	//출석ID 가져오기
+	@Override
+	public Optional<Integer> selectAttendanceId(String memberId, java.sql.Date attendanceDate) {	
+		return attendanceRepository.selectId(memberId, attendanceDate.toString());
+	}
 
+	//날짜와 출석유형 조회하기
+	@Override
+	public Attendance selectDataAndCategory(int attendanceId) {
+		return attendanceRepository.selectDataAndCategory(attendanceId);
+	}
+	
 	@Transactional
 	public void insertAll() {
 		String today = Today.getToday();

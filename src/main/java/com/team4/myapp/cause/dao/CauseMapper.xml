@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.myapp.cause.dao.ICauseRepository">
+
+	<insert id="insertCause" parameterType="com.team4.myapp.cause.model.Cause">	
+		INSERT INTO CAUSE(CAUSE_ID, CAUSE_CONTENT, CAUSE_STATUS, CATEGORY_ID, ATTENDANCE_ID, MEMBER_ID
+			<if test="fileData != null">,FILE_DATA, FILE_NAME, FILE_SIZE, FILE_CONTENT_TYPE</if>
+		) VALUES (
+			cause_seq.nextval, #{content}, 1, #{categoryId}, #{attendanceId}, #{memberId}
+			<if test="fileData != null">, #{fileData}, #{fileName}, #{fileSize}, #{fileContentType}</if>
+		)	
+	</insert>
+	
+	<select id="selectCauseCount" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS "count" FROM CAUSE WHERE MEMBER_ID=#{memberId}
+		]]>
+	</select>
+	
+	<select id="selectCauseList" parameterType="map" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
+		<![CDATA[
+		SELECT bb.CAUSE_ID 	AS		causeId,
+        		WRITE_DATE 	AS 		writeDate,
+        		CAUSE_CONTENT		AS 		content,
+        		CATEGORY_ID		AS 		categoryId,
+       			bb.MEMBER_ID		AS 	memberId,
+       		 	bb.ATTENDANCE_STATUS 	AS attendanceStatus,
+       			bb.CAUSE_STATUS 		AS 		causeStatus,
+        		RNUM+1 AS seq
+				FROM( SELECT aa.CAUSE_ID, aa.WRITE_DATE, aa.CAUSE_CONTENT, CATEGORY_ID, aa.MEMBER_ID, ATTENDANCE_STATUS, CAUSE_STATUS, ROWNUM AS RNUM
+            		FROM (
+                		SELECT  CAUSE_ID, CAUSE.WRITE_DATE, CAUSE.CAUSE_CONTENT, CATEGORY_ID, CAUSE.MEMBER_ID, ATTENDANCE.ATTENDANCE_STATUS, CAUSE.CAUSE_STATUS
+                		FROM CAUSE, ATTENDANCE
+                		WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID and CAUSE.MEMBER_ID = #{memberId}
+                		ORDER BY WRITE_DATE DESC
+                	) aa
+        		) bb
+		WHERE RNUM BETWEEN #{start} AND #{end}
+		]]>
+	</select>
+	
+</mapper>
