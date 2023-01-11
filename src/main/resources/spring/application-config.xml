@@ -28,7 +28,6 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -44,19 +43,20 @@
 	<tx:annotation-driven />
 
 	<!-- 예외 처리 -->
-	<!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
-	<!-- <property name="exceptionMappings"> -->
-	<!-- <props> -->
-	<!-- <prop key="java.lang.RuntimeException"> -->
-	<!-- error/runtime -->
-	<!-- </prop> -->
-	<!-- </props> -->
-	<!-- </property> -->
-	<!-- <property name="defaultErrorView" value="error/default"></property> -->
-	<!-- </bean> -->
+<!-- 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!-- 		<property name="exceptionMappings"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="java.lang.RuntimeException"> -->
+<!-- 					error/runtime -->
+<!-- 				</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 		<property name="defaultErrorView" value="error/default"></property>	 -->
+<!-- 	</bean> -->
+	<!-- 서비스  경로 -->
+	<context:component-scan base-package="com.team4.myapp.board.service"></context:component-scan>
 
-	<context:component-scan
-		base-package="com.team4.myapp.attendance.service"></context:component-scan>
+	<context:component-scan base-package="com.team4.myapp.attendance.service"></context:component-scan>
 	<context:component-scan base-package="com.team4.myapp.cause.service"/> 
 	<context:component-scan base-package="com.team4.myapp.reasoncategory.service"/> 
 	<context:component-scan
@@ -74,4 +74,7 @@
 		base-package="com.team4.myapp.out.dao" />
 		<mybatis-spring:scan base-package="com.team4.myapp.cause.dao"/> 
 	<mybatis-spring:scan base-package="com.team4.myapp.reasoncategory.dao"/>
+	<mybatis-spring:scan base-package="com.team4.myapp.member.dao"/>
+	<mybatis-spring:scan base-package="com.team4.myapp.board.repository"/>
+
 </beans>

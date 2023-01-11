@@ -10,9 +10,6 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
-		infrastructure -->
-
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -22,14 +19,20 @@
 		location="/WEB-INF/resources/member/" />
 	<resources mapping="/c/**"
 		location="/WEB-INF/resources/cause_list/" />
+	<resources mapping="/b/**"
+		location="/WEB-INF/resources/boardres/" />
+
+	<resources mapping="/images/**"
+		location="/WEB-INF/resources/images/" />
+
+	<resources mapping="/cal/**"
+		location="/WEB-INF/resources/calendar/" />
+
 	<resources mapping="/cd/**"
 		location="/WEB-INF/resources/cause_detail/" />
 	<resources mapping="/h/**"
 		location="/WEB-INF/resources/home/" />
-	<resources mapping="/cal/**"
-		location="/WEB-INF/resources/calendar/" />
-	<resources mapping="/images/**"
-		location="/WEB-INF/resources/images/" />
+
 	<resources mapping="/ld/**"
 		location="/WEB-INF/resources/lec_detail/" />
 
@@ -60,7 +63,6 @@
 			<beans:value>50000000</beans:value>
 		</beans:property>
 	</beans:bean>
-
 
 	<!-- json 응답을 위함 @ResponseBody -->
 	<beans:bean
