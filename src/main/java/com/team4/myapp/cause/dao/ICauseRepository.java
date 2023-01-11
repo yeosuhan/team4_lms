@@ -19,4 +19,9 @@ public interface ICauseRepository {
 			@Param("start")int start, @Param("end") int end);
 	
 	List<CauseListDto> selectCauseAdmin(@Param("start")int start, @Param("end") int end);
+	void accept(@Param("causeId")int causeId, @Param("causeStatus") int causeStatus);
+	void attendanceUcc(@Param("causeId") int causeId, @Param("submitStatus") int submitStatus);
+	int getAwaitNo();
+	int getApproveNo();
+	int getRejectNo();
 }

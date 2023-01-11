@@ -84,4 +84,38 @@
 		]]>
 	</select>
 	
+	<update id="accept" parameterType="hashmap">
+	<![CDATA[
+		UPDATE cause 
+			SET CAUSE_STATUS = #{causeStatus}
+		WHERE CAUSE_ID=#{causeId}
+	]]>
+	</update>
+	
+	<update id="attendanceUcc" parameterType="hashmap">
+	<![CDATA[
+		UPDATE ATTENDANCE 
+			SET SUBMIT_STATUS = #{submitStatus}
+		WHERE ATTENDANCE_ID=(select ATTENDANCE_ID  from cause where CAUSE_ID=#{causeId})
+	]]>
+	</update>
+	
+	<select id="getAwaitNo" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS count FROM CAUSE where CAUSE_STATUS=0
+		]]>
+	</select> 
+	
+	<select id="getApproveNo" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS count FROM CAUSE where CAUSE_STATUS=1
+		]]>
+	</select> 
+	
+	<select id="getRejectNo" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS count FROM CAUSE where CAUSE_STATUS=2
+		]]>
+	</select> 
+	
 </mapper>

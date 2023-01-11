@@ -120,5 +120,25 @@ public class CauseService implements ICauseService{
 		return list;
 	}
 
+	@Override
+	public void accept(int causeId, int causeStatus) {
+		causeRepository.accept(causeId, causeStatus);	
+		causeRepository.attendanceUcc(causeId, causeStatus+1);	
+	}
+
+	@Override
+	public int getAwaitNo() {
+		return causeRepository.getAwaitNo();	
+	}
+
+	@Override
+	public int getApproveNo() {
+		return causeRepository.getApproveNo();
+	}
+
+	@Override
+	public int getRejectNo() {
+		return causeRepository.getRejectNo();
+	}
 
 }

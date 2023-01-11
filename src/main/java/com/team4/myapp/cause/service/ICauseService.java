@@ -15,6 +15,10 @@ public interface ICauseService {
 
 	List<CauseListDto> selectCauseList(String memberId, int page);
 	List<CauseListDto> selectCauseListAdmin(int page);
+	void accept(int causeId, int causeStatus);
+	int getAwaitNo();
+	int getApproveNo();
+	int getRejectNo();
 	
 	
 }

@@ -114,6 +114,11 @@ public class CauseController {
 		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
 		model.addAttribute("causeList", causeList);
 		
+		//대기 수		
+		model.addAttribute("awaitNo",causeService.getAwaitNo());
+		model.addAttribute("approveNo",causeService.getApproveNo());
+		model.addAttribute("rejectNo",causeService.getRejectNo());
+		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectCount();
 		System.out.println("관리자 전체 행: "+ bbsCount);
@@ -139,5 +144,13 @@ public class CauseController {
 		return cdlist;
 	}
 	
+	///-------------------------------------------------------------------------
+	
+	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
+	public String accept(CauseListDto cause, int page) {	
+			causeService.accept(cause.getCauseId(),cause.getCauseStatus());
+		return "redirect:/cause/admin/list/"+page;
+	}
+		
 	
 }
