@@ -19,10 +19,10 @@
       ]]>
    </select>
    
-   <insert id="insertAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
+   <insert id="insertAttendance" parameterType="string">
       <![CDATA[
-         insert into attendance(ATTENDANCE_ID, ATTENDANCE_DATE, CHECK_IN, ATTENDANCE_STATUS, SUBMIT_STATUS, MEMBER_ID)
-         values(ATTENDANCE_SEQ.nextval, SYSDATE , CURRENT_TIMESTAMP, #{attendanceStatus}, #{submitStatus} , #{memberId})
+         insert into attendance(ATTENDANCE_ID, MEMBER_ID)   
+         values(ATTENDANCE_SEQ.nextval, #{memberId})
       ]]>
    </insert>
    

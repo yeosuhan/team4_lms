@@ -21,6 +21,7 @@ public interface IAttendanceService {
 	
 	String selectCheckIn(String memberId);
 	String selectCheckOut(String memberId);
+	void leaveEarly(String memberId);
 
-	int selectId(String memberId);
+	int selectId(String memberId); 
 }
