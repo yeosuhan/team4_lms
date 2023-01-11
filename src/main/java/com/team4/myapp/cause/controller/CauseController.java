@@ -162,11 +162,6 @@ public class CauseController {
 	public String updateCause(@PathVariable int causeId, Model model){
 		CauseListDto cause= causeService.selectCauseDetail(causeId);
 		
-		System.out.println("사유서 수정입니다. 사유서상태는? :"+cause.getCauseStatus());
-		if(cause.getCauseStatus() == 2) {
-			return "cause/detail/{causeId}";
-		}
-		
 		logger.info("/cause/update : "+ cause.toString());
 		model.addAttribute("list",cause);
 		return "cause/update";
@@ -174,8 +169,7 @@ public class CauseController {
 	
 	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
 	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs, Model model) {
-		String state = causeService.updateCause(cause.getCauseId());
-		model.addAttribute("state", state);
+		causeService.updateCause(cause);
 		
 		return "redirect:/cause/list";
 	}

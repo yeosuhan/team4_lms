@@ -35,7 +35,6 @@
 					</div>
 					<div class="form-row">
 						<div class="form-holder">출석 유형</div>
-						
 						<div class="form-holder">
 							<c:choose>
 								<c:when test="${attendanceId != 0}">

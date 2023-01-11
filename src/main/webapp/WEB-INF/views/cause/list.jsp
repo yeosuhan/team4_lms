@@ -82,29 +82,29 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">날짜</div>
 							<div id="cd_date" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">이름</div>
 							<div id="cd_name" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">출석유형</div>
 							<div id="cd_attendance" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">상세 이유</div>
 							<div id="cd_category" class="col-6"></div>
 						</div>
 
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">내용</div>
 							<div id="cd_content" class="col-6"></div>
 						</div>
 
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">처리</div>
 							<div id="cd_status" class="col-6"></div>
 						</div>
@@ -120,10 +120,10 @@
 					</div>
 					<div class="modal-footer">
 					<!-- Modal footer -->
-					<form action="/cause/update">
-						<input type="button" class="btn btn-info" id="updateButton" name="id"  value="수정"/>
+						<input type="button" class="btn btn-info" id="updateButton" name="${causeId}" onclick="update()" value="수정"/>
+						<button class="btn btn-info" name="update" id="updateButton" value="${causeId}">수정</button>
 						<input type="button" class="btn btn-info" name="${causeId}" value="삭제"/>
-					</form>
+					
 					</div>
 				</div>	
 			</div>

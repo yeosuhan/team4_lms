@@ -20,5 +20,5 @@ public interface ICauseRepository {
 	
 	List<CauseListDto> selectCauseAdmin(@Param("start")int start, @Param("end") int end);
 	
-	void updateCauseDetail(int causeId);
+	void updateCauseDetail(Cause cause);
 }

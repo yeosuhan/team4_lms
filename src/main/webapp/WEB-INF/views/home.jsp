@@ -29,8 +29,8 @@
 
 <header class="masthead" style="border-bottom-color: green;">
 	<div class="container">
-		<div class="masthead-subheading">Welcome To OTI University!</div>
-		<div class="masthead-heading text-uppercase">세계로 뻗어나가는 OTI대학</div>
+		<div class="masthead-subheading">Welcome To OTI University</div>
+		<div class="masthead-heading text-uppercase">세계로 뻗어나가는 OTI대학교</div>
 		<a class="btn btn-primary btn-xl text-uppercase" href="/member/login">Go Login</a>
 	</div>
 </header>

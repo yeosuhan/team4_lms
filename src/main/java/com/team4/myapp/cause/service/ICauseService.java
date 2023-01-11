@@ -17,7 +17,7 @@ public interface ICauseService {
 	List<CauseListDto> selectCauseList(String memberId, int page);
 	List<CauseListDto> selectCauseListAdmin(int page);
 	
-	String updateCause(int causeId);
+	void updateCause(Cause cause);
 	
 	
 	

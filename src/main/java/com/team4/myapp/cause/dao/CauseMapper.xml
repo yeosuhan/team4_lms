@@ -88,10 +88,10 @@
 		]]>
 	</select>
 	
-	<update id="updateCauseDetail" parameterType="int">
+	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
 		<![CDATA[
 			UPDATE CAUSE
-				SET CAUSE_CONTENT AS causeContent, 
+				SET CAUSE_CONTENT AS content, 
 					FILE_NAME=#{fileName},
 					FILE_SIZE=#{fileSize},
 					FILE_CONTENT=#{fileContentType},

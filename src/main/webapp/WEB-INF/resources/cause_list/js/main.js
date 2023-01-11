@@ -35,24 +35,31 @@ function DetailList(id){
 			$('#cd_attendance').text(data.attendanceStatusString);
 			$('#cd_status').text(data.causeStatusString);
 			$('#cd_content').text(data.content);
-			$('.updateButton').val(id);
+			$('#cd_category').text(data.categoryString);
 			
-			$('#cd_file').empty();
-			
-			var img = document.createElement('img'); 
-		    img.src = '/file/'+id; 
-		    console.log(img);
-			$('#cd_file').append(img);
-			
-			/*let img = '<img src="">';
-			console.log(img);
-			$('#cd_file').empty();
-			$('#cd_file').append(img);*/
-		/*	$('#cd_category').text("<img src='<c:url value='/file/"+data.fileId+"/>'>");	*/
+			$('.updateButton').append();
 			
 			
-		}	
+			// 사진 띄우기
+			if(data.fileSize > 0){
+				let img = '<img src="/file/'+id+'"style="width: 100px"/>';
+			    console.log(img);
+			    $('#cd_file').empty();
+				$('#cd_file').append(img);
+				 var i = true;
+				
+			} else{
+				$('#cd_file').text("첨부파일 없음");
+			} 
+			//사진 커졌다가 작아졌다 하는 기능
+			$(function() {
+			 	$('img').bind('click', function(event){ 
+					var $target = $(this); // $(event.target);
+			            $target.width($target.width()*2);  // 나누기는 축소
+			            $target.height($target.height()*2);	
+			            $target.unbind();
+			 	});		 
+			});
+		}
 	});
-	
-	
 }
