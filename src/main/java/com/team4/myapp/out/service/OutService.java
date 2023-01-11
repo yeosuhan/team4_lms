@@ -61,9 +61,13 @@ public class OutService implements IOutService {
 		
 		// 총 외출 시간 계산하기
 		long time = 0;
+		String ot;
 		for(OutDto dto : list) {
 			in = format.parse(dto.getCheckIn());
-			out = format.parse(dto.getCheckOut());
+			ot = dto.getCheckOut();
+			if(ot == null) continue;
+			out = format.parse(ot);
+			
 			System.out.println(" > " + (out.getTime() - in.getTime()));
 			time =  (out.getTime() - in.getTime()) / 1000; // 총 몇 초 ?
 			System.out.println(" >>>>>> " + time);

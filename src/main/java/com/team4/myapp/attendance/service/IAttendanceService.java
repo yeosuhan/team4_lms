@@ -10,6 +10,7 @@ import com.team4.myapp.attendance.model.CalendarDto;
 public interface IAttendanceService {
 	
 	void insertAll();
+	void todayPost(String today);
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 	

@@ -42,13 +42,13 @@
 						lead-in to additional content.</p>
 					<div class="row" style="background-color: green; height: 100px;">
 						<div class="col-sm-6" style="background-color: yellow;">
-							<c:if test="${checkin == false}">
+							<c:if test="${checkin == true}">
 								<form action="/attendance/checkin" method="POST">
 									<button type="submit" class="btn btn-primary">출석</button>
 								</form>
 							</c:if>
 
-							<c:if test="${checkout == false}">
+							<c:if test="${checkout == true}">
 								<form action="/attendance/checkout" method="POST">
 									<button type="submit" class="btn btn-primary">퇴근</button>
 								</form>
@@ -69,17 +69,17 @@
 					<p class="card-text">${outListDto.hours} 시간  ${outListDto.minutes} 분  ${outListDto.seconds}초</p>
 					<div class="row" style="background-color: green; height: 100px;">
 						<div class="col-sm-6" style="background-color: yellow;">
-							<c:if test="${goOut == true && checkout == false}">
+							<c:if test="${goOut == true && checkout == true}">
 								<form action="/attendance/out" method="POST">
 									<button type="submit" class="btn btn-primary">외출</button>
 								</form>
 							</c:if>
-							<c:if test="${goOut == false && checkout == false}">
+							<c:if test="${goOut == false && checkout == true}">
 								<form action="/attendance/comback" method="POST">
 									<button type="submit" class="btn btn-primary">복귀</button>
 								</form>
 							</c:if>
-							<c:if test="${checkout == false}">
+							<c:if test="${checkout == true}">
 								<form action="/attendance/leave" method="POST">
 									<button type="submit" class="btn btn-primary">조퇴</button>
 								</form>

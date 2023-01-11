@@ -48,20 +48,18 @@ public class AttendanceController {
 		String checkin = null;
 		String checkout = null;
 		// 출근 여부 확인
-		try {
-			checkin = attendanceService.selectCheckIn(memberId);
+		checkin = attendanceService.selectCheckIn(memberId);
+		if (checkin == null) {
 			model.addAttribute("checkin", true);
-		} catch (Exception e) {
-			model.addAttribute("checkin", false);
-		}
+		} else model.addAttribute("checkin", false);
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkout == null)
-			model.addAttribute("checkout", false);
+		if (checkin != null && checkout == null)
+			model.addAttribute("checkout", true);
 		else {
 			checkout = "있음";
-			model.addAttribute("checkout", true);
+			model.addAttribute("checkout", false);
 		}
 
 		// 외출 여부 확인
