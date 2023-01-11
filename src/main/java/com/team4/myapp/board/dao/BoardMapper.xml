@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team4.myapp.board.dao.IBoardRepository">
+
+	<select id="selectArticleListByCategory" parameterType="hashmap" resultType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+	SELECT 
+	    board_id 				AS "boardId", 
+	    board_title					AS "title", 
+	    board_date				AS "boardDate", 
+	    view_count				AS "viewCount", 
+	    member_id				AS "memberId", 
+	    heart_count				AS "heartCount", 
+	    file_download_count		AS "fileDownloadCount"
+	FROM board
+	WHERE board_type=#{boardType}
+	ORDER BY board_id DESC
+	OFFSET #{start}-1 ROWS
+	FETCH FIRST 10 ROWS ONLY
+	]]>
+	</select>
+	
+	<select id="selectArticle" parameterType="int" resultType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		SELECT 
+		    b.board_id 				AS "boardId", 
+		    board_title				AS "title", 
+		    board_content			AS "content", 
+		    board_date				AS "boardDate", 
+		    view_count				AS "viewCount", 
+		    heart_count				AS "heartCount", 
+		    file_name				AS "fileName",
+		    file_data				AS "fileData",
+		    file_content_type		AS "fileContentType",
+		    file_size				AS "fileSize",
+		    file_download_count		AS "fileDownloadCount",
+		    board_type				AS "boardType",
+		    b.member_id				AS "memberId"
+		FROM board b
+		WHERE b.board_id=#{boardId}
+	]]>
+	</select>
+	
+	<update id="updateReadCount" parameterType="int">
+	<![CDATA[
+		UPDATE board 
+			SET view_count = view_count+1 
+		WHERE board_id=#{boardId}
+	]]>
+	</update>
+	
+	<update id="updateDownloadCount" parameterType="int">
+	<![CDATA[
+		UPDATE board 
+			SET FILE_DOWNLOAD_COUNT = FILE_DOWNLOAD_COUNT+1 
+		WHERE board_id=#{boardId}
+	]]>
+	</update>
+	
+	<update id="updateHeartCount" parameterType="int">
+	<![CDATA[
+		UPDATE board 
+			SET HEART_COUNT = HEART_COUNT+1,
+			 	view_count = view_count-1 
+		WHERE board_id=#{boardId}
+	]]>
+	</update>
+	
+	<select id="selectMaxArticleNo" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT 
+			NVL(MAX(board_id),0) AS "articleNo"
+		FROM board
+	]]>
+	</select>
+
+	<select id="selectMaxFileId" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT 
+			NVL(MAX(file_id),0) AS "fileId"
+		FROM board_upload_file
+	]]>
+	</select>
+	
+	<insert id="insertArticle" parameterType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		INSERT INTO 
+		board 
+			(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE, MEMBER_ID)  
+		VALUES 
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{boardType}, #{memberId})
+	]]>	
+	</insert>
+	
+	<insert id="insertFileData" parameterType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		INSERT INTO 
+		board 
+			(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, FILE_NAME, FILE_DATA, FILE_CONTENT_TYPE, FILE_SIZE, BOARD_TYPE, MEMBER_ID)  
+		VALUES 
+			(board_seq.nextval, #{title}, #{content}, SYSDATE, #{fileName}, #{fileData}, #{fileContentType}, #{fileSize}, #{boardType}, #{memberId})
+	]]>	
+	</insert>
+
+	<select id="getFile" parameterType="int" resultType="com.team4.myapp.board.model.BoardUploadFile">
+	<![CDATA[
+		SELECT 
+			file_id				AS "fileId", 
+			board_id			AS "boardId", 
+			file_name			AS "fileName", 
+			file_size			AS "fileSize", 
+			file_content_type	AS "fileContentType", 
+			file_data 			AS "fileData"
+		FROM board_upload_file 
+		WHERE file_id=#{fileId}
+	]]>
+	</select>
+
+	<insert id="updateReplyNumber" parameterType="hashmap">
+	<![CDATA[
+		UPDATE 
+			board 
+		SET 
+			reply_number = reply_number + 1 
+		WHERE 
+			master_id = #{masterId} AND reply_number > #{replyNumber}
+	]]>
+	</insert>
+
+	<insert id="replyArticle" parameterType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		INSERT INTO 
+		board 
+			(board_id, category_id, writer, email, password, title, content, write_date, master_id, reply_number, reply_step)  
+		VALUES 
+			(#{boardId}, #{categoryId}, #{writer}, #{email}, #{password}, #{title}, #{content}, SYSDATE, #{masterId}, #{replyNumber}, #{replyStep})
+	]]>
+	</insert>
+
+	<update id="updateArticle" parameterType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		UPDATE 
+			board 
+		SET 
+			board_title=#{title}, 
+			board_content=#{content}, 
+			BOARD_DATE=SYSDATE 
+		WHERE 
+			board_id=#{boardId}
+	]]>
+	</update>
+
+	<update id="updateFileData" parameterType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+	 	UPDATE 
+	 		board
+	 	SET 
+	 		file_name=#{fileName}, file_size=#{fileSize}, 
+			file_content_type=#{fileContentType}, file_data=#{fileData}, 
+			FILE_DOWNLOAD_COUNT=0
+	 	WHERE 
+	 		board_id=#{boardId}
+	]]>
+	</update>
+	
+	<select id="selectDeleteArticle" parameterType="int" resultType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		SELECT 
+			category_id		AS "categoryId", 
+			master_id		AS "masterId", 
+			reply_number	AS "replyNumber"
+		FROM
+			board
+		WHERE 
+			board_id = #{boardId}
+	]]>
+	</select>
+	
+	<delete id="deleteFileData" parameterType="int">
+	<![CDATA[
+		DELETE FROM board_upload_file 
+		WHERE EXISTS  ( SELECT board_id FROM board 
+						 WHERE board.master_id=#{boardId} 
+						 	AND board.board_id=board_upload_file.board_id )
+	]]>
+	</delete>
+
+	<delete id="deleteReplyFileData" parameterType="int">
+	<![CDATA[
+		DELETE FROM board_upload_file 
+		WHERE EXISTS  ( SELECT board_id FROM board  
+						 WHERE board.board_id=#{boardId} 
+						 	AND board.board_id=board_upload_file.board_id )
+	]]>
+	</delete>
+
+	<delete id="deleteArticleByBoardId" parameterType="int">
+		DELETE FROM 
+			board 
+		WHERE 
+			board_id=#{boardId}
+	</delete>
+
+	<delete id="deleteArticleByMasterId" parameterType="int">
+		DELETE FROM 
+			board 
+		WHERE 
+			master_id=#{boardId}
+	</delete>
+	
+	<select id="selectTotalArticleCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(board_id) AS "count" 
+		FROM board
+	]]>
+	</select>
+	
+	<select id="selectTotalArticleCountByCategoryId" parameterType="string" resultType="int">
+	<![CDATA[
+		SELECT COUNT(board_id) AS "count"
+		FROM board 
+		WHERE board_type=#{boardType}	
+	]]>
+	</select>
+	
+	<select id="selectTotalArticleCountByKeyword" parameterType="hashmap" resultType="int">
+	<![CDATA[
+		SELECT 
+			COUNT(*) FROM board
+		WHERE 
+			board_type=#{boardType} AND
+			(BOARD_TITLE LIKE #{keyword} OR BOARD_CONTENT LIKE #{keyword})
+	]]>
+	</select> 
+
+	<select id="searchListByContentKeyword" parameterType="hashmap" resultType="com.team4.myapp.board.model.Board">
+	<![CDATA[
+		SELECT 
+			board_id 				AS "boardId", 
+		    BOARD_TITLE				AS "title", 
+		    board_date				AS "boardDate", 
+		    view_count				AS "viewCount", 
+		    heart_count				AS "heartCount",
+		    member_id				AS "memberId", 
+		    file_download_count		AS "fileDownloadCount"
+	    FROM (
+	    	SELECT 
+	    		board_id, 
+			    BOARD_TITLE, 
+			    board_date, 
+			    view_count, 
+			    heart_count,
+			    member_id, 
+			    file_download_count,
+	    		rownum AS rnum
+	    	FROM (
+	    		SELECT * FROM board
+	    		WHERE
+	    			board_type=#{boardType} AND
+					(BOARD_TITLE LIKE #{keyword} OR BOARD_CONTENT LIKE #{keyword})
+	    		ORDER BY board_id DESC
+	    	)
+	    )
+	    WHERE rnum BETWEEN #{start} AND #{end}
+	]]>
+	</select>
+</mapper>

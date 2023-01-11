@@ -7,10 +7,14 @@ import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 
 public interface ICauseService {	
+	int selectCount();
 	int selectCauseCount(String memberId);
+	CauseListDto selectCauseDetail(int causeId);
+	
 	void insertCause(CauseDto causeDto);
 
 	List<CauseListDto> selectCauseList(String memberId, int page);
 	List<CauseListDto> selectCauseListAdmin(int page);
+	
 	
 }

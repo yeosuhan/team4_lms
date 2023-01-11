@@ -3,11 +3,13 @@ package com.team4.myapp.reply.model;
 import java.sql.Date;
 
 public class Reply {
+	
 	private int replyId;
 	private Date replyDate;
 	private String content;
 	private int boardId;
-	private int memberId;
+	private String memberId;
+	private String memberName;
 	
 	public int getReplyId() {
 		return replyId;
@@ -33,10 +35,19 @@ public class Reply {
 	public void setBoardId(int boardId) {
 		this.boardId = boardId;
 	}
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	
+	
+	
 }

@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.team4.myapp.board.model.Board;
 import com.team4.myapp.board.service.IBoardService;
-import com.team4.myapp.board.vo.Board;
+import com.team4.myapp.reply.model.Reply;
+import com.team4.myapp.reply.service.IReplyService;
 
 @Controller
 public class BoardController {
@@ -35,6 +37,8 @@ public class BoardController {
 	@Autowired
 	IBoardService boardService;
 	
+	@Autowired
+	IReplyService replyService;
 	// 작성 폼 열기
 	@RequestMapping(value = "/board/write/{boardType}", method = RequestMethod.GET)
 	public String writeArticle(@PathVariable String boardType, Locale locale, Model model) {
@@ -70,7 +74,7 @@ public class BoardController {
 	public String getListByCategory(@PathVariable String boardType, @PathVariable int page, HttpSession session, Model model) {
 		session.setAttribute("page", page);
 		model.addAttribute("boardType", boardType);
-
+		
 		List<Board> boardList = boardService.selectArticleListByCategory(boardType, page);
 		model.addAttribute("boardList", boardList);
 
@@ -93,8 +97,10 @@ public class BoardController {
 	@RequestMapping("/board/detail/{boardId}")
 	public String getBoardDetails(@PathVariable int boardId, Model model) {		
 		Board board = boardService.selectArticle(boardId);
+		List <Reply> reply = replyService.selectReply(boardId);
 		model.addAttribute("board", board);
 		model.addAttribute("boardType", board.getBoardType());
+		model.addAttribute("reply", reply);
 		return "board/boarddetail";
 	}
 	

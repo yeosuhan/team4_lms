@@ -2,8 +2,8 @@ package com.team4.myapp.board.service;
 
 import java.util.List;
 
-import com.team4.myapp.board.vo.Board;
-import com.team4.myapp.board.vo.BoardUploadFile;
+import com.team4.myapp.board.model.Board;
+import com.team4.myapp.board.model.BoardUploadFile;
 
 public interface IBoardService {
 	void insertArticle(Board boardId);

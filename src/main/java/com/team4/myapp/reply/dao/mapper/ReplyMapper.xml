@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.myapp.reply.dao.IReplyRepository">
-<insert id="writeReply" parameterType="com.team4.myapp.reply.model.Reply">
+	<insert id="writeReply"
+		parameterType="com.team4.myapp.reply.model.Reply">
 	 <![CDATA[
-	 	insert into reply (REPLY_ID, MASTER_ID, REPLY_DATE, CONTENT,BOARD_ID, MEMBER_ID)
-	 	VALUES (REPLY_SEQ.nextval,0,SYSDATE,#{content},#{boardId},#{memberId})
+	 	insert into reply (REPLY_ID, MASTER_ID, REPLY_DATE, CONTENT, BOARD_ID , MEMBER_ID)
+	 	VALUES (REPLY_SEQ.nextval, 0 , SYSDATE , #{content} , #{boardId} , #{memberId} )
 	 ]]>
 	</insert>
-
+	<select id="selectReply" parameterType="map"
+		resultType="com.team4.myapp.reply.model.Reply">
+	<![CDATA[
+		select
+			member_name as memberName,
+			content as content,
+			reply_date as replyDate,
+			reply_id as replyId,
+			board_id as boardId
+		from
+			members m, reply r
+		where
+			m.member_id = r.member_id
+        AND
+			board_id=#{boardId}
+		order by
+			reply_id desc
+	]]>
+	</select>
+	<delete id="deleteReply" parameterType="map" >
+	<![CDATA[
+		DELETE FROM REPLY 
+		WHERE 
+			member_id=#{memberId}
+		AND
+			reply_id=#{replyId}
+	]]>
+	</delete>
 </mapper>

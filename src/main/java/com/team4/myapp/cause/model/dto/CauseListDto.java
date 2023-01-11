@@ -13,6 +13,7 @@ public class CauseListDto {
 	private int causeId;
 	private String content;
 	private int categoryId;
+	private String categoryString;
 	private int attendanceId;
 	private Date writeDate;
 	private String memberId;
@@ -21,7 +22,9 @@ public class CauseListDto {
 	private int attendanceStatus;
 	private String attendanceStatusString;
 	private String memberName;
-		
+	private String attendanceDate;
+	
+	
 	public String attendanceStatus(int attendanceStatus) {
 		if(attendanceStatus == 0) {
 			this.attendanceStatusString = "결석";
@@ -42,5 +45,20 @@ public class CauseListDto {
 			this.causeStatusString = "반려";
 		}
 		return causeStatusString;
+	}
+	
+	public String categoryString(int categoryId) {
+		if(categoryId == 5) {
+			this.categoryString = "지하철 연착";
+		} else if(categoryId == 6) {
+			this.categoryString = "경조사";
+		} else if(categoryId == 7) {
+			this.categoryString = "병원";
+		} else if(categoryId == 8) {
+			this.categoryString = "공가";
+		} else if(categoryId == 9) {
+			this.categoryString = "기타";
+		}
+		return categoryString;
 	}
 }

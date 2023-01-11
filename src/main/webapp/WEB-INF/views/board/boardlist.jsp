@@ -52,7 +52,7 @@ color: grey;
 						<tr>
 							<td class="column1">${board.boardId}</td>
 							<c:url var="viewLink" value="/board/detail/${board.boardId}"/>
-							<td class="column2"><a href='${viewLink}' id="detail">${board.title}</a></td>
+							<td class="column2"><a href='${viewLink}' id="detail">${board.title} </a></td>
 							<td class="column3">${board.memberId}</td>
 							<td class="column4"><fmt:formatDate value="${board.boardDate}" pattern="YYYY-MM-dd"/></td>
 							<td class="column5">${board.viewCount}</td>

@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
@@ -25,8 +27,10 @@ public class CauseService implements ICauseService{
 	IAttendanceRepository attendanceRepository;
 	
 	//사유서 작성하기
-	@Transactional
+	@Override
+	@Transactional(rollbackFor= {Exception.class}, transactionManager="transactionManager")
 	public void insertCause(CauseDto causeDto) {
+
 		Cause cause = new Cause();
 		int aId = 0;
 		if(causeDto.getAttendanceId() == 0) {
@@ -54,6 +58,7 @@ public class CauseService implements ICauseService{
 		}
 		
 		causeRepository.insertCause(cause);
+
 	}
 	
 	//전체 행수 구하기
@@ -61,9 +66,14 @@ public class CauseService implements ICauseService{
 	public int selectCauseCount(String memberId) {
 		return causeRepository.selectCauseCount(memberId);
 	} 
+	
+	@Override
+	public int selectCount() {
+		return causeRepository.selectCount();
+	}
 
 	//사유서 리스트 보기(학생)
-	@Transactional
+	@Override
 	public List<CauseListDto> selectCauseList(String memberId, int page) {
 		//페이징 처리
 		int start = ((page-1) * 5) +1;
@@ -80,7 +90,7 @@ public class CauseService implements ICauseService{
 	}
 
 	//사유서 리스트 보기(관리자)
-	@Transactional
+	@Override
 	public List<CauseListDto> selectCauseListAdmin(int page) {
 		//페이징 처리
 		int start = ((page-1) * 5) +1;
@@ -90,12 +100,25 @@ public class CauseService implements ICauseService{
 			String  s1 = i.attendanceStatus(i.getAttendanceStatus());
 			String s2 = i.submitStatus(i.getCauseStatus());
 			i.setAttendanceStatusString(s1);
-			i.setAttendanceStatusString(s2);
+			i.setCauseStatusString(s2);
 		}
 		
 		return list;
 	}
-	
-	
+
+	//사유서 자세히 보기
+	@Override
+	public CauseListDto selectCauseDetail(int causeId) {
+		CauseListDto list = causeRepository.selectCauseDetail(causeId);
+		String  s1 = list.attendanceStatus(list.getAttendanceStatus());
+		String s2 = list.submitStatus(list.getCauseStatus());
+		String s3 = list.categoryString(list.getCategoryId());
+		list.setAttendanceStatusString(s1);
+		list.setCauseStatusString(s2);
+		list.setCategoryString(s3);
+		
+		return list;
+	}
+
 
 }

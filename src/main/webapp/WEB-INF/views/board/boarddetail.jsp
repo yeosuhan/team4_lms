@@ -4,7 +4,36 @@
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script>
+	function writeReply(boardId) {
+		var content1 = $("#replyContent").val();
+		$.ajax({
+			type : 'POST',	 // get방식으로 통신
+			url : "/reply/write",
+			data : {boardId: boardId, content:content1},
+			error : function() { // 통신 실패시
+				console.log('통신실패!');
+			},
+			success : function(data) { // 통신 성공시 탭 내용담는 div를 읽어들인 값으로 채운다.
+				 location.href = "/board/detail/"+boardId;
+			}
+		});
+	}
+	function deleteReply(boardId, replyId) {
+		console.log(replyId);
+		$.ajax({
+			type : 'POST',	 // get방식으로 통신
+			url : "/reply/delete",
+			data : {boardId: boardId, replyId:replyId},
+			error : function() { // 통신 실패시
+				console.log('통신실패!');
+			},
+			success : function(data) { // 통신 성공시 탭 내용담는 div를 읽어들인 값으로 채운다.
+				 location.href = "/board/detail/"+boardId;
+			}
+		});
+	}
+</script>
 <style>
 * {
 	box-sizing: border-box;
@@ -561,6 +590,7 @@ body {
 #thumb:hover {
 	color: blue;
 }
+
 </style>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
@@ -716,38 +746,36 @@ body {
 						<br /> <br /> <br />
 					</div>
 					<div class="content">
-						<form action="<c:url value='/board/detail/${board.boardId}'/>"
-							method="post" enctype="multipart/form-data"
-							class="form-horizontal">
-							<input type="hidden" value="${board.memberId}" /> <input
-								type="hidden" value="${board.boardId}" /> <input type="hidden"
-								value="${content}" />
+						<form enctype="multipart/form-data" class="form-horizontal">
 							<div class="form-group">
-								<div class="card-header">댓글</div>
+								<div class="card-header text-center">댓글 (${reply.size()})</div>
 								<div class="col-sm-16">
-									<textarea name="content" rows="10" cols="100"
-										class="form-control"></textarea>
+									<textarea name="content" rows="5" cols="100"
+										class="form-control" id="replyContent"></textarea>
 								</div>
-								<div class="card-footer">
-									<button class="butona btn" type="submit">
-										Reply (0) <span class="tag"> <img
+								<div class="card-footer text-right">
+									<button class="butona btn" type="button"
+										onclick="writeReply(${board.boardId})" style="width: 150px;">
+										Reply<span class="tag"> <img
 											src="https://i.ibb.co/GQf8frw/reply.png" />
 										</span>
 									</button>
 								</div>
 							</div>
 						</form>
-						<div class="card-header">댓글 리스트</div>
+						<form enctype="multipart/form-data" class="form-horizontal">
+						<div class="card-header text-center">댓글 리스트</div>
 						<ul class="list-group">
 							<c:forEach var="reply" items="${reply}">
-								<li class="list-group-item d-flex justify-content-between"></li>
-								<div>${reply.content}</div>
-								<div>
-									<div>작성자 : ${board.memberName}</div>
-									<button class="badge">삭제</button>
-								</div>
+								<li class="list-group-item d-flex justify-content-between" style="border-left: none; border-right:none;">
+									${reply.replyId}. 작성자 : ${reply.memberName}<h6>${reply.replyDate}</h6>
+									<button class="badge" type="button" style="color:black;" onclick="deleteReply(${board.boardId},${reply.replyId})">삭제</button>
+								</li>
+								<li class="list-group-item d-flex justify-content-between" style="border-left: none; border-right:none; border-bottom:3px solid black;"><div>${reply.content}</div></li>
+								
 							</c:forEach>
 						</ul>
+						</form>
 					</div>
 				</div>
 			</div>

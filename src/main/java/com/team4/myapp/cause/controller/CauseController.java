@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.service.IAttendanceService;
 import com.team4.myapp.cause.model.dto.CauseDto;
@@ -70,6 +73,7 @@ public class CauseController {
 			causeService.insertCause(causeDto);
 			System.out.println("글쓰기 성공");
 			return "redirect:/cause/list/"+ session.getAttribute("page");
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
@@ -78,7 +82,7 @@ public class CauseController {
 	}
 	
 	//사유서 목록 불러오기(유저)
-	@RequestMapping(value = "cause/list/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "/cause/list/{page}", method = RequestMethod.GET)
 	public String selectCauseList(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
 		session.setAttribute("page", page);
@@ -103,25 +107,37 @@ public class CauseController {
 	}
 	
 	//사유서 목록 보기 (관리자)
-//	@RequestMapping(value="cause/admin/list", method = RequestMethod.GET)
-//	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
-//		//리스트 불러오기
-//		session.setAttribute("page", page);
-//		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
-//		model.addAttribute("causeList", causeList);
-//		
-//		
-//		//전체 페이지 구하기(5페이지씩 구분)
-//		int bbsCount = causeService.selectCauseListAdmin(memberId);
-//		int totalPageCount=0;
-//		if(bbsCount > 0) {
-//			totalPageCount = (int)Math.ceil(bbsCount/5.0);
-//		}
-//		
-//		model.addAttribute("totalPageCount",totalPageCount);
-//		model.addAttribute("page",page);
-//		
-//		return "cause/list";
-//	}
+	@RequestMapping(value="/cause/admin/list/{page}", method = RequestMethod.GET)
+	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
+		//리스트 불러오기
+		session.setAttribute("page", page);
+		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
+		model.addAttribute("causeList", causeList);
+		
+		//전체 페이지 구하기(5페이지씩 구분)
+		int bbsCount = causeService.selectCount();
+		System.out.println("관리자 전체 행: "+ bbsCount);
+		int totalPageCount=0;
+		if(bbsCount > 0) {
+			totalPageCount = (int)Math.ceil(bbsCount/5.0);
+		}
+		model.addAttribute("totalPageCount",totalPageCount);
+		model.addAttribute("page",page);
+		model.addAttribute("boardType","/cause/admin/list/");
+		
+		return "manager/list";
+	}
+	
+	//신청서 상세 조회
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="YYYY-MM-dd")
+	@ResponseBody
+	@RequestMapping(value="/cause/detail/{id}", method=RequestMethod.GET)
+	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session, Model model) {
+		System.out.println("aa"+id);
+		
+		CauseListDto cdlist = causeService.selectCauseDetail(id);
+		return cdlist;
+	}
+	
 	
 }

@@ -33,8 +33,8 @@ public class MemberController {
 	public String login() {
 		return "member/login";
 	}
-	
-	@RequestMapping(value="/admin/main", method=RequestMethod.POST)
+
+	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		Member member = memberService.selectMember(memberId);
 		if(member != null) {
@@ -56,10 +56,7 @@ public class MemberController {
 					System.out.println("lectureid: " + member.getLectureId());
 					System.out.println("-----------------------------------------------------------");
 					if(member.getIdentity().equals("professor")) {
-						List<Lecture> lectureList = lectureService.selectAllLecture();
-						model.addAttribute("lectureList", lectureList);
-						System.out.println(lectureList);
-						return "lecture/lectureList";
+						return "redirect:/admin/main";
 					} else {
 						return "redirect:/attendance/main";
 					}
@@ -73,6 +70,14 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
+	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
+	public String adminLogin(Model model, HttpServletRequest request) {
+		List<Lecture> lectureList = lectureService.selectAllLecture();
+		model.addAttribute("lectureList", lectureList);
+		System.out.println(lectureList);
+		return "/lecture/lectureList";
+	}
+	
 	
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) {
