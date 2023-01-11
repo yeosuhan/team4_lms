@@ -555,7 +555,7 @@
 							<div class="modal-header">
 								삭제 확인
 								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">x</span>
+									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">해당 게시물을 삭제하시겠습니까?</div>
