@@ -26,6 +26,7 @@ function DetailList(id){
 			console.log("통신 성공");
 			console.log(data);
 			console.log(data.attendanceDate);
+			console.log(data.memberId);
 			var date = data.attendanceDate.toString();
 			date = date.substring(0, 10);
 			$('#myModal').modal('show');
@@ -34,8 +35,7 @@ function DetailList(id){
 			$('#cd_attendance').text(data.attendanceStatusString);
 			$('#cd_status').text(data.causeStatusString);
 			$('#cd_content').text(data.content);
-			$('#cd_category').text(data.categoryString);
-			
+			$('#cd_category').text(data.categoryString);	
 		}	
 	});
 }

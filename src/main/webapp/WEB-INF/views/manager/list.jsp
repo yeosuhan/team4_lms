@@ -50,7 +50,7 @@
 				</thead>
 				<tbody>		
 					<c:forEach items="${causeList}" var="causeListDto">
-						<tr>
+						<tr onclick="DetailList(${causeListDto.causeId})">
 							<td class="column1">${causeListDto.writeDate}</td>
 							<td class="column2">${causeListDto.causeId}</td>	
 							<td class="column3">${causeListDto.content}</td>
@@ -63,5 +63,60 @@
 			</table>
 		</div>
 	</div>
+	<div class="container">
+		<!-- The Modal -->
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">사유 신청서</h4>
+						<button type="button" class="close" data-dismiss="modal">X</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-6">날짜</div>
+							<div id="cd_date" class="col-6"></div>
+						</div>
+						<div class="row">
+							<div class="col-6">이름</div>
+							<div id="cd_name" class="col-6"></div>
+						</div>
+						<div class="row">
+							<div class="col-6">출석유형</div>
+							<div id="cd_attendance" class="col-6"></div>
+						</div>
+						<div class="row">
+							<div class="col-6">상세 이유</div>
+							<div id="cd_category" class="col-6"></div>
+						</div>
+
+						<div class="row">
+							<div class="col-6">내용</div>
+							<div id="cd_content" class="col-6"></div>
+						</div>
+						<div class="row">
+							<div class="col-6">첨부파일</div>
+							<div id="cd_file" class="col-6"></div>
+						</div>
+						<div class="row">
+							<div class="col-6">처리</div>
+							<div id="cd_status" class="col-6"></div>
+						</div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info">허가</button>
+						<button type="button" class="btn btn-info">거절</button>			
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 </div>
 <%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
