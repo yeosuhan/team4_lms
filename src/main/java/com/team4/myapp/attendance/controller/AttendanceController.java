@@ -1,5 +1,6 @@
 package com.team4.myapp.attendance.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
+import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.IOutService;
 
 @Controller
@@ -21,7 +23,7 @@ public class AttendanceController {
 
 	@Autowired
 	IAttendanceService attendanceService;
-	
+
 	@Autowired
 	IOutService outService;
 
@@ -46,31 +48,39 @@ public class AttendanceController {
 		String checkin = null;
 		String checkout = null;
 		// 출근 여부 확인
-		try {
-			checkin = attendanceService.selectCheckIn(memberId);
+		checkin = attendanceService.selectCheckIn(memberId);
+		if (checkin == null) {
 			model.addAttribute("checkin", true);
-		} catch (Exception e) {
-			model.addAttribute("checkin", false);
-		}
+		} else model.addAttribute("checkin", false);
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkout == null)
-			model.addAttribute("checkout", false);
+		if (checkin != null && checkout == null)
+			model.addAttribute("checkout", true);
 		else {
 			checkout = "있음";
-			model.addAttribute("checkout", true);
+			model.addAttribute("checkout", false);
 		}
 
 		// 외출 여부 확인
-		boolean goOut = outService.goOut(memberId);
+		boolean goOut = outService.selectOut(memberId);
 		model.addAttribute("goOut", goOut);
 		
+		// 외출 기록 및 총 시간 정보
+		OutListDto outListDto = null;
+		try {
+			outListDto = outService.getOutDetails(memberId);
+			model.addAttribute("outListDto", outListDto);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		// 복귀 여부 확인
 		System.out.println("goOut : " + goOut);
 		System.out.println("aid : " + checkin);
 		System.out.println("time : " + checkout);
-
+		System.out.println("outListDto : " + outListDto);
+		
 		return "calendar/userCalendar";
 	}
 
@@ -94,17 +104,49 @@ public class AttendanceController {
 
 		return "redirect:/attendance/main";
 	}
-	
-	// 조퇴 처리 
-	@RequestMapping(value="/attendance/leave", method = RequestMethod.POST)
+
+	// 조퇴 처리
+	@RequestMapping(value = "/attendance/leave", method = RequestMethod.POST)
 	public String leaveEarly(HttpSession session) {
 		String memberId = (String) session.getAttribute("memberid");
-		attendanceService.leaveEarly(memberId);
+
+		// 출석을 하고, 퇴근하지 않은 경우에만 조퇴 가능
+		String checkin = attendanceService.selectCheckIn(memberId);
+		String checkout = attendanceService.selectCheckOut(memberId);
+
+		if (checkin != null && checkout == null) {
+			attendanceService.leaveEarly(memberId);
+		}
 		return "redirect:/attendance/main";
 	}
-	
-	// 외출 처리
-	
-	// 복귀 처리
 
+	// 외출 처리
+	@RequestMapping(value = "/attendance/out", method = RequestMethod.POST)
+	public String getOut(HttpSession session) {
+		String memberId = (String) session.getAttribute("memberid");
+
+		// 출석을 하고, 퇴근하지 않은 경우에만 외출 가능
+		String checkin = attendanceService.selectCheckIn(memberId);
+		String checkout = attendanceService.selectCheckOut(memberId);
+
+		// 외출 가능 여부 조회 : 이전 외출의 복귀를 하지 않을 경우 false
+		boolean goOut = outService.selectOut(memberId);
+		if (goOut && checkin != null && checkout == null) {
+			outService.insertCheckIn(memberId);
+			System.out.println("외출 가능 ~");
+		}
+		return "redirect:/attendance/main";
+	}
+
+	// 복귀 처리
+	@RequestMapping(value = "/attendance/comback", method = RequestMethod.POST)
+	public String comback(HttpSession session) {
+		String memberId = (String) session.getAttribute("memberid");
+
+		// 복귀 가능 여부 조회 : 이전 외출의 복귀를 하지 않을 경우 return false -> 복귀 가능
+		boolean result = outService.selectOut(memberId);
+		if (!result)
+			outService.updateCheckOut(memberId);
+		return "redirect:/attendance/main";
+	}
 }

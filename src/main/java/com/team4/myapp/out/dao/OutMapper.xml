@@ -34,4 +34,14 @@
 			where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
 		]]>
 	</update>
+	
+	<select id="selectOutList" parameterType="string" resultType="com.team4.myapp.out.model.OutDto">
+		<![CDATA[
+			select 
+			to_char(CHECK_IN, 'HH24:mi:ss') as checkIn,
+			to_char(CHECK_OUT, 'HH24:mi:ss')	 as checkOut
+			from out
+			where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
+		]]>
+	</select>
 </mapper>

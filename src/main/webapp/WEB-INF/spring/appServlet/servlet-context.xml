@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -9,62 +10,78 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-   
-  	<!-- Enables the Spring MVC @Controller programming model -->
-   	<annotation-driven />
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
 
-   <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/m/**"
+		location="/WEB-INF/resources/member/" />
+	<resources mapping="/c/**"
+		location="/WEB-INF/resources/cause_list/" />
+	<resources mapping="/b/**"
+		location="/WEB-INF/resources/boardres/" />
 
-   <resources mapping="/m/**" location="/WEB-INF/resources/member/" />
-   <resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />  
-   <resources mapping="/b/**" location="/WEB-INF/resources/boardres/" />
+	<resources mapping="/images/**"
+		location="/WEB-INF/resources/images/" />
 
-   <resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+	<resources mapping="/cal/**"
+		location="/WEB-INF/resources/calendar/" />
 
-   <resources mapping="/cal/**" location="/WEB-INF/resources/calendar/" />
+	<resources mapping="/cd/**"
+		location="/WEB-INF/resources/cause_detail/" />
+	<resources mapping="/h/**"
+		location="/WEB-INF/resources/home/" />
 
-	<resources mapping="/cd/**" location="/WEB-INF/resources/cause_detail/"/>
-   <resources mapping="/h/**" location="/WEB-INF/resources/home/" />
+	<resources mapping="/ld/**"
+		location="/WEB-INF/resources/lec_detail/" />
 
-    <resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />   
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
 
-   
-   <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-      <beans:property name="prefix" value="/WEB-INF/views/" />
-      <beans:property name="suffix" value=".jsp" />
-   </beans:bean>
-   
-   <context:component-scan base-package="com.team4.myapp"/>
-   
-   <view-controller path="/" view-name="home"/>
-   
-   <beans:bean id="multipartResolver" 
-   class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-      <beans:property name="maxUploadSize">
-         <beans:value>50000000</beans:value>
-      </beans:property>
-   </beans:bean>
-   
+	<context:component-scan
+		base-package="com.team4.myapp.cause.controller" />
+	<context:component-scan
+		base-package="com.team4.myapp.attendance.controller" />
+	<context:component-scan
+		base-package="com.team4.myapp.member.controller" />
+	<context:component-scan
+		base-package="com.team4.myapp.lecture.controller" />
+	<context:component-scan
+		base-package=" com.team4.myapp.util.scheduler" />
+
+	<view-controller path="/" view-name="home" />
+
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize">
+			<beans:value>50000000</beans:value>
+		</beans:property>
+	</beans:bean>
+
 	<!-- json 응답을 위함 @ResponseBody -->
-   <beans:bean
-      class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-      <beans:property name="messageConverters">
-         <beans:list>
-            <beans:bean
-               class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-               <beans:property name="supportedMediaTypes">
-                  <beans:list>
-                     <beans:value>text/html;charset=UTF-8</beans:value>
-                     <beans:value>application/json;charset=UTF-8</beans:value>
-                  </beans:list>
-               </beans:property>
-            </beans:bean>
-         </beans:list>
-      </beans:property>
-   </beans:bean>
-	
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<beans:property name="supportedMediaTypes">
+						<beans:list>
+							<beans:value>text/html;charset=UTF-8</beans:value>
+							<beans:value>application/json;charset=UTF-8</beans:value>
+						</beans:list>
+					</beans:property>
+				</beans:bean>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
 	<!-- 스케줄러 사용하기 위한 설정 -->
-	<task:annotation-driven/>	
+	<task:annotation-driven />
 </beans:beans>
