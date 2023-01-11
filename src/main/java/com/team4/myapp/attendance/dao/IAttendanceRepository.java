@@ -16,7 +16,7 @@ public interface IAttendanceRepository {
 	void updateCheckIn(@Param("attendance") Attendance attendance, @Param("today") String today);
 	void updateCheckOut(@Param("memberId") String memberId, @Param("attendanceStatus") int attendanceStatus, @Param("today") String today);
 	
-	Optional<Integer> selectId(@Param("memberId") String memberId, @Param("today") String today);
+	Integer selectId(@Param("memberId") String memberId, @Param("today") String today);
 	int selectAttendanceId(@Param("memberId") String memberId, @Param("attendanceDate") String attendanceDate);
 	
 	String selectCheckIn(@Param("memberId") String memberId, @Param("today") String today);
