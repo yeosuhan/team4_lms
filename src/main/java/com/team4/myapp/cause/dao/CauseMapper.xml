@@ -11,11 +11,17 @@
 		)	
 	</insert>
 	
-	<select id="selectCauseCount" parameterType="String" resultType="int">
+	<select id="selectCauseCount" parameterType="string" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) AS "count" FROM CAUSE WHERE MEMBER_ID=#{memberId}
-		]]>
+		]]> 
 	</select>
+	
+	<select id="selectCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS count FROM CAUSE
+		]]>
+	</select> 
 	
 	<select id="selectCauseList" parameterType="map" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
 		<![CDATA[
@@ -41,7 +47,7 @@
 	
 	<select id="selectCauseAdmin" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
 		<![CDATA[
-				SELECT bb.CAUSE_ID 	AS		causeId,
+				SELECT bb.CAUSE_ID 	AS	causeId,
 	        		WRITE_DATE 	AS 		writeDate,
 	        		CAUSE_CONTENT		AS 		content,
 	        		CATEGORY_ID		AS 		categoryId,
@@ -59,6 +65,22 @@
 	                	) aa
 	        		) bb
 			WHERE RNUM BETWEEN #{start} AND #{end}
+		]]>
+	</select>
+	
+	<select id="selectCauseDetail" parameterType="int" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
+		<![CDATA[
+			SELECT 	CAUSE.CAUSE_ID 	AS	causeId,
+			   WRITE_DATE 	AS 		writeDate,
+			   CAUSE_CONTENT		AS 		content,
+			   CAUSE.CATEGORY_ID		AS 		categoryId,
+			   MEMBERS.MEMBER_ID		AS 	memberId,
+		       MEMBER_NAME		AS 		memberName,
+			   ATTENDANCE_STATUS 	AS attendanceStatus,
+			   CAUSE_STATUS 		AS 		causeStatus,
+			   ATTENDANCE_DATE	AS attendanceDate
+			FROM CAUSE, ATTENDANCE, MEMBERS 
+			WHERE CAUSE.ATTENDANCE_ID = ATTENDANCE.ATTENDANCE_ID AND MEMBERS.MEMBER_ID = CAUSE.MEMBER_ID AND CAUSE.CAUSE_ID=#{causeId}
 		]]>
 	</select>
 	

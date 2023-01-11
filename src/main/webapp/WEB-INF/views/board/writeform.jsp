@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
+
+
 <%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 <div class="container">
    <div class="pg-opt">

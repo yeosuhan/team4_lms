@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.team4.myapp.board.repository.IBoardRepository;
-import com.team4.myapp.board.vo.Board;
-import com.team4.myapp.board.vo.BoardUploadFile;
+import com.team4.myapp.board.dao.IBoardRepository;
+import com.team4.myapp.board.model.Board;
+import com.team4.myapp.board.model.BoardUploadFile;
 
 @Service
 public class BoardService implements IBoardService {

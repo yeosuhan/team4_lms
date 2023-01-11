@@ -7,11 +7,12 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Param;
 
 import com.team4.myapp.attendance.model.Attendance;
+import com.team4.myapp.cause.model.Cause;
 
 public interface IAttendanceRepository {
 	List<Attendance> selectMemberAttendance(@Param("memberId")String memberId,  @Param("month") int month);
 	void insertAttendance(String memberId);
-	
+
 	void updateCheckIn(@Param("attendance") Attendance attendance, @Param("today") String today);
 	void updateCheckOut(@Param("memberId") String memberId, @Param("attendanceStatus") int attendanceStatus, @Param("today") String today);
 	
