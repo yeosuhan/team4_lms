@@ -71,17 +71,33 @@
 	<select id="selectCauseDetail" parameterType="int" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
 		<![CDATA[
 			SELECT 	CAUSE.CAUSE_ID 	AS	causeId,
-			   WRITE_DATE 	AS 		writeDate,
-			   CAUSE_CONTENT		AS 		content,
-			   CAUSE.CATEGORY_ID		AS 		categoryId,
-			   MEMBERS.MEMBER_ID		AS 	memberId,
-		       MEMBER_NAME		AS 		memberName,
-			   ATTENDANCE_STATUS 	AS attendanceStatus,
-			   CAUSE_STATUS 		AS 		causeStatus,
-			   ATTENDANCE_DATE	AS attendanceDate
+					   WRITE_DATE 	AS 		writeDate,
+					   CAUSE_CONTENT		AS 		content,
+					   CAUSE.CATEGORY_ID		AS 		categoryId,
+					   MEMBERS.MEMBER_ID		AS 	memberId,
+				       MEMBER_NAME		AS 		memberName,
+					   ATTENDANCE_STATUS 	AS attendanceStatus,
+					   CAUSE_STATUS 		AS 		causeStatus,
+					   FILE_SIZE AS fileSize,
+					   FILE_CONTENT_TYPE AS fileContentType,
+					   FILE_DATA 	AS 		fileData,
+					   FILE_NAME AS fileName,
+					   ATTENDANCE_DATE	AS attendanceDate
 			FROM CAUSE, ATTENDANCE, MEMBERS 
 			WHERE CAUSE.ATTENDANCE_ID = ATTENDANCE.ATTENDANCE_ID AND MEMBERS.MEMBER_ID = CAUSE.MEMBER_ID AND CAUSE.CAUSE_ID=#{causeId}
 		]]>
 	</select>
+	
+	<update id="updateCauseDetail" parameterType="int">
+		<![CDATA[
+			UPDATE CAUSE
+				SET CAUSE_CONTENT AS causeContent, 
+					FILE_NAME=#{fileName},
+					FILE_SIZE=#{fileSize},
+					FILE_CONTENT=#{fileContentType},
+					FILE_DATA=#{fileData}
+			WHERE CAUSE_ID=#{cause_id}
+		]]>
+	</update>
 	
 </mapper>

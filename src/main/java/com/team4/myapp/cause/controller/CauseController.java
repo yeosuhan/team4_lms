@@ -1,13 +1,19 @@
 package com.team4.myapp.cause.controller;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.service.IAttendanceService;
+import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 import com.team4.myapp.cause.service.ICauseService;
@@ -132,12 +139,45 @@ public class CauseController {
 	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="YYYY-MM-dd")
 	@ResponseBody
 	@RequestMapping(value="/cause/detail/{id}", method=RequestMethod.GET)
-	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session, Model model) {
-		System.out.println("aa"+id);
-		
+	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session) {
 		CauseListDto cdlist = causeService.selectCauseDetail(id);
 		return cdlist;
 	}
 	
+	//사진 보여주기
+	@RequestMapping("/file/{causeId}")
+	public ResponseEntity<byte[]> getFile(@PathVariable int causeId){
+		Cause file = causeService.selectFileDetail(causeId);
+		logger.info("getFile "+ file.toString());
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mtypes = file.getFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(file.getFileSize());
+		headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
+		return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
+	}
+	
+	//사유서 수정
+	@RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
+	public String updateCause(@PathVariable int causeId, Model model){
+		CauseListDto cause= causeService.selectCauseDetail(causeId);
+		
+		System.out.println("사유서 수정입니다. 사유서상태는? :"+cause.getCauseStatus());
+		if(cause.getCauseStatus() == 2) {
+			return "cause/detail/{causeId}";
+		}
+		
+		logger.info("/cause/update : "+ cause.toString());
+		model.addAttribute("list",cause);
+		return "cause/update";
+	}
+	
+	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
+	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs, Model model) {
+		String state = causeService.updateCause(cause.getCauseId());
+		model.addAttribute("state", state);
+		
+		return "redirect:/cause/list";
+	}
 	
 }

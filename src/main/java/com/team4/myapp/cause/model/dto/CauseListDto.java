@@ -22,7 +22,12 @@ public class CauseListDto {
 	private int attendanceStatus;
 	private String attendanceStatusString;
 	private String memberName;
+	private int submitStatus;
 	private String attendanceDate;
+	private byte[] fileData;
+	private String fileName;
+	private long fileSize;
+	private String fileContentType;
 	
 	
 	public String attendanceStatus(int attendanceStatus) {

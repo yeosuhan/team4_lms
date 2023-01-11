@@ -35,9 +35,24 @@ function DetailList(id){
 			$('#cd_attendance').text(data.attendanceStatusString);
 			$('#cd_status').text(data.causeStatusString);
 			$('#cd_content').text(data.content);
-			$('#cd_category').text(data.categoryString);	
+			$('.updateButton').val(id);
+			
+			$('#cd_file').empty();
+			
+			var img = document.createElement('img'); 
+		    img.src = '/file/'+id; 
+		    console.log(img);
+			$('#cd_file').append(img);
+			
+			/*let img = '<img src="">';
+			console.log(img);
+			$('#cd_file').empty();
+			$('#cd_file').append(img);*/
+		/*	$('#cd_category').text("<img src='<c:url value='/file/"+data.fileId+"/>'>");	*/
+			
+			
 		}	
 	});
+	
+	
 }
-
-

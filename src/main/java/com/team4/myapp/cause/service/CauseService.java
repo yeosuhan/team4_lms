@@ -119,6 +119,32 @@ public class CauseService implements ICauseService{
 		
 		return list;
 	}
+	
+	//사진파일 불러오기 용
+	@Transactional
+	public Cause selectFileDetail(int causeId) {
+		CauseListDto causeDto = causeRepository.selectCauseDetail(causeId);
+		Cause cause = new Cause();
+		cause.setFileData(causeDto.getFileData());
+		cause.setFileContentType(causeDto.getFileContentType());;
+		cause.setFileSize(causeDto.getFileSize());
+		cause.setFileName(causeDto.getFileName());
+		return cause;
+	}
+
+	//사유서 수정하기
+	@Transactional
+	public String updateCause(int causeId) {
+		CauseListDto cause = causeRepository.selectCauseDetail(causeId);
+		String result = "";
+		if(cause.getCauseStatus() != 2) {
+			causeRepository.updateCauseDetail(causeId);
+			result="승인전";
+		} else {
+			result="승인 후";
+		}
+		return result;
+	}
 
 
 }

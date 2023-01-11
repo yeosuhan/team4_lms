@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
@@ -77,7 +78,7 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">사유 신청서</h4>
-						<button type="button" class="close" data-dismiss="modal">X</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
@@ -102,25 +103,31 @@
 							<div class="col-6">내용</div>
 							<div id="cd_content" class="col-6"></div>
 						</div>
-						<div class="row">
-							<div class="col-6">첨부파일</div>
-							<div id="cd_file" class="col-6"></div>
-						</div>
+
 						<div class="row">
 							<div class="col-6">처리</div>
 							<div id="cd_status" class="col-6"></div>
 						</div>
-					</div>
 
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-info">수정</button>
-						<button type="button" class="btn btn-info">삭제</button>
+						<div class="row">
+							<div class="col-6">첨부파일</div>
+							<div  class="col-6">
+								<div id="cd_file" style="width:100px; height:100px">
+									
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
+					<div class="modal-footer">
+					<!-- Modal footer -->
+					<form action="/cause/update">
+						<input type="button" class="btn btn-info" id="updateButton" name="id"  value="수정"/>
+						<input type="button" class="btn btn-info" name="${causeId}" value="삭제"/>
+					</form>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
-
 </div>
 <%@ include file="/WEB-INF/views/fragment/footer.jsp"%>

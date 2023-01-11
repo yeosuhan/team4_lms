@@ -29,7 +29,7 @@
 		location="/WEB-INF/resources/calendar/" />
 
 	<resources mapping="/cd/**"
-		location="/WEB-INF/resources/cause_detail/" />
+		location="/WEB-INF/resources/cause_write/" />
 	<resources mapping="/h/**"
 		location="/WEB-INF/resources/home/" />
 
