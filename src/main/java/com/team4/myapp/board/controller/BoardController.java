@@ -44,13 +44,11 @@ public class BoardController {
 
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	public String writeArticle(Board board, BindingResult results, RedirectAttributes redirectAttrs) {
-		System.out.println("444444444444444");
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
 			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
 			MultipartFile mfile = board.getFile();
-			System.out.println("3333333333333333333");
 			if(mfile!=null && !mfile.isEmpty()) {
 				board.setFileName(mfile.getOriginalFilename());
 				board.setFileSize(mfile.getSize());
@@ -59,11 +57,10 @@ public class BoardController {
 				boardService.insertFileArticle(board);
 			}else {
 				boardService.insertArticle(board);
-				System.out.println("22222222222222222");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("11111111111");
+			System.out.println("");
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
 		return "redirect:/board/list/"+board.getBoardType();
