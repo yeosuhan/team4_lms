@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,9 @@ import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
+import com.team4.myapp.out.dao.IOutRepository;
+import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
 
 @Service
@@ -27,28 +29,57 @@ public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IMemberRepository memberRepository;
+	
+	@Autowired
+	IOutRepository outRepository;
+	
+	@Autowired
+	OutService outService;
 
-	// 근무시간 충족 여부 검사
-	private boolean calWorkingTime(String memberId) {
-		// 5 시간 이상 근무 시 true 리턴한다.
-		Date date = null;
+	// 근무시간 충족 여부 검사 : 조퇴, 퇴근 시 수행 됨// 5 시간 이상 근무 시 true 리턴한다.
+	private boolean calWorkingTime(String memberId, String today, OutListDto out) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");	
+		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");	
+		Date date = null;   // 출근시간	
+		Date date2 = null; // 퇴근 or 조퇴 버튼 누른 현재 시간
+		long totalOut = 0;
+		
 		try {
-
 			// 출근 시간 조회
-			String str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
+			String str = null;
+			if(today == null && out == null) {
+				str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
+				date2 = new Date();			
+			}
+			else {
+				str = attendanceRepository.selectCheckIn(memberId,today);
+				date2 = format2.parse(today);
+				date2.setHours(18);
+				date2.setMinutes(0);
+				date2.setSeconds(0);
+				
+				Date outs = new Date();
+				outs.setHours(out.getHours());
+				outs.setMinutes(out.getMinutes());
+				outs.setSeconds(out.getSeconds());
+				totalOut = outs.getTime();
+			}
+
 			System.out.println("str : " + str);
-			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			date = format.parse(str);
 			System.out.println("str : " + date);
 		} catch (ParseException e) {
 			System.out.println("calWorkingTime() 에러 ");
 			e.printStackTrace();
 		}
-		// 퇴근 or 조퇴 버튼 누른 현재 시간
-		Date date2 = new Date();
+		
 
 		// 근무시간 >= 5 이여야 출석 인정
-		long total = (date2.getTime() - date.getTime()) / 3600000;
+		System.out.println("-----------  AttendanceService  calWorkingTime() ----------");
+		System.out.println("퇴근 시간 : " + date2);
+		System.out.println("출근 시간 : " + date);
+		System.out.println("외출 시간 : " + totalOut);
+		long total = (date2.getTime() - date.getTime() - totalOut) / 3600000;
 		System.out.println("total hours ~~~  : " + total);
 		if (total < 5) {
 			return false;
@@ -99,7 +130,7 @@ public class AttendanceService implements IAttendanceService {
 		// memberId, 날짜로 출석 id 찾아서 퇴근 값 넣기
 		String today = Today.getToday();
 		// 퇴근 버튼 누른 시점에서 퇴근시간 - 출근시간 >= 5 여야 출석 인정 됨
-		boolean result = calWorkingTime(memberId);
+		boolean result = calWorkingTime(memberId, null, null);
 
 		// 근무시간 미달 여부 검사
 		if (!result) {
@@ -130,7 +161,7 @@ public class AttendanceService implements IAttendanceService {
 	}
 
 	// 출석ID 가져오기
-	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {
+	public int selectAttendanceId(String memberId, Date attendanceDate) {
 		return attendanceRepository.selectAttendanceId(memberId, attendanceDate.toString());
 	}
 
@@ -161,26 +192,61 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
-	// 조퇴 처리
+	// 조퇴 처리 : 퇴근시간=현재시간으로 설정
+	// 출근 시간 충족 여부에 따라 결석/ 조퇴 결정 됨
 	public void leaveEarly(String memberId) {
-		boolean result = calWorkingTime(memberId);
+		boolean result = calWorkingTime(memberId, null, null);
 		String today = Today.getToday();
 		System.out.println(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		if (!result) { // 출근 시간 미달인 경우
 			System.out.println(" 미달~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			attendanceRepository.updateCheckOut(memberId, 0, today);
+			attendanceRepository.updateCheckOut(memberId, 0, today); // 결석 처리
 		} else {
-			attendanceRepository.updateCheckOut(memberId, 3, today);
+			attendanceRepository.updateCheckOut(memberId, 3, today); // 조퇴 처리
 		}
 	}
 
+	// 스케줄러가 호출함 : 최종적으로 퇴근처리 안한 사람 update 처리
 	@Transactional
-	public void todayPost(String today) {
-		// 퇴근처리가 안된 경우 18:00 로 값을 넣는다.
-
-		// 외출 시간 계산
-		// 외출 값이 있을 경우 -> 마지막 외출의 check_out== null 이면 18:00로 update 한다.
-		// 총 외출 시간을 기반으로 근무시간 계산 후 -> 결석 여부 판단
-
+	public void todayPost(Date date, String today){
+//		0. 출근했는데 퇴근 시간이 빈 유저 목록 가져오기
+		List<Integer> alist = attendanceRepository.selectCheckoutNull(today);
+		
+//		1. 그 사람들 결석처리
+		for(int aid : alist) {
+			attendanceRepository.updateCheckOutById(aid, 0); // 결석 처리
+		}
+		
+		Timestamp timestamp = new Timestamp(date.getYear(), date.getMonth(), date.getDate(),
+				18, 0, 0, 0);
+		
+//		3. 외출데이터에 복귀값 없으면  18:00 로 수정
+		outRepository.updateOutNull(today, timestamp);
+		
+//		4. 오늘 외출한 member_Id 가져오기
+		List<String> members = outRepository.selectMemberId(today);
+		
+		OutListDto outListDto = null;
+		boolean result;
+		for(String mid : members) {
+			try {
+				// 5. 외출한 사람별 총 외출시간 계산하여 	
+				// 6. 근무시간 계산하고 최종 수정
+				outListDto = outService.getOutDetails(mid, today);
+				System.out.println(mid + " 의 오늘 하루 총 외출 시간 : " + outListDto.toString());
+				result = calWorkingTime(mid, today, outListDto);
+				
+				if (!result) { // 출근 시간 미달인 경우
+					System.out.println(" 미달 ~~~~~~");
+					attendanceRepository.updateCheckOut(mid, 0, today); // 결석 처리
+				} else {
+					attendanceRepository.updateCheckOut(mid, 1, today); // 출석처리
+				}				
+				
+			} catch (ParseException e) {e.printStackTrace();}			
+		}	
 	}
+
+
+	
 }

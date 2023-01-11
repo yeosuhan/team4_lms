@@ -1,6 +1,5 @@
 package com.team4.myapp.out.service;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,7 +46,7 @@ public class OutService implements IOutService {
 	}
 
 	// 오늘의 외출 기록, 총 시간게산
-	public OutListDto getOutDetails(String memberId) throws ParseException{
+	public OutListDto getOutDetails(String memberId, String today) throws ParseException{
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		long total = 0;
 		Date in = null;
@@ -55,7 +54,7 @@ public class OutService implements IOutService {
 		OutListDto outListDto = new OutListDto();
 		
 		// 오늘의 외출 기록 가져오기
-		List<OutDto> list = outRepository.selectOutList(memberId);
+		List<OutDto> list = outRepository.selectOutList(memberId, today);
 		System.out.println(" >>F>ddgdgddg  " +  list);
 		outListDto.setOutlist(list);
 		

@@ -19,14 +19,14 @@
    				where rownum = 1   	
 			]]>
 	</select>
-	
+
 	<insert id="insertCheckIn" parameterType="string">
 		<![CDATA[
 			insert into out(OUT_ID, MEMBER_ID, CHECK_IN)	
 			values(OUT_SEQ.nextval, #{memberId}, CURRENT_TIMESTAMP)
 		]]>
 	</insert>
-	
+
 	<update id="updateCheckOut" parameterType="string">
 		<![CDATA[
 			update out
@@ -34,14 +34,35 @@
 			where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
 		]]>
 	</update>
-	
-	<select id="selectOutList" parameterType="string" resultType="com.team4.myapp.out.model.OutDto">
+
+	<select id="selectOutList" parameterType="map"
+		resultType="com.team4.myapp.out.model.OutDto">
+		select 
+		to_char(CHECK_IN, 'HH24:mi:ss') as checkIn,
+		to_char(CHECK_OUT, 'HH24:mi:ss') as checkOut
+		from out
+		where MEMBER_ID = #{memberId} and
+		<choose>
+			<when test="today == null">to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')</when>
+			<otherwise>to_char(OUT_DATE, 'YYYY-MM-DD') = #{today} </otherwise>
+		</choose>
+	</select>
+
+	<update id="updateOutNull" parameterType="map">
 		<![CDATA[
-			select 
-			to_char(CHECK_IN, 'HH24:mi:ss') as checkIn,
-			to_char(CHECK_OUT, 'HH24:mi:ss')	 as checkOut
+			update out
+			set CHECK_OUT = #{timestamp}
+			where to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(#{today}, 'YYYY-MM-DD') and CHECK_OUT is null and CHECK_IN is not null
+		]]>
+	</update>
+
+	<select id="selectMemberId" parameterType="string"
+		resultType="string">
+		<![CDATA[
+			select distinct member_id
 			from out
-			where MEMBER_ID = #{memberId} and to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
+			where to_char(out_date,'YYYY-MM-DD') = #{today}
 		]]>
 	</select>
+
 </mapper>

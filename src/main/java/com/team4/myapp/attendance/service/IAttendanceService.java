@@ -1,8 +1,7 @@
 package com.team4.myapp.attendance.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
@@ -10,7 +9,7 @@ import com.team4.myapp.attendance.model.CalendarDto;
 public interface IAttendanceService {
 	
 	void insertAll();
-	void todayPost(String today);
+	void todayPost(Date date, String today) throws Exception;
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 	

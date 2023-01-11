@@ -69,7 +69,7 @@ public class AttendanceController {
 		// 외출 기록 및 총 시간 정보
 		OutListDto outListDto = null;
 		try {
-			outListDto = outService.getOutDetails(memberId);
+			outListDto = outService.getOutDetails(memberId, null);
 			model.addAttribute("outListDto", outListDto);
 		} catch (ParseException e) {
 			e.printStackTrace();
