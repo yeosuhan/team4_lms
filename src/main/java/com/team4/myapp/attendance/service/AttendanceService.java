@@ -3,7 +3,10 @@ package com.team4.myapp.attendance.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -182,5 +185,16 @@ public class AttendanceService implements IAttendanceService {
 		// 외출 값이 있을 경우 -> 마지막 외출의 check_out== null 이면 18:00로 update 한다.
 		// 총 외출 시간을 기반으로 근무시간 계산 후 -> 결석 여부 판단
 
+	}
+
+	@Override
+	public void next_statistics() {
+		List<String> members = memberRepository.selectAllStudent();
+		int month=Calendar.getInstance().get(Calendar.MONTH)+1;
+		int year=Calendar.getInstance().get(Calendar.YEAR);
+		for(String member: members) {
+			attendanceRepository.insertMonthSchedule(member, year, month);
+		}
+		
 	}
 }
