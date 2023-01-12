@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Param;
 import com.team4.myapp.out.model.OutDto;
 
 public interface IOutRepository {
-	OutDto selectCheckOut(@Param("memberId") String memberId, @Param("today") String today);
+	OutDto selectLastOut(@Param("memberId") String memberId, @Param("today") String today);
 	
 	void insertCheckIn(String membetId);
 	
-	void updateCheckOut(String memberId);
+	void updateCheckOut(int outId);
 	
 	List<OutDto> selectOutList(@Param("memberId") String memberId, @Param("today") String today);
 	
