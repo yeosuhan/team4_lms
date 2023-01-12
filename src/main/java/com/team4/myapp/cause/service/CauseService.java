@@ -1,15 +1,11 @@
 package com.team4.myapp.cause.service;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.cause.dao.ICauseRepository;
@@ -119,26 +115,52 @@ public class CauseService implements ICauseService{
 		
 		return list;
 	}
+	
+	//--------------------------------------------------
 
 	@Override
 	public void accept(int causeId, int causeStatus) {
 		causeRepository.accept(causeId, causeStatus);	
-		causeRepository.attendanceUcc(causeId, causeStatus+1);	
+		attendanceRepository.attendanceUcc(causeId, causeStatus+1);	
 	}
 
 	@Override
-	public int getAwaitNo() {
-		return causeRepository.getAwaitNo();	
+	public List<Integer> getSubmitStatusNo() {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusNo(0));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(1));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(2));
+		return submitStatusList;
 	}
 
 	@Override
-	public int getApproveNo() {
-		return causeRepository.getApproveNo();
+	public List<CauseListDto> selectCauseListAdminDate(String date, int page) {
+		//페이징 처리
+				int start = ((page-1) * 5) +1;
+				
+				List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
+				for(CauseListDto i : list) {
+					String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+					String s2 = i.submitStatus(i.getCauseStatus());
+					i.setAttendanceStatusString(s1);
+					i.setCauseStatusString(s2);
+				}
+				
+				return list;
 	}
 
 	@Override
-	public int getRejectNo() {
-		return causeRepository.getRejectNo();
+	public List<Integer> getSubmitStatusDateNo(String date) {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(0, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(1, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(2, date));
+		return submitStatusList;
+	}
+
+	@Override
+	public int selectDateCount(String date) {
+		return causeRepository.selectDateCount(date);
 	}
 
 }

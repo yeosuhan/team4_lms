@@ -10,6 +10,11 @@
 <script src="<c:url value='/c/js/popper.min.js'/>"></script>
 <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
 <script src="<c:url value='/c/js/main.js'/>"></script>
+<script>
+	function closeModal(){
+		$('#myModal').modal('hide');
+	}
+</script>
 
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
@@ -64,15 +69,11 @@
 		                <div class="card-body">
 		                    <div class="table-responsive">
 								<table class="table">
-									<tr>
-										<td align="left">
-											<tag:paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" />
-										</td>
-										<td align="right">
-										
-											<form method="get">
+									<tr>										
+										<td align="right">										
+											<form action='<c:url value="/cause/admin/date/${page}"/>' method="get">
 												<label for="birthday">날짜:</label>
-												 <input type="date" id="date" name="date">												 
+												 <input type="date" id="keyword" name="keyword">												 
 												<input type="submit" value="조회" />
 											</form>
 											
@@ -98,18 +99,34 @@
 												<td class="column3">${causeListDto.content}</td>
 												<td class="column4">${causeListDto.attendanceStatusString}</td>
 												<td class="column5">${causeListDto.memberName}</td>
+												<td class="column6" style="color:
 												<c:choose>
-													<c:when test="">
-														
+													<c:when test="${causeListDto.causeStatusString eq '허가'}">
+														 blue
 													</c:when>
-													<c:when test="">
-														
+													<c:when test="${causeListDto.causeStatusString eq '반려'}">
+														red
 													</c:when>
 												</c:choose>
-												<td class="column6">${causeListDto.causeStatusString}</td>
+												">${causeListDto.causeStatusString}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
+								</table>
+								<table class="table">
+									<tr>
+										<td>page</td>
+										<td align="center">
+											<c:if test="${keyword==null}">
+												<tag:paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" />
+											</c:if>
+											<c:if test="${keyword!=null}">
+												<c:if test="${totalPageCount==0}">조회 결과가 없습니다. </c:if>	
+												<tag:search-paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" keyword="${keyword}" />														
+											</c:if>
+										</td>	
+										<td></td>								
+									</tr> 
 								</table>
 							</div>
 
@@ -130,13 +147,8 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">사유 신청서</h4>
-						<button type="button" class="close" data-dismiss="modal">x</button>
+						<button type="button" class="close" data-dismiss="modal" onclick="closeModal()">&times;</button>
 					</div>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">xx</span>
-					</button>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<button type="button" class="btn btn-success" style="background-color:grey" data-dismiss="modal" aria-label="Close">취소</button>	
 					<!-- Modal body -->
 					<div class="modal-body">
 						<div class="row">
@@ -173,10 +185,11 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">					
 						<form action='<c:url value="/cause/admin/accept"/>' class="form-inline" method="post">
-						<input type="hidden" id="causeId" name="causeId">
-						<input type="hidden" id="page" name="page" value="${page}">
-						<button type="submit" class="btn btn-info" id="causeStatus" name="causeStatus" value=1>허가</button>&ensp; 
-						<button type="submit" class="btn btn-info" id="causeStatus" name="causeStatus" value=2>반려</button>	
+							<input type="hidden" id="causeId" name="causeId">
+							<input type="hidden" id="page" name="page" value="${page}">
+							<button type="submit" class="btn btn-info" id="causeStatus" name="causeStatus" value=1>허가</button>&ensp; 
+							<button type="submit" class="btn btn-danger" id="causeStatus" name="causeStatus" value=2>반려</button>&ensp; 
+							<button type="button" class="btn btn-success" style="background-color:grey" data-dismiss="modal" aria-label="Close" onclick="closeModal()">취소</button>	
 						</form>		
 					</div>
 				</div>
