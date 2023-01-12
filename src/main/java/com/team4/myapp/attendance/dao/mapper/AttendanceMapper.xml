@@ -119,7 +119,7 @@
       ]]>
 	</select>
 
-	<update id="updateCheckOutById" parameterType="map">
+	<update id="updateAttendanceStatusById" parameterType="map">
 		<![CDATA[
 			update attendance
 			set ATTENDANCE_STATUS = #{attendanceStatus}

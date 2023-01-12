@@ -52,7 +52,7 @@
 	<update id="updateOutNull" parameterType="map">
 		<![CDATA[
 			update out
-			set CHECK_OUT = #{timestamp}
+			set CHECK_OUT = to_timestamp(#{timestamp})
 			where to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(#{today}, 'YYYY-MM-DD') and CHECK_OUT is null and CHECK_IN is not null
 		]]>
 	</update>

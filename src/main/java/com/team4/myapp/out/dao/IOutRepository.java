@@ -16,7 +16,7 @@ public interface IOutRepository {
 	
 	List<OutDto> selectOutList(@Param("memberId") String memberId, @Param("today") String today);
 	
-	void updateOutNull(@Param("today") String today, @Param("timestamp") Timestamp timestamp);
+	void updateOutNull(@Param("today") String today, @Param("timestamp") String timestamp);
 
 	List<String> selectMemberId(String today);
 }

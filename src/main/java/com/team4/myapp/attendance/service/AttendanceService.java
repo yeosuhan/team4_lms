@@ -21,6 +21,8 @@ import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
 
+import oracle.sql.TIMESTAMP;
+
 @Service
 public class AttendanceService implements IAttendanceService {
 
@@ -58,16 +60,17 @@ public class AttendanceService implements IAttendanceService {
 				date2.setMinutes(0);
 				date2.setSeconds(0);
 				
+				// 총 외출 시간
 				Date outs = new Date();
+				outs.setYear(date2.getYear());
+				outs.setMonth(date2.getMonth());
+				outs.setDate(date2.getDate());
 				outs.setHours(out.getHours());
 				outs.setMinutes(out.getMinutes());
 				outs.setSeconds(out.getSeconds());
-				totalOut = outs.getTime();
+				totalOut = out.getTotal() * 1000;
 			}
-
-			System.out.println("str : " + str);
 			date = format.parse(str);
-			System.out.println("str : " + date);
 		} catch (ParseException e) {
 			System.out.println("calWorkingTime() 에러 ");
 			e.printStackTrace();
@@ -79,7 +82,10 @@ public class AttendanceService implements IAttendanceService {
 		System.out.println("퇴근 시간 : " + date2);
 		System.out.println("출근 시간 : " + date);
 		System.out.println("외출 시간 : " + totalOut);
+		System.out.println("출근 시간 - 퇴근시간 : " + (date2.getTime() - date.getTime()));
+		System.out.println(" 총 초 : " +( date2.getTime() - date.getTime() - totalOut));
 		long total = (date2.getTime() - date.getTime() - totalOut) / 3600000;
+		//long total = (date2.getTime() - date.getTime()) / 3600000;
 		System.out.println("total hours ~~~  : " + total);
 		if (total < 5) {
 			return false;
@@ -212,15 +218,20 @@ public class AttendanceService implements IAttendanceService {
 //		0. 출근했는데 퇴근 시간이 빈 유저 목록 가져오기
 		List<Integer> alist = attendanceRepository.selectCheckoutNull(today);
 		
-//		1. 그 사람들 결석처리
+//		1. 그 사람들 결석처리, 퇴근시간은 null로 유지
 		for(int aid : alist) {
-			attendanceRepository.updateCheckOutById(aid, 0); // 결석 처리
+			System.out.println(" 결석 처리 : " + aid);
+			attendanceRepository.updateAttendanceStatusById(aid, 0); // 결석 처리
 		}
 		
-		Timestamp timestamp = new Timestamp(date.getYear(), date.getMonth(), date.getDate(),
-				18, 0, 0, 0);
-		
 //		3. 외출데이터에 복귀값 없으면  18:00 로 수정
+		SimpleDateFormat sdt = new SimpleDateFormat("YYYY/MM/DD HH:mm:ss");
+		date.setHours(18);
+		date.setMinutes(0);
+
+				
+		String timestamp = sdt.format(date);
+		System.out.println("timestamp  : " + timestamp);
 		outRepository.updateOutNull(today, timestamp);
 		
 //		4. 오늘 외출한 member_Id 가져오기
@@ -240,7 +251,7 @@ public class AttendanceService implements IAttendanceService {
 					System.out.println(" 미달 ~~~~~~");
 					attendanceRepository.updateCheckOut(mid, 0, today); // 결석 처리
 				} else {
-					attendanceRepository.updateCheckOut(mid, 1, today); // 출석처리
+					attendanceRepository.updateCheckOut(mid, -1, today); // 가존 상태 유지
 				}				
 				
 			} catch (ParseException e) {e.printStackTrace();}			

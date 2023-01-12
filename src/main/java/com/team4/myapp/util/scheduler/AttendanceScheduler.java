@@ -18,7 +18,7 @@ public class AttendanceScheduler {
 
 	// 초 분 시 일 월 요일
 	// 매일 오전 5시에 오늘의 출결 데이터가 초기화되어 삽입된다.
-	@Scheduled(cron = "0 0 5 * * 1-5")
+	@Scheduled(cron = "0 0 6 * * 1-5")
 	public void today_init() {
 		try {
 			attendanceService.insertAll();
@@ -35,7 +35,7 @@ public class AttendanceScheduler {
 	}
 	
 	// 매일 오후 11:59 에 이전 날의 출결, 외출 데이터를 확인하고, 총 근무시간을 통해 출결 상태를 update 한다.
-	@Scheduled(cron = "0 49 18 * * 1-5")
+	@Scheduled(cron = "0 9 14 * * 1-5")
 	public void today_post() {
 		 // 퇴근처리가 안된 경우 18:00 로 값을 넣는다.
 		Date date = new Date();
@@ -44,16 +44,13 @@ public class AttendanceScheduler {
 		
         try {
 			attendanceService.todayPost(date, today);
+			System.out.println(today + " 출석 상태 결산 완료");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("today_post 실패,,,,!");
+			System.out.println(today + " 출석 상태 결산 실패,,, ! ! !");
 
 		}
-		// 외출 시간 계산
-		// 외출 값이 있을 경우 -> 마지막 외출의 check_out== null 이면 18:00로 update 한다.
-		// 총 외출 시간을 기반으로 근무시간 계산 후 -> 결석 여부 판단
-		System.out.println("오늘 출석 데이터 삽입 됨~~");
 
 	}
 
