@@ -26,5 +26,6 @@ public interface IAttendanceRepository {
 	Attendance selectDataAndCategory(int attendanceId);
 	
 	void attendanceUcc(@Param("causeId") int causeId, @Param("submitStatus") int submitStatus);
+	void insertMonthSchedule(@Param("member") String member, @Param("year") int year, @Param("month") int month);
 
 }

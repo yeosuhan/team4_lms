@@ -106,4 +106,11 @@
 	]]>
 	</update>
 	
+	<insert id="insertMonthSchedule" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO STATISTICS(MEMBER_ID, YEAR, MONTH, ATTENDANCE, LATE, ABSENT, LEAVE) 
+			VALUES (#{member}, #{year}, #{month}, 0, 0, 0, 0)
+		]]>
+	</insert>
+	
 </mapper>
