@@ -15,7 +15,7 @@
 <script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/c/js/popper.min.js'/>"></script>
 <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
-<script src="<c:url value='/c/js/main.js'/>"></script>
+<script src="<c:url value='/cal/js/main.js'/>"></script>
 
 
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
@@ -78,7 +78,9 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">사유 신청서</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
@@ -120,8 +122,7 @@
 					</div>
 					<div class="modal-footer">
 					<!-- Modal footer -->
-						<input type="button" class="btn btn-info" id="updateButton" name="${causeId}" onclick="update()" value="수정"/>
-						<button class="btn btn-info" name="update" id="updateButton" value="${causeId}">수정</button>
+						<input type="button" class="btn btn-info" id="updateButton" name="${list.causeId}" value="수정"/>
 						<input type="button" class="btn btn-info" name="${causeId}" value="삭제"/>
 					
 					</div>

@@ -161,8 +161,7 @@ public class CauseController {
 	@RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
 	public String updateCause(@PathVariable int causeId, Model model){
 		CauseListDto cause= causeService.selectCauseDetail(causeId);
-		
-		logger.info("/cause/update : "+ cause.toString());
+
 		model.addAttribute("list",cause);
 		return "cause/update";
 	}

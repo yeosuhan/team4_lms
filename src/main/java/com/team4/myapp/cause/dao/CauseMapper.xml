@@ -91,7 +91,7 @@
 	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
 		<![CDATA[
 			UPDATE CAUSE
-				SET CAUSE_CONTENT AS content, 
+				SET CAUSE_CONTENT=#{content}, 
 					FILE_NAME=#{fileName},
 					FILE_SIZE=#{fileSize},
 					FILE_CONTENT=#{fileContentType},
