@@ -136,11 +136,11 @@ public class CauseController {
 	}
 	
 	//신청서 상세 조회
-	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="YYYY-MM-dd")
 	@ResponseBody
 	@RequestMapping(value="/cause/detail/{id}", method=RequestMethod.GET)
 	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session) {
 		CauseListDto cdlist = causeService.selectCauseDetail(id);
+		logger.info(cdlist.toString());
 		return cdlist;
 	}
 	
@@ -161,7 +161,6 @@ public class CauseController {
 	@RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
 	public String updateCause(@PathVariable int causeId, Model model){
 		CauseListDto cause= causeService.selectCauseDetail(causeId);
-		
 		logger.info("/cause/update : "+ cause.toString());
 		model.addAttribute("list",cause);
 		return "cause/update";
@@ -169,9 +168,22 @@ public class CauseController {
 	
 	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
 	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs, Model model) {
+		logger.info("/cause/update : "+ cause.toString());
 		causeService.updateCause(cause);
 		
-		return "redirect:/cause/list";
+		return "redirect:/cause/list/"+(Integer)session.getAttribute("page");
+	}
+	
+	//사유서 삭제
+	@RequestMapping(value="/cause/delete", method=RequestMethod.POST)
+	public String deleteCause(@PathVariable int causeId, Model model, HttpSession session) {
+		try {
+			causeService.deleteCause(causeId);
+			return "cause/list"+"/" + (Integer)session.getAttribute("page");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "error/runtime";
+		}
 	}
 	
 }

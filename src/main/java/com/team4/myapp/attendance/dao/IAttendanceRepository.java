@@ -24,5 +24,7 @@ public interface IAttendanceRepository {
 	
 	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") Date attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
+	
+	void changeSubmitStatus(@Param("s_status")int s_status, @Param("causeId")int causeId);
 
 }

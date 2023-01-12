@@ -38,7 +38,7 @@
 	                		SELECT  CAUSE_ID, CAUSE.WRITE_DATE, CAUSE.CAUSE_CONTENT, CATEGORY_ID, CAUSE.MEMBER_ID, ATTENDANCE.ATTENDANCE_STATUS, CAUSE.CAUSE_STATUS
 	                		FROM CAUSE, ATTENDANCE
 	                		WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID and CAUSE.MEMBER_ID = #{memberId}
-	                		ORDER BY WRITE_DATE DESC
+	                		ORDER BY CAUSE_ID DESC
 	                	) aa
 	        		) bb
 			WHERE RNUM BETWEEN #{start} AND #{end}
@@ -91,13 +91,20 @@
 	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
 		<![CDATA[
 			UPDATE CAUSE
-				SET CAUSE_CONTENT AS content, 
+				SET CAUSE_CONTENT=#{content}, 
 					FILE_NAME=#{fileName},
 					FILE_SIZE=#{fileSize},
-					FILE_CONTENT=#{fileContentType},
-					FILE_DATA=#{fileData}
-			WHERE CAUSE_ID=#{cause_id}
+					FILE_CONTENT_TYPE=#{fileContentType},
+					FILE_DATA=#{fileData},
+					WRITE_DATE = SYSDATE
+			WHERE CAUSE_ID=#{causeId}
 		]]>
 	</update>
+	
+	<delete id="deleteCause" parameterType="int">
+		<![CDATA[
+			DELETE FROM CAUSE WHERE CAUSE_ID = #{causeId}
+		]]>
+	</delete>
 	
 </mapper>

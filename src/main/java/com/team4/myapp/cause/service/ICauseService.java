@@ -18,7 +18,7 @@ public interface ICauseService {
 	List<CauseListDto> selectCauseListAdmin(int page);
 	
 	void updateCause(Cause cause);
-	
+	void deleteCause(int causeId);
 	
 	
 }

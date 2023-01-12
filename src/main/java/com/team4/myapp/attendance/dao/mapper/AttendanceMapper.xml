@@ -97,4 +97,13 @@
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
 	</select>	
+	
+	<update id="changeSubmitStatus" parameterType="int">
+		<![CDATA[
+			UPDATE (SELECT SUBMIT_STATUS FROM CAUSE, ATTENDANCE
+			WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID AND CAUSE_ID = #{causeId})
+			SET SUBMIT_STATUS = {s_status}
+		]]>
+	</update>
+	
 </mapper>

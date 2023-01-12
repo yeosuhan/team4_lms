@@ -1,8 +1,8 @@
-<%@ page pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 <link
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
 	rel="stylesheet">
@@ -78,7 +78,8 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">사유 신청서</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">X</button>
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
@@ -111,21 +112,27 @@
 
 						<div class="row">
 							<div class="col-6">첨부파일</div>
-							<div  class="col-6">
-								<div id="cd_file" style="width:100px; height:100px">
-									
-								</div>
+							<div class="col-6">
+								<div id="cd_file" style="width: 100px; height: 100px"></div>
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-					<!-- Modal footer -->
-						<input type="button" class="btn btn-info" id="updateButton" name="${causeId}" onclick="update()" value="수정"/>
-						<button class="btn btn-info" name="update" id="updateButton" value="${causeId}">수정</button>
-						<input type="button" class="btn btn-info" name="${causeId}" value="삭제"/>
-					
-					</div>
-				</div>	
+					<form>
+						<div class="modal-footer" style="justify-content: flex-start">
+							 <c:choose>
+								<c:when test="${list.submitStatus == 2}">
+									<div id="closebutton"></div>
+								</c:when>
+								<c:otherwise>
+									<div id="updatebutton"></div>
+									<div id="deletebutton">
+										<input type="hidden" value="${list.causeId}" name="causeId">
+									</div>
+								</c:otherwise>
+							</c:choose> 
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
