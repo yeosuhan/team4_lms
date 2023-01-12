@@ -27,6 +27,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.model.Board;
 import com.team4.myapp.board.service.IBoardService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 
 @Controller
 public class BoardController {
