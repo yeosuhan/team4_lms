@@ -67,13 +67,21 @@ color: grey;
 			</table>
 			<table class="table">
 		<tr>
-			<td align="left">page</td>
+			<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
+				<c:if test="${boardType=='community'}"><td></td><td></td></c:if>
 			<td align="left">
 			<c:if test="${totalPageCount==0}">검색 결과가 없습니다. </c:if>
-				<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+				<jk:search-paging boardType="/board/search/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}" keyword="${keyword}"/>
 			</td>
 			<td align="right">
-				<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				<c:if test="${boardType=='community'}">
+					<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+				</c:if>
+				<c:if test="${boardType=='reference'}">
+					<c:if test="${sessionScope.memberid=='admin'}">
+						<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
+					</c:if>
+				</c:if>
 			</td>
 		</tr>
 		</table>
