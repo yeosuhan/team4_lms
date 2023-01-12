@@ -66,7 +66,8 @@ color: grey;
 			</table>
 			<table class="table">
 				<tr>
-					<td align="left">page</td>
+					<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
+						<c:if test="${boardType=='community'}"><td></td><td></td></c:if>
 					<td align="center">
 						<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 					</td>
