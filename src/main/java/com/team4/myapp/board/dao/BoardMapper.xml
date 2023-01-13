@@ -25,9 +25,9 @@
 	<select id="selectArticle" parameterType="int" resultType="com.team4.myapp.board.model.Board">
 	<![CDATA[
 		SELECT 
-		    board_id 				AS "boardId", 
-		    board_title					AS "title", 
-		    board_content					AS "content", 
+		    b.board_id 				AS "boardId", 
+		    board_title				AS "title", 
+		    board_content			AS "content", 
 		    board_date				AS "boardDate", 
 		    view_count				AS "viewCount", 
 		    heart_count				AS "heartCount", 
@@ -37,9 +37,9 @@
 		    file_size				AS "fileSize",
 		    file_download_count		AS "fileDownloadCount",
 		    board_type				AS "boardType",
-		    member_id				AS "memberId"		
-		FROM board 
-		WHERE board_id=#{boardId}
+		    b.member_id				AS "memberId"
+		FROM board b
+		WHERE b.board_id=#{boardId}
 	]]>
 	</select>
 	

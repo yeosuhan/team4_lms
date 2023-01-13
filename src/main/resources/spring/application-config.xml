@@ -58,6 +58,7 @@
 	<context:component-scan base-package="com.team4.myapp.member.service"/>
 	<context:component-scan base-package="com.team4.myapp.board.service"/>
 	<context:component-scan base-package="com.team4.myapp.out.service"/>
+	<context:component-scan base-package="com.team4.myapp.reply.service"/>
 <!-- 	<context:component-scan base-package="com.coderby.myapp.member.service"></context:component-scan> -->
 	
  	<!--  dao 인터페이스 경로 --> 
@@ -67,4 +68,5 @@
 	<mybatis-spring:scan base-package="com.team4.myapp.member.dao"/>
 	<mybatis-spring:scan base-package="com.team4.myapp.board.dao"/>
 	<mybatis-spring:scan base-package="com.team4.myapp.out.dao"/>
+	<mybatis-spring:scan base-package="com.team4.myapp.reply.dao"/>
 </beans>
