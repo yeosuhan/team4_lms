@@ -48,6 +48,10 @@ public class Reply {
 		this.memberName = memberName;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Reply [replyId=" + replyId + ", replyDate=" + replyDate + ", content=" + content + ", boardId="
+				+ boardId + ", memberId=" + memberId + ", memberName=" + memberName + "]";
+	}
 	
 }

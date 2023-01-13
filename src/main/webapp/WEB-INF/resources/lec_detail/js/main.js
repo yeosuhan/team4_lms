@@ -19,7 +19,7 @@
 				}, month_click);
 				$("#add-button").click({
 					date : date
-				}, new_event);
+				});
 				// Set current month as active
 				$(".months-row").children().eq(date.getMonth()).addClass(
 						"active-month");
@@ -146,18 +146,6 @@
 		init_calendar(date);
 	}
 
-	// Adds a json event to event_data
-	function new_event_json(name, count, date, day) {
-		var event = {
-			"occasion" : name,
-			"invited_count" : count,
-			"year" : date.getFullYear(),
-			"month" : date.getMonth() + 1,
-			"day" : day
-		};
-		event_data["events"].push(event);
-	}
-
 	// Display all events of the selected date in card views
 	function show_events(data) {
 		var attendance = 0; // 출석
@@ -185,8 +173,6 @@
 			"font-size" : "15px"
 		});
 		// Clear the dates container
-		$(".events-container").empty();
-		$(".events-container").show(250);
 		console.log(event_data["events"]);
 		// If there are no events for this date, notify the user
 		var event_card = $("<div class='event-card'></div>");
@@ -210,9 +196,11 @@
 					+ data[i].memberName + " - " + data[i].title + "</div>");
 			$(event_body).append(event_content);
 		}
-
+		$(".events-container").empty();
+		$(".events-container").show(250);
 		$(".events-container").append(event_card);
 		$(".events-container").append(event_body);
+		
 	}
 
 	// Checks if a specific date has any events
@@ -227,7 +215,18 @@
 		}
 		return events;
 	}
-
+	var event_data = {
+		    "events": [
+		    {
+		        "occasion": " Repeated Test Event ",
+		        "invited_count": 120,
+		        "year": 2020,
+		        "month": 5,
+		        "day": 10,
+		        "cancelled": true
+		    }
+		    ]
+		};
 	const months = [ "January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December" ];
 

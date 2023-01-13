@@ -22,6 +22,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
 
+
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 
