@@ -13,7 +13,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>OTI UNIVERSITY LMS</title>
-	
+
 	<!-- home -->
 	<link rel="icon" type="image/x-icon"
 		href="<c:url value='/h/assets/favicon.ico'/>" />
@@ -33,15 +33,3 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="<c:url value='/h/js/scripts.js'/>"></script>
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-	
-	
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
-	
-	<!-- Style -->
-	<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet"
-		href="<c:url value='/cal/css/bootstrap.min.css'/>">
-	<!-- Style -->
-	<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">

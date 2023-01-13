@@ -23,7 +23,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<form action="<c:url value='/cause/write'/>" method="post"  enctype="multipart/form-data" id="wizard">
+		<form action="<c:url value='/cause/update'/>" method="post"  enctype="multipart/form-data" id="wizard">
 			<div class="inner">
 				<div class="image-holder">
 					<!-- <img src="cause_detail/images/form-wizard-1.jpg" alt="">  -->
@@ -31,46 +31,25 @@
 				</div>
 				<div class="form-content">
 					<div class="form-header">
-						<h3>사유서 신청</h3>
+						<h3>사유서 수정</h3>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">출석 유형</div>
+						
 						<div class="form-holder">
-							<c:choose>
-								<c:when test="${attendanceId != 0}">
-									<input type="text" name="attendanceStatus" value="${dateAndCategory.attendanceStatus}"/>
-								</c:when>
-								<c:otherwise>
-									<select name="attendanceStatus">
-										<option value="0">결석</option>
-										<option value="2">지각</option>
-										<option value="3">조퇴</option>
-									</select>
-								</c:otherwise>
-							</c:choose>
+							${list.attendanceStatusString}
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">세부 유형</div>
 						<div class="form-holder">
-							<select name="categoryId">
-								<c:forEach var="category" items="${categoryList}">
-									<option value="${category.categoryId}" id="categoryId">${category.categoryName}</option>
-								</c:forEach>
-							</select>
+							${list.categoryString}
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">날짜</div>
 						<div class="form-holder">
-							<c:choose>
-								<c:when test="${attendanceId != 0}">
-									<input type="text" name="attendanceDate" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${dateAndCategory.attendanceDate}"/>"/>
-								</c:when>
-								<c:otherwise>
-									<input type="date" name="attendanceDate" class="form-control" />
-								</c:otherwise>
-							</c:choose>
+							${list.attendanceDate}
 						</div>
 					</div>
 					<div class="form-row">
@@ -80,18 +59,21 @@
 					<div class="form-row">
 						<div class="form-holder">내용</div>
 						<div class="form-holder">
-							<textarea name="content" maxlength="300"
-								class="form-control" style="resize: none; height: 70px"></textarea>
+							<textarea maxlength="300" class="form-control" 
+								style="resize: none; height: 70px" name="content" placeholder="${list.content}">${list.content}</textarea>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">첨부파일</div>
 						<div class="form-holder">
-							<input type="file" name="file" />
+							<input type="file" name="file" /> 기존파일: ${list.fileName}
 						</div>
 					</div>
-					<input type="hidden" name="memberId" value="${sessionScope.memberid}"/>
-					<input type="hidden" name="attendanceId" value="${attendanceId}"/>
+					<input type="hidden" name="causeId" value="${list.causeId}"/>
+					<input type="hidden" name="fileName" value="${list.fileName}"/>
+					<input type="hidden" name="fileContentType" value="${list.fileContentType}"/>
+					<input type="hidden" name="fileSize" value="${list.fileSize}"/>
+					<input type="hidden" name="fileData" value="${list.fileData}"/>
 					<input type="submit" value="제출하기"/>
 				</div>
 			</div>

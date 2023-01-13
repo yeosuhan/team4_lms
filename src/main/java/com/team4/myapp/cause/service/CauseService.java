@@ -1,11 +1,16 @@
 package com.team4.myapp.cause.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.cause.dao.ICauseRepository;
@@ -52,7 +57,7 @@ public class CauseService implements ICauseService{
 				e.printStackTrace();
 			}
 		}
-		
+		attendanceRepository.changeSubmitStatus(1, cause.getCategoryId());
 		causeRepository.insertCause(cause);
 
 	}
@@ -116,7 +121,41 @@ public class CauseService implements ICauseService{
 		return list;
 	}
 	
-	//--------------------------------------------------
+	//사진파일 불러오기용
+	@Transactional
+	public Cause selectFileDetail(int causeId) {
+		CauseListDto causeDto = causeRepository.selectCauseDetail(causeId);
+		Cause cause = new Cause();
+		cause.setFileData(causeDto.getFileData());
+		cause.setFileContentType(causeDto.getFileContentType());
+		cause.setFileSize(causeDto.getFileSize());
+		cause.setFileName(causeDto.getFileName());
+		return cause;
+	}
+
+	//사유서 수정하기
+	@Transactional
+	public void updateCause(Cause cause) {
+		
+		if(cause.getFile() != null && !cause.getFile().isEmpty()) {
+			cause.setFileName(cause.getFile().getOriginalFilename());
+			cause.setFileSize(cause.getFile().getSize());
+			cause.setFileContentType(cause.getFile().getContentType());
+			try {
+				cause.setFileData(cause.getFile().getBytes());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		causeRepository.updateCauseDetail(cause);
+	}
+	
+	//사유서 삭제하기
+	@Transactional
+	public void deleteCause(int causeId) {
+		causeRepository.deleteCause(causeId);
+		attendanceRepository.changeSubmitStatus(0, causeId);
+	}
 
 	@Override
 	public void accept(int causeId, int causeStatus) {

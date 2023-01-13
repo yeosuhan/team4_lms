@@ -42,12 +42,13 @@
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"
 		style="background-color: black;">
 		<div class="container">
-			<a class="navbar-brand" <c:choose>
+			<a class="navbar-brand"
+			<c:choose>
 					<c:when test="${sessionScope.memberid eq 'admin'}">href="/admin/main"</c:when>
 					<c:otherwise>href="/attendance/main"</c:otherwise>
-				</c:choose>>			
-			<img
-				src="/images/logo/OTIUniversity.png" style="width: 100px" /></a>
+			</c:choose>>		
+			<img src="/images/logo/OTIUniversity.png" style="width: 150px; height: auto" />
+			</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -86,7 +87,6 @@
 							</li>
 						</c:otherwise>
 					</c:choose>
-
 				</ul>
 			</div>
 		</div>

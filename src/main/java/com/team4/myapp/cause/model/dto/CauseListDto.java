@@ -2,19 +2,24 @@ package com.team4.myapp.cause.model.dto;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude="fileData")
 public class CauseListDto {
 	private int causeId;
 	private String content;
 	private int categoryId;
 	private String categoryString;
 	private int attendanceId;
+
 	private Date writeDate;
 	private String memberId;
 	private int causeStatus;
@@ -22,7 +27,13 @@ public class CauseListDto {
 	private int attendanceStatus;
 	private String attendanceStatusString;
 	private String memberName;
-	private String attendanceDate;
+	private int submitStatus;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date attendanceDate;
+	private byte[] fileData;
+	private String fileName;
+	private long fileSize;
+	private String fileContentType;
 	
 	
 	public String attendanceStatus(int attendanceStatus) {

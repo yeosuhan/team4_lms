@@ -11,11 +11,15 @@ public interface ICauseService {
 	int selectCount();
 	int selectCauseCount(String memberId);
 	CauseListDto selectCauseDetail(int causeId);
+	Cause selectFileDetail(int causeId);
 	
 	void insertCause(CauseDto causeDto);
 
 	List<CauseListDto> selectCauseList(String memberId, int page);
 	List<CauseListDto> selectCauseListAdmin(int page);
+	
+	void updateCause(Cause cause);
+	void deleteCause(int causeId);
 	
 	void accept(int causeId, int causeStatus);
 	List<Integer> getSubmitStatusNo();
