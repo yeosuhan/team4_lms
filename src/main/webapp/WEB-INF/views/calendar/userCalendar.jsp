@@ -42,6 +42,7 @@
 					<div class="row" style=" height: 100px;">
 						<div class="col-sm-6">
 							<h3>출근 시간</h3>
+							<p>${in}</p>
 							
 						</div>
 						<div class="col-sm-6">
