@@ -19,7 +19,7 @@ color: grey;
 			<h1 class="mb-5 mt-3"><c:if test="${boardType=='reference'}">자료실</c:if>
    		<c:if test="${boardType=='community'}">커뮤니티</c:if></h1>
 		</div>
-		<div class="table-responsive" style="border-top: 1px solid gray;"><br/>
+		<div class="table-responsive" style="border-top: 1px solid gray"><br/>
 			<form action="<c:url value='/board/search/${boardType}/1'/>" method="get">
 				<div class="pull-right row" style="margin-bottom: 5px;">
 				<div class="col"></div>
