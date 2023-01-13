@@ -1,6 +1,7 @@
 package com.team4.myapp.cause.controller;
 
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,8 @@ import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 import com.team4.myapp.cause.service.ICauseService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.reasoncategory.model.ReasonCategory;
 import com.team4.myapp.reasoncategory.service.IReasonCategoryService;
 
@@ -114,12 +117,18 @@ public class CauseController {
 	}
 	
 	//사유서 목록 보기 (관리자)
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/list/{page}", method = RequestMethod.GET)
 	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
 		session.setAttribute("page", page);
 		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
 		model.addAttribute("causeList", causeList);
+		
+		//대기 수		
+		model.addAttribute("awaitNo", causeService.getSubmitStatusNo().get(0));
+		model.addAttribute("approveNo", causeService.getSubmitStatusNo().get(1));
+		model.addAttribute("rejectNo",causeService.getSubmitStatusNo().get(2));
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectCount();
@@ -136,12 +145,49 @@ public class CauseController {
 	}
 	
 	//신청서 상세 조회
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="YYYY-MM-dd")
 	@ResponseBody
 	@RequestMapping(value="/cause/detail/{id}", method=RequestMethod.GET)
-	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session) {
+	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session, Model model) {
 		CauseListDto cdlist = causeService.selectCauseDetail(id);
 		logger.info(cdlist.toString());
 		return cdlist;
+	}
+	
+	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
+	public String accept(CauseListDto cause, int page) {	
+			causeService.accept(cause.getCauseId(),cause.getCauseStatus());
+		return "redirect:/cause/admin/list/"+page;
+	}
+	
+	@RequestMapping(value="/cause/admin/date/{page}", method = RequestMethod.GET)
+	public String selectCauseListAdminDate(@PathVariable int page, String keyword, HttpSession session, Model model) {
+		//리스트 불러오기
+		List<CauseListDto> causeList = causeService.selectCauseListAdminDate(keyword,page);
+		model.addAttribute("causeList", causeList);
+		
+		//대기 수		
+		model.addAttribute("awaitNo", causeService.getSubmitStatusDateNo(keyword).get(0));
+		model.addAttribute("approveNo", causeService.getSubmitStatusDateNo(keyword).get(1));
+		model.addAttribute("rejectNo",causeService.getSubmitStatusDateNo(keyword).get(2));
+		
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(0));
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(1));
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(2));
+		
+		//전체 페이지 구하기(5페이지씩 구분)
+		int bbsCount = causeService.selectDateCount(keyword);
+		System.out.println("관리자 전체 행: "+ bbsCount);
+		int totalPageCount=0;
+		if(bbsCount > 0) {
+			totalPageCount = (int)Math.ceil(bbsCount/5.0);
+		}
+		model.addAttribute("totalPageCount",totalPageCount);
+		model.addAttribute("page",page);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("boardType","/cause/admin/date");
+		
+		return "manager/list";
 	}
 	
 	//사진 보여주기

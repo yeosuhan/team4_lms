@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -31,7 +30,13 @@
 	<div class="container">
 		<div class="masthead-subheading">Welcome To OTI University</div>
 		<div class="masthead-heading text-uppercase">세계로 뻗어나가는 OTI대학교</div>
-		<a class="btn btn-primary btn-xl text-uppercase" href="/member/login">Go Login</a>
+		<c:if test="${sessionScope.memberid != null}">
+			<a class="btn btn-primary btn-xl text-uppercase" href="/attendance/main">Go Main</a>
+		</c:if>
+		<c:if test="${sessionScope.memberid == null}">
+			<a class="btn btn-primary btn-xl text-uppercase" href="/member/login">Go Login</a>
+		</c:if>
+		
 	</div>
 </header>
 

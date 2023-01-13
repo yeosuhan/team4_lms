@@ -50,15 +50,13 @@
 	      <div class="col-sm-8">
 	        <textarea name="content" rows="10" cols="100" class="form-control"></textarea>
 	      </div>
-	    </div>
-	    <c:if test="${boardType=='reference'}">
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="photo"><fmt:message key="FILE"/></label>
-		      <div class="col-sm-8">
+	    </div>	    
+		<div class="form-group">
+		   <label class="control-label col-sm-2" for="photo"><fmt:message key="FILE"/></label>
+		    <div class="col-sm-8">
 		        <input type="file" id="i_file" name="file"><span id="droparea" class="help-block"><fmt:message key="FILESIZE_ERROR"/></span>
-		      </div>
 		    </div>
-	    </c:if>
+		</div>	    
 	    <div class="form-group">
 	       <div class="col-sm-offset-2 col-sm-8">
 	         <input type="hidden" name="boardType" value="${boardType}">

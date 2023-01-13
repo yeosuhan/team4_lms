@@ -23,4 +23,9 @@ public interface ICauseRepository {
 	void updateCauseDetail(Cause cause);
 	void deleteCause(int causeId);
 
+	void accept(@Param("causeId") int causeId, @Param("causeStatus") int causeStatus);
+	int getSubmitStatusNo(int status);
+	List<CauseListDto> selectCauseListAdminDate(@Param("date") String date, @Param("start") int start, @Param("end") int i);
+	Integer getSubmitStatusDateNo(@Param("status") int status, @Param("date") String date);
+	int selectDateCount(String date);
 }

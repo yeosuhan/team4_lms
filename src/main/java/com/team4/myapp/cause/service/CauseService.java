@@ -1,6 +1,7 @@
 package com.team4.myapp.cause.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -156,5 +157,49 @@ public class CauseService implements ICauseService{
 		attendanceRepository.changeSubmitStatus(0, causeId);
 	}
 
+	@Override
+	public void accept(int causeId, int causeStatus) {
+		causeRepository.accept(causeId, causeStatus);	
+		attendanceRepository.attendanceUcc(causeId, causeStatus+1);	
+	}
+
+	@Override
+	public List<Integer> getSubmitStatusNo() {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusNo(0));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(1));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(2));
+		return submitStatusList;
+	}
+
+	@Override
+	public List<CauseListDto> selectCauseListAdminDate(String date, int page) {
+		//페이징 처리
+				int start = ((page-1) * 5) +1;
+				
+				List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
+				for(CauseListDto i : list) {
+					String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+					String s2 = i.submitStatus(i.getCauseStatus());
+					i.setAttendanceStatusString(s1);
+					i.setCauseStatusString(s2);
+				}
+				
+				return list;
+	}
+
+	@Override
+	public List<Integer> getSubmitStatusDateNo(String date) {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(0, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(1, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(2, date));
+		return submitStatusList;
+	}
+
+	@Override
+	public int selectDateCount(String date) {
+		return causeRepository.selectDateCount(date);
+	}
 
 }

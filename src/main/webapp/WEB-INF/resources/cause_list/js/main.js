@@ -52,6 +52,8 @@ function DetailList(id){
 			$('#cd_category').text(data.categoryString);
 			$('#updateButton').attr("value",data.causeId);
 			$('#deleteCause').attr("value",data.causeId);
+			$('#causeId').text(id);	
+			$('#causeId').val(id);
 			
 			//승인상태에 따라 버튼 달라짐.
 			if(data.causeStatus == 0){

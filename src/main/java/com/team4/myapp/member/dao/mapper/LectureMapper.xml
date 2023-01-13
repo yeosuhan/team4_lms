@@ -16,7 +16,8 @@
 		SELECT 
 			member_name AS memberName,
 			attendance_date AS attendanceDate,
-			attendance_status AS attendanceStatus			
+			attendance_status AS attendanceStatus,	
+			lecture_id AS lectureId		
 		FROM 
 			attendance a, members m
 		WHERE
