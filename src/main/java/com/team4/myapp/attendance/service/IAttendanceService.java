@@ -23,5 +23,6 @@ public interface IAttendanceService {
 	String selectCheckOut(String memberId);
 	void leaveEarly(String memberId);
 
-	int selectId(String memberId); 
+	int selectId(String memberId);
+	void next_statistics(); 
 }

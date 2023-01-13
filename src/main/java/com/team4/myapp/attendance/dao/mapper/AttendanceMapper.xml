@@ -118,6 +118,21 @@
          where ATTENDANCE_ID == #{attendanceId}
       ]]>
 	</select>
+	
+	<update id="attendanceUcc" parameterType="hashmap">
+	<![CDATA[
+		UPDATE ATTENDANCE 
+			SET SUBMIT_STATUS = #{submitStatus}
+		WHERE ATTENDANCE_ID=(select ATTENDANCE_ID  from cause where CAUSE_ID=#{causeId})
+	]]>
+	</update>
+	
+	<insert id="insertMonthSchedule" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO STATISTICS(MEMBER_ID, YEAR, MONTH, ATTENDANCE, LATE, ABSENT, LEAVE) 
+			VALUES (#{member}, #{year}, #{month}, 0, 0, 0, 0)
+		]]>
+	</insert>
 
 	<update id="updateAttendanceStatusById" parameterType="map">
 		<choose>
@@ -135,4 +150,6 @@
 			</otherwise>
 		</choose>
 	</update>
+		
+	
 </mapper>

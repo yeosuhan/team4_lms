@@ -48,5 +48,11 @@ public class AttendanceScheduler {
 			System.out.println(today + " today_post 출석 상태 결산 실패,,, ! ! !");
 		}
 	}
+	
+	// 매월 말일 새벽12시 5분에 다음달 통계 넣어놔야됨 ex) member_id, 2023, 02, 0, 0, 0, 0
+	   @Scheduled(cron = "0 5 0 1 * ?")
+	   public void next_statistics() {
+		   attendanceService.next_statistics();		   
+	   }
 
 }

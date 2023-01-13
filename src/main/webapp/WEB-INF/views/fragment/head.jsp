@@ -35,20 +35,6 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
 
-<!-- cause_list -->
-<link
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="<c:url value='/c/fonts/icomoon/style.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/c/css/owl.carousel.min.css'/>">
-<script src="<c:url value='/c/js/jquery-3.3.1.min.js'/>"></script>
-<script src="<c:url value='/c/js/popper.min.js'/>"></script>
-<script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
-<script src="<c:url value='/c/js/main.js'/>"></script>
-
-
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
 

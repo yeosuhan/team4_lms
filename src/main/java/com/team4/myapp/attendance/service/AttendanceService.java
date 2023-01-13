@@ -3,7 +3,10 @@ package com.team4.myapp.attendance.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -205,7 +208,7 @@ public class AttendanceService implements IAttendanceService {
 			System.out.println(" 결석 처리 : " + aid);
 			attendanceRepository.updateAttendanceStatusById(aid, 0, null, null); // 결석 처리
 		}
-		// 3. 외출데이터에 복귀값 없으면  18:00 로 수정
+		// 3. 외출데이터에 복귀값 없으면 18:00 로 수정
 		SimpleDateFormat sdt = new SimpleDateFormat("YYYY/MM/DD HH:mm:ss");
 		date.setHours(18);
 		date.setMinutes(0);
@@ -238,4 +241,13 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
+	@Override
+	public void next_statistics() {
+		List<String> members = memberRepository.selectAllStudent();
+		int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		for (String member : members) {
+			attendanceRepository.insertMonthSchedule(member, year, month);
+		}
+	}
 }
