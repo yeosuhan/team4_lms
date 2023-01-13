@@ -24,5 +24,7 @@ public class Attendance {
 	private int attendanceStatus;
 	private int submitStatus;
 	private String memberName;
+	private int lectureId;
+
 
 }

@@ -56,7 +56,8 @@
 		base-package=" com.team4.myapp.util.scheduler" />
 	<context:component-scan
 		base-package=" com.team4.myapp.board.controller" />
-
+	<context:component-scan
+		base-package=" com.team4.myapp.reply.controller" />
 	<view-controller path="/" view-name="home" />
 
 	<beans:bean id="multipartResolver"

@@ -105,11 +105,6 @@ public class Board {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
-	
-	
-	
-	
-	
+
 
 }

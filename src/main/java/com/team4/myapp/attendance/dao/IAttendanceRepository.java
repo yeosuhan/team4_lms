@@ -6,11 +6,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.team4.myapp.attendance.model.Attendance;
+import com.team4.myapp.util.scheduler.dto.Statistics;
 
 public interface IAttendanceRepository {
 	List<Attendance> selectMemberAttendance(@Param("memberId")String memberId,  @Param("month") int month);
 	void insertAttendance(String memberId);
-
+	
+	
 	void updateCheckIn(@Param("attendance") Attendance attendance, @Param("today") String today);
 	void updateCheckOut(@Param("memberId") String memberId, @Param("attendanceStatus") int attendanceStatus, @Param("today") String today);
 	
@@ -22,6 +24,9 @@ public interface IAttendanceRepository {
 	
 	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") Date attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
+	
+	void insertToday(@Param("memberId")String memberId, @Param("attendanceStatus")int attendanceStatus,@Param("yesterday") String yesterday, @Param("year") String year, @Param("month") String month);
+	List<Statistics> selectStatus(@Param("yesterday") String yesterday);
 	
 	List<Integer> selectCheckoutNull(String today);
 	String selectCheckInById(int attendanceId);
