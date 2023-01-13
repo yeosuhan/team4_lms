@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	function writeReply(boardId) {
 		var content1 = $("#replyContent").val();
@@ -35,7 +39,6 @@
 	}
 </script>
 <style>
-<style>
 		* {
 		  box-sizing: border-box;
 		  outline: none;
@@ -43,6 +46,7 @@
 		body {
 		  margin: 0;
 		  font-family: Sans-serif;
+		 background-color: #efefef;
 		}
 		.dashboard {
 		  display: flex;
@@ -525,7 +529,7 @@
 		  background: #555;
 		}
 		
-		#thumb:hover {
+		#thumb:hover, #share:hover {
 		color: blue;
 		}
 		
@@ -571,14 +575,14 @@
 				<hr class="new-hr">
 				<div class="right-bottom">
 					<div class="check">
-						<h2>
+						<h1>
 							<c:if test="${board.boardType=='reference'}">
 								<fmt:message key="REFERENCE" />
 							</c:if>
 							<c:if test="${board.boardType=='community'}">
 								<fmt:message key="COMMUNITY" />
 							</c:if>
-						</h2>
+						</h1>
 					</div>
 					<div class="search-arrow">
 						<div class="buttons">
@@ -646,29 +650,25 @@
 				<div class="from">
 					<span class="who">작성자: </span>${board.memberId}
 				</div>
-				<div class="row">
-					<c:if test="${board.boardType=='community'}">&emsp;좋아요 
-		        		<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
-		        		${board.heartCount}&emsp;
-		        	</c:if>
-		        	공유	        	
-		        	<i class="fa fa-share-alt" aria-hidden="true" id="share" onclick="copy()"></i> 		        			        
-		        <div class="col text-right">
-		          <span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
-		          <c:if test="${board.boardType=='reference'}"><span> 다운로드 수 </span>
-		          	<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
-		          </c:if>
-		        </div>
-	        </div>	 
-	        <div class="message-from" style="border-top: 1px solid gray;">
-				<p>${board.content}</p>
-			</div>
-			
-			
-			
-			
-			
-	        
+					<div class="row">
+					<div class="col">
+						<c:if test="${board.boardType=='community'}">좋아요 
+			        		<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
+			        		${board.heartCount}&emsp;
+			        	</c:if>
+			        	공유	        	
+			        	<i class="fa fa-share-alt" aria-hidden="true" id="share" onclick="copy()"></i> 	
+			        </div>	        			        
+			        <div class="col text-right">
+			          <span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
+			          <c:if test="${board.boardType=='reference'}"><span> 다운로드 수 </span>
+			          	<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
+			          </c:if>
+			        </div>
+		        </div>	 
+		        <div class="message-from" style="border-top: 1px solid gray;">
+					<p>${board.content}</p>
+				</div>	        
 		        <div class="attachment-last">
 		          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
 		          <div class="att-write">
@@ -709,20 +709,7 @@
 							</tr>
 						</c:if>
 					  </div>
-				</div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-					<div>
-						<br /> <br /> <br />
-					</div>
+				</div>	
 					<div class="content">
 						<form enctype="multipart/form-data" class="form-horizontal">
 							<div class="form-group">
