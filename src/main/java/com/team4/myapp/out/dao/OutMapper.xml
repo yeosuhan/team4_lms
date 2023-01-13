@@ -44,7 +44,8 @@
 		from out
 		where MEMBER_ID = #{memberId} and
 		<choose>
-			<when test="today == null">to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')</when>
+			<when test="today == null">to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(sysdate,'YYYY-MM-DD')
+		</when>
 			<otherwise>to_char(OUT_DATE, 'YYYY-MM-DD') = #{today} </otherwise>
 		</choose>
 	</select>
@@ -52,8 +53,8 @@
 	<update id="updateOutNull" parameterType="map">
 		<![CDATA[
 			update out
-			set CHECK_OUT = to_timestamp(#{timestamp})
-			where to_char(OUT_DATE, 'YYYY-MM-DD') = to_char(#{today}, 'YYYY-MM-DD') and CHECK_OUT is null and CHECK_IN is not null
+			set CHECK_OUT = to_timestamp(#{timestamp}, 'YYYY/MM/DD HH24:MI:SS')
+			where to_char(OUT_DATE, 'YYYY-MM-DD') = #{today} and CHECK_OUT is null and CHECK_IN is not null
 		]]>
 	</update>
 

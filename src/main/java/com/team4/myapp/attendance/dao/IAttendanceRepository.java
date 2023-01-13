@@ -25,5 +25,7 @@ public interface IAttendanceRepository {
 	
 	List<Integer> selectCheckoutNull(String today);
 	String selectCheckInById(int attendanceId);
-	void updateAttendanceStatusById(@Param("attendanceId") int attendanceId,  @Param("attendanceStatus") int attendanceStatus);
+
+	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
+			@Param("memberId") String memberId, @Param("today") String today);
 }

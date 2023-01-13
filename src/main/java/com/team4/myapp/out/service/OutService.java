@@ -47,30 +47,30 @@ public class OutService implements IOutService {
 	}
 
 	// 오늘의 외출 기록, 총 시간게산
-	public OutListDto getOutDetails(String memberId, String today) throws ParseException{
+	public OutListDto getOutDetails(String memberId, String today) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		long total = 0;
 		Date in = null;
 		Date out = null;
 		OutListDto outListDto = new OutListDto();
-		
+
 		// 오늘의 외출 기록 가져오기
 		List<OutDto> list = outRepository.selectOutList(memberId, today);
 		outListDto.setOutlist(list);
-		
+
 		// 총 외출 시간 계산하기
 		long time = 0;
 		String ot;
-		for(OutDto dto : list) {
+		for (OutDto dto : list) {
 			in = format.parse(dto.getCheckIn());
 			ot = dto.getCheckOut();
-			if(ot == null) continue;
+			if (ot == null)
+				continue;
 			out = format.parse(ot);
-			
-			time =  (out.getTime() - in.getTime()) / 1000; // 총 몇 초 ?
+
+			time = (out.getTime() - in.getTime()) / 1000; // 총 몇 초 ?
 			total += time;
 		}
-		System.out.println(" 초  : " + total);
 		int h = (int) (total / 3600);
 		int m = (int) (total % 3600) / 60;
 		int sec = (int) (total % 60);
@@ -78,10 +78,8 @@ public class OutService implements IOutService {
 		outListDto.setHours(h);
 		outListDto.setMinutes(m);
 		outListDto.setSeconds(sec);
-		
+
 		return outListDto;
 	}
-	
-	
 
 }

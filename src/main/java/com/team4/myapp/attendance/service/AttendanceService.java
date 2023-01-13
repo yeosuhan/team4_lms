@@ -21,8 +21,6 @@ import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
 
-import oracle.sql.TIMESTAMP;
-
 @Service
 public class AttendanceService implements IAttendanceService {
 
@@ -31,35 +29,35 @@ public class AttendanceService implements IAttendanceService {
 
 	@Autowired
 	IMemberRepository memberRepository;
-	
+
 	@Autowired
 	IOutRepository outRepository;
-	
+
 	@Autowired
 	OutService outService;
 
 	// 근무시간 충족 여부 검사 : 조퇴, 퇴근 시 수행 됨// 5 시간 이상 근무 시 true 리턴한다.
 	private boolean calWorkingTime(String memberId, String today, OutListDto out) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");	
-		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");	
-		Date date = null;   // 출근시간	
-		Date date2 = null; // 퇴근 or 조퇴 버튼 누른 현재 시간
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = null; // 출근시간
+		Date date2 = null; // 퇴근 , 조퇴 버튼 누른 현재 시간 or 조회된 퇴근시간
 		long totalOut = 0;
-		
+
 		try {
 			// 출근 시간 조회
-			String str = null;
-			if(today == null && out == null) {
-				str = attendanceRepository.selectCheckIn(memberId, Today.getToday());
-				date2 = new Date();			
-			}
-			else {
-				str = attendanceRepository.selectCheckIn(memberId,today);
-				date2 = format2.parse(today);
-				date2.setHours(18);
-				date2.setMinutes(0);
-				date2.setSeconds(0);
-				
+			String ain = null;
+			if (today == null && out == null) {
+				ain = attendanceRepository.selectCheckIn(memberId, Today.getToday());
+				date2 = new Date();
+			} else {
+				ain = attendanceRepository.selectCheckIn(memberId, today);
+				// 외출 복귀하지 않은 사람의 퇴근시간을 가져온다. -> null : 결석처리 returan false
+				// 값이 있으면 -> 해당 값으로 시간을 계산한다.
+				String aout = attendanceRepository.selectCheckOut(memberId, today);
+				if (aout == null)
+					return false;
+				date2 = format.parse(aout);
+
 				// 총 외출 시간
 				Date outs = new Date();
 				outs.setYear(date2.getYear());
@@ -70,23 +68,14 @@ public class AttendanceService implements IAttendanceService {
 				outs.setSeconds(out.getSeconds());
 				totalOut = out.getTotal() * 1000;
 			}
-			date = format.parse(str);
+			date = format.parse(ain);
 		} catch (ParseException e) {
 			System.out.println("calWorkingTime() 에러 ");
 			e.printStackTrace();
 		}
-		
 
 		// 근무시간 >= 5 이여야 출석 인정
-		System.out.println("-----------  AttendanceService  calWorkingTime() ----------");
-		System.out.println("퇴근 시간 : " + date2);
-		System.out.println("출근 시간 : " + date);
-		System.out.println("외출 시간 : " + totalOut);
-		System.out.println("출근 시간 - 퇴근시간 : " + (date2.getTime() - date.getTime()));
-		System.out.println(" 총 초 : " +( date2.getTime() - date.getTime() - totalOut));
 		long total = (date2.getTime() - date.getTime() - totalOut) / 3600000;
-		//long total = (date2.getTime() - date.getTime()) / 3600000;
-		System.out.println("total hours ~~~  : " + total);
 		if (total < 5) {
 			return false;
 		}
@@ -95,10 +84,6 @@ public class AttendanceService implements IAttendanceService {
 
 	public List<CalendarDto> selectMemberAttendance(String memberId, int month) {
 		List<Attendance> alist = attendanceRepository.selectMemberAttendance(memberId, month);
-
-		System.out.println("selectMemberAttendance ~~~~~~~~~~~~~~~~~");
-		System.out.println(alist);
-
 		List<CalendarDto> clist = new ArrayList<CalendarDto>();
 
 		for (Attendance a : alist) {
@@ -128,7 +113,6 @@ public class AttendanceService implements IAttendanceService {
 		else {
 			attendance.setAttendanceStatus(1);
 		}
-
 		attendanceRepository.updateCheckIn(attendance, today);
 	}
 
@@ -203,9 +187,7 @@ public class AttendanceService implements IAttendanceService {
 	public void leaveEarly(String memberId) {
 		boolean result = calWorkingTime(memberId, null, null);
 		String today = Today.getToday();
-		System.out.println(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		if (!result) { // 출근 시간 미달인 경우
-			System.out.println(" 미달~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			attendanceRepository.updateCheckOut(memberId, 0, today); // 결석 처리
 		} else {
 			attendanceRepository.updateCheckOut(memberId, 3, today); // 조퇴 처리
@@ -214,50 +196,46 @@ public class AttendanceService implements IAttendanceService {
 
 	// 스케줄러가 호출함 : 최종적으로 퇴근처리 안한 사람 update 처리
 	@Transactional
-	public void todayPost(Date date, String today){
-//		0. 출근했는데 퇴근 시간이 빈 유저 목록 가져오기
+	public void todayPost(Date date, String today) {
+		// 0. 출근했는데 퇴근 시간이 빈 유저 목록 가져오기
 		List<Integer> alist = attendanceRepository.selectCheckoutNull(today);
-		
-//		1. 그 사람들 결석처리, 퇴근시간은 null로 유지
-		for(int aid : alist) {
+
+		// 1. 그 사람들 결석처리, 퇴근시간은 null로 유지
+		for (int aid : alist) {
 			System.out.println(" 결석 처리 : " + aid);
-			attendanceRepository.updateAttendanceStatusById(aid, 0); // 결석 처리
+			attendanceRepository.updateAttendanceStatusById(aid, 0, null, null); // 결석 처리
 		}
-		
-//		3. 외출데이터에 복귀값 없으면  18:00 로 수정
+		// 3. 외출데이터에 복귀값 없으면  18:00 로 수정
 		SimpleDateFormat sdt = new SimpleDateFormat("YYYY/MM/DD HH:mm:ss");
 		date.setHours(18);
 		date.setMinutes(0);
-
-				
 		String timestamp = sdt.format(date);
 		System.out.println("timestamp  : " + timestamp);
 		outRepository.updateOutNull(today, timestamp);
-		
-//		4. 오늘 외출한 member_Id 가져오기
+
+		// 4. 오늘 외출한 member_Id 가져오기
 		List<String> members = outRepository.selectMemberId(today);
-		
 		OutListDto outListDto = null;
 		boolean result;
-		for(String mid : members) {
+		for (String mid : members) {
 			try {
-				// 5. 외출한 사람별 총 외출시간 계산하여 	
+				// 5. 외출한 사람별 총 외출시간 계산하여
 				// 6. 근무시간 계산하고 최종 수정
 				outListDto = outService.getOutDetails(mid, today);
 				System.out.println(mid + " 의 오늘 하루 총 외출 시간 : " + outListDto.toString());
 				result = calWorkingTime(mid, today, outListDto);
-				
-				if (!result) { // 출근 시간 미달인 경우
+
+				if (!result) { // 출근 시간 미달인 경우 그 상태만 수정한다.
 					System.out.println(" 미달 ~~~~~~");
-					attendanceRepository.updateCheckOut(mid, 0, today); // 결석 처리
+					attendanceRepository.updateAttendanceStatusById(null, 0, mid, today); // 결석 처리
 				} else {
-					attendanceRepository.updateCheckOut(mid, -1, today); // 가존 상태 유지
-				}				
-				
-			} catch (ParseException e) {e.printStackTrace();}			
-		}	
+					attendanceRepository.updateAttendanceStatusById(null, -1, mid, today); // 가존 상태 유지
+				}
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-
-	
 }
