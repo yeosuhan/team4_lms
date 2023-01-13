@@ -23,6 +23,7 @@ public interface ICauseService {
 	List<CauseListDto> selectCauseListAdminDate(String date, int page);
 	List<Integer> getSubmitStatusDateNo(String date);
 	int selectDateCount(String date);
+	int selectByAttendanceId(int attendaceId);
 	
 	
 }

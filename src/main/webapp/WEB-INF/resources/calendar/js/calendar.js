@@ -19,16 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				height : 400,
 				editable : true,
 				eventLimit : true, // allow "more" link when too many events
-				events : data,
-				eventClick : function(info) {
-					alert('Event: ' + info.event.title);
-					console.log(info.event);
-					console.log(info.event.attendanceStatus);
-					console.log(info.event.extendedProps.attendanceStatus);
-					// location.href =
-					// "/cause/write?attendanceId="+info.event.id;
-
-				},
+				events : data
 			});
 
 			calendar.render();
