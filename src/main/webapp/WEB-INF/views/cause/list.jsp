@@ -17,7 +17,10 @@
 <script src="<c:url value='/c/js/popper.min.js'/>"></script>
 <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
 <script src="<c:url value='/c/js/main.js'/>"></script>
-
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
 
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>

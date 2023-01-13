@@ -32,17 +32,4 @@
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="<c:url value='/h/js/scripts.js'/>"></script>
 		<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-
-		<!--  calendar 관련 resources-->
-
-
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
 		
-		<!-- Style -->
-		<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet"
-			href="<c:url value='/cal/css/bootstrap.min.css'/>">
-		<!-- Style -->
-		<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
