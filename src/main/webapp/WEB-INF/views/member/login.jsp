@@ -33,7 +33,7 @@
 					<div class="login-wrap p-0">
 						<h3 class="mb-4 text-center">로그인 하세요</h3>
 						<c:if test="${empty sessionScope.userid}">
-							<form action="<c:url value='/admin/main'/>" method="post"
+							<form action="<c:url value='/member/login'/>" method="post"
 								class="form-horizontal">
 								<div class="form-group">
 									<input type="text" name=memberId class="form-control" placeholder="Username"
@@ -47,7 +47,7 @@
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn submit px-3"
-										style="background-color: #F9F6F1;">Sign In</button>
+										style="background-color: #F9F6F1;">LogIn</button>
 								</div>
 							</form>
 						</c:if>

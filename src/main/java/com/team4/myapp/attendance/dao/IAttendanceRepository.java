@@ -2,12 +2,10 @@ package com.team4.myapp.attendance.dao;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.cause.model.Cause;
 
 public interface IAttendanceRepository {
 	List<Attendance> selectMemberAttendance(@Param("memberId")String memberId,  @Param("month") int month);
@@ -25,7 +23,12 @@ public interface IAttendanceRepository {
 	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") Date attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
 	
+	List<Integer> selectCheckoutNull(String today);
+	String selectCheckInById(int attendanceId);
+	
 	void attendanceUcc(@Param("causeId") int causeId, @Param("submitStatus") int submitStatus);
 	void insertMonthSchedule(@Param("member") String member, @Param("year") int year, @Param("month") int month);
 
+	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
+			@Param("memberId") String memberId, @Param("today") String today);
 }

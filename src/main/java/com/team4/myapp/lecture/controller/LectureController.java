@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.member.service.ILectureService;
 
 @Controller
+@Auth(role = Role.PROFESSOR)
 public class LectureController {
 	@Autowired
 	ILectureService lectureService;

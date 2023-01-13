@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.member.model.Lecture;
 import com.team4.myapp.member.model.Member;
 import com.team4.myapp.member.service.ILectureService;
@@ -22,30 +23,40 @@ import com.team4.myapp.member.service.IMemberService;
 @Controller
 public class MemberController {
 	static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+
 	@Autowired
 	IMemberService memberService;
-	
+
 	@Autowired
 	ILectureService lectureService;
-	
-	@RequestMapping(value="/member/login", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String login() {
 		return "member/login";
 	}
 	
-	@RequestMapping(value="/admin/main", method=RequestMethod.POST)
+	@RequestMapping(value = "/member/denied", method = RequestMethod.GET)
+	public String authDenied() {
+		return "member/denied";
+	}
+
+	@RequestMapping(value = "/member/login", method = RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		Member member = memberService.selectMember(memberId);
-		if(member != null) {
+		if (member != null) {
 			String dbPassword = member.getPassword();
-			if(dbPassword==null) {
+			if (dbPassword == null) {
 				model.addAttribute("message", "NOT_VALID_USER");
 			} else {
-				if(dbPassword.equals(password)) {
+				if (dbPassword.equals(password)) {
 					session.setAttribute("memberid", memberId);
-					session.setAttribute("membername",member.getMemberName());
-					session.setAttribute("identity", member.getIdentity());
+					session.setAttribute("membername", member.getMemberName());
+
+					if (member.getIdentity().equals("student"))
+						session.setAttribute("identity", Role.STUDENT);
+					else
+						session.setAttribute("identity", Role.PROFESSOR);
+
 					session.setAttribute("lectureid", member.getLectureId());
 
 					System.out.println("-----------------------------------------------------------");
@@ -55,10 +66,8 @@ public class MemberController {
 					System.out.println("identity: " + member.getIdentity());
 					System.out.println("lectureid: " + member.getLectureId());
 					System.out.println("-----------------------------------------------------------");
-					if(member.getIdentity().equals("professor")) {
-						List<Lecture> lectureList = lectureService.selectAllLecture();
-						model.addAttribute("lectureList", lectureList);
-						return "lecture/lectureList";
+					if (member.getIdentity().equals("professor")) {
+						return "redirect:/admin/main";
 					} else {
 						return "redirect:/attendance/main";
 					}
@@ -72,10 +81,19 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
-	
-	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
+
+	@Auth(role = Role.PROFESSOR)
+	@RequestMapping(value = "/admin/main", method = RequestMethod.GET)
+	public String adminMain(Model model, HttpServletRequest request) {
+		List<Lecture> lectureList = lectureService.selectAllLecture();
+		model.addAttribute("lectureList", lectureList);
+		System.out.println(lectureList);
+		return "lecture/lectureList";
+	}
+
+	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
-		return "/member/login";
+		return "member/login";
 	}
 }

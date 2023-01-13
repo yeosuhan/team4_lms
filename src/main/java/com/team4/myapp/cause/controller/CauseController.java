@@ -25,6 +25,8 @@ import com.team4.myapp.attendance.service.IAttendanceService;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 import com.team4.myapp.cause.service.ICauseService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.reasoncategory.model.ReasonCategory;
 import com.team4.myapp.reasoncategory.service.IReasonCategoryService;
 
@@ -82,6 +84,7 @@ public class CauseController {
 	}
 	
 	//사유서 목록 불러오기(유저)
+	@Auth(role = Role.STUDENT)
 	@RequestMapping(value = "/cause/list/{page}", method = RequestMethod.GET)
 	public String selectCauseList(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
@@ -107,6 +110,7 @@ public class CauseController {
 	}
 	
 	//사유서 목록 보기 (관리자)
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/list/{page}", method = RequestMethod.GET)
 	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기

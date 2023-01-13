@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.team4.myapp.attendance.dao.IAttendanceRepository">
-	
-	<select id="selectMemberAttendance" parameterType="map" resultType="com.team4.myapp.attendance.model.Attendance">
+
+	<select id="selectMemberAttendance" parameterType="map"
+		resultType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			select 
 			ATTENDANCE_ID as attendanceId, 
@@ -18,14 +19,14 @@
 			where member_id = #{memberId}
 		]]>
 	</select>
-	
+
 	<insert id="insertAttendance" parameterType="string">
 		<![CDATA[
 			insert into attendance(ATTENDANCE_ID, MEMBER_ID)	
 			values(ATTENDANCE_SEQ.nextval, #{memberId})
 		]]>
 	</insert>
-	
+
 	<update id="updateCheckIn" parameterType="map">
 		<![CDATA[
 			update attendance 
@@ -35,7 +36,7 @@
 			where (MEMBER_ID = #{attendance.memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</update>
-	
+
 	<update id="updateCheckOut" parameterType="map">
 
 		update attendance
@@ -49,55 +50,75 @@
 		= #{today})
 
 	</update>
-	
+
 	<select id="selectId" parameterType="map" resultType="int">
 		<![CDATA[
 			select ATTENDANCE_ID  from attendance
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</select>
-	
-	<select id="selectAttendanceId" parameterType="map" resultType="int">
+
+	<select id="selectAttendanceId" parameterType="map"
+		resultType="int">
 		<![CDATA[
 			select ATTENDANCE_ID  FROM ATTENDANCE
 			WHERE (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{attendanceDate})
 		]]>
 	</select>
-	
+
 	<select id="selectCheckIn" parameterType="map"
-      resultType="string">
+		resultType="string">
       <![CDATA[
          select to_char(CHECK_IN, 'YYYY/MM/dd HH24:mi:ss')       
          from attendance
          where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
       ]]>
-   </select>
-   
+	</select>
+
 	<select id="selectCheckOut" parameterType="map"
 		resultType="string">
 		<![CDATA[
-			select to_char(CHECK_OUT) 			
+			select to_char(CHECK_OUT, 'YYYY/MM/dd HH24:mi:ss') 			
 			from attendance
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
 	</select>
-	
-	<insert id="insertFutureAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
+
+	<insert id="insertFutureAttendance"
+		parameterType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID) 
 			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId})
 		]]>
 	</insert>
-	
-	<select id="selectDataAndCategory" parameterType="int" resultType="com.team4.myapp.attendance.model.Attendance">
+
+	<select id="selectDataAndCategory" parameterType="int"
+		resultType="com.team4.myapp.attendance.model.Attendance">
 		<![CDATA[
 			SELECT ATTENDANCE_ID AS attendanceId,
 					ATTENDANCE_DATE AS attendanceDate,
 					ATTENDANCE_STATUS AS attendanceStatus
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
-	</select>	
-		
+	</select>
+
+	<select id="selectCheckoutNull" parameterType="string"
+		resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  from attendance
+			where CHECK_IN is not null and CHECK_OUT is null and to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+		]]>
+	</select>
+
+	<select id="selectCheckInById" parameterType="int"
+		resultType="string">
+      <![CDATA[
+         select to_char(CHECK_IN, 'HH24:mi:ss')       
+         from attendance
+         where ATTENDANCE_ID == #{attendanceId}
+      ]]>
+	</select>
+	
 	<update id="attendanceUcc" parameterType="hashmap">
 	<![CDATA[
 		UPDATE ATTENDANCE 
@@ -112,5 +133,23 @@
 			VALUES (#{member}, #{year}, #{month}, 0, 0, 0, 0)
 		]]>
 	</insert>
+
+	<update id="updateAttendanceStatusById" parameterType="map">
+		<choose>
+			<when test="attendanceId != null">
+				update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where ATTENDANCE_ID = #{attendanceId}
+			</when>
+			<otherwise>update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where MEMBER_ID = #{memberId} and
+				to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+			</otherwise>
+		</choose>
+	</update>
+		
 	
 </mapper>
