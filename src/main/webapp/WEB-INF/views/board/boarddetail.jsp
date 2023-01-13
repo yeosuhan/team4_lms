@@ -720,7 +720,7 @@
 										class="form-control" id="replyContent"></textarea>
 								</div>
 								<div class="card-footer text-right">
-									<button class="butona btn" type="button"
+									<button class="butona btn btn-primary" type="button"
 										onclick="writeReply(${board.boardId})" style="width: 150px;">
 										Reply<span class="tag"> <img
 											src="https://i.ibb.co/GQf8frw/reply.png" />
