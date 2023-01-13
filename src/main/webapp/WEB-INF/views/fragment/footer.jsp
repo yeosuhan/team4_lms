@@ -6,9 +6,9 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 text-lg-start">Copyright &copy; TEAM4 2023</div>
                     <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter" id="twitter" onclick="twitter()"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook" id="facebook" onclick="facebook()"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn" id="naver" onclick="naver()"><b>N</b></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter" id="twitter" onclick="twitter()" style="border-radius: 0.25rem !important"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook" id="facebook" onclick="facebook()" style="border-radius: 0.25rem !important"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn" id="naver" onclick="naver()" style="border-radius: 0.25rem !important"><b>N</b></a>
                     </div>
                     <div class="col-lg-4 text-lg-end">
                         <a class="link-dark text-decoration-none me-3" href="#!">LMS</a>

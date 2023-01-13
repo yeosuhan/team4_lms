@@ -23,11 +23,16 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value='/h/js/scripts.js'/>"></script>
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<style>
+body{
+background-color: #efefef;;
+}
+</style>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 	<div class="content" style="border-bottom: 1px gray solid;">
 		<div class="container">
 			<div style="border-top: 1px solid gray;">
-				<h1 class="mb-5 mt-3">강의 출결 관리</h1>
+				<h1 class="mb-5 mt-3" style="font-weight: 400 !important;">강의 출결 관리</h1>
 			</div>
 			<div class="row justify-content-center" style="border-top: 1px solid gray">
 				<p></p><br/>
