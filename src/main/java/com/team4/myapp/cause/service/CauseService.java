@@ -140,7 +140,6 @@ public class CauseService implements ICauseService{
 			cause.setFileName(cause.getFile().getOriginalFilename());
 			cause.setFileSize(cause.getFile().getSize());
 			cause.setFileContentType(cause.getFile().getContentType());
-			
 			try {
 				cause.setFileData(cause.getFile().getBytes());
 			} catch (Exception e) {

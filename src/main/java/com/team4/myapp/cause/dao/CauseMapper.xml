@@ -103,7 +103,7 @@
 	
 	<delete id="deleteCause" parameterType="int">
 		<![CDATA[
-			DELETE FROM CAUSE WHERE CAUSE_ID = #{causeId}
+			DELETE FROM CAUSE WHERE CAUSE_ID=#{causeId}
 		]]>
 	</delete>
 	

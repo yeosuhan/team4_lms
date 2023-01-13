@@ -176,13 +176,14 @@ public class CauseController {
 	
 	//사유서 삭제
 	@RequestMapping(value="/cause/delete", method=RequestMethod.POST)
-	public String deleteCause(@PathVariable int causeId, Model model, HttpSession session) {
+	public String deleteCause(int causeId, HttpSession session) {
 		try {
 			causeService.deleteCause(causeId);
-			return "cause/list"+"/" + (Integer)session.getAttribute("page");
+			System.out.println("삭제 완료");
+			return "redirect:/cause/list"+"/" + (Integer)session.getAttribute("page");
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "error/runtime";
+			return "home";
 		}
 	}
 	

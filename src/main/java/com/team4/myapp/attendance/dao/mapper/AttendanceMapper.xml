@@ -98,11 +98,11 @@
 		]]>
 	</select>	
 	
-	<update id="changeSubmitStatus" parameterType="int">
+	<update id="changeSubmitStatus" parameterType="map">
 		<![CDATA[
 			UPDATE (SELECT SUBMIT_STATUS FROM CAUSE, ATTENDANCE
 			WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID AND CAUSE_ID = #{causeId})
-			SET SUBMIT_STATUS = {s_status}
+			SET SUBMIT_STATUS = #{s_status}
 		]]>
 	</update>
 	
