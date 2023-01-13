@@ -25,7 +25,7 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">OTI 대학교</h2>
+					<h2 class="heading-section"><a href="/" style="color: #fff">OTI 대학교</a></h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -51,17 +51,18 @@
 								</div>
 							</form>
 						</c:if>
-						<div class="form-group d-md-flex">
-							<div class="w-50">
-								<label class="checkbox-wrap checkbox-primary">Remember
-									Me <input type="checkbox" checked> <span
-									class="checkmark"></span>
-								</label>
+						<form>
+							<div class="form-group d-md-flex">
+								<div class="w-50">
+									<label class="checkbox-wrap checkbox-primary">Remember
+										Me <input type="checkbox" checked> <span
+										class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="/" style="color: #fff">Home</a>
+								</div>
 							</div>
-							<div class="w-50 text-md-right">
-								<a href="#" style="color: #fff">Forgot Password</a>
-							</div>
-						</div>
 						</form>
 
 					</div>
