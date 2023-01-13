@@ -4,7 +4,8 @@
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script>
+<script src="<c:url value='/cal/js/jquery-3.3.1.min.js'/>"></script>
+<script >
 	function writeReply(boardId) {
 		var content1 = $("#replyContent").val();
 		$.ajax({
