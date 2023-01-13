@@ -520,6 +520,12 @@
 		}
 				
 	</style>
+	<script>
+	function copy() {
+		navigator.clipboard.writeText(window.location.href);
+		alert("클립 보드에 복사되었습니다.");
+	}
+	</script>
 	<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 	
 	<div class="container">
@@ -596,13 +602,15 @@
 	        <div class="from">
 	          <span class="who">작성자: </span>${board.memberId}
 	        </div>
-	        <div class="row">
-		        <c:if test="${board.boardType=='community'}">&emsp;좋아요 
+	        <div class="row">		        
 		        	<div class="col">
-		        		<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
-		        		${board.heartCount} 
-		        	</div>
-		        </c:if>
+		        		<c:if test="${board.boardType=='community'}">좋아요 
+		        			<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
+		        			${board.heartCount}&emsp;
+		        		</c:if>
+		        		공유	        	
+		        		<i class="fa fa-share-alt" aria-hidden="true" id="share" onclick="copy()"></i> 		        	
+		        	</div>		        
 		        <div class="col text-right">
 		          <span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
 		          <c:if test="${board.boardType=='reference'}"><span> 다운로드 수 </span>
