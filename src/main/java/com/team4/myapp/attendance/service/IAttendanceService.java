@@ -2,10 +2,10 @@ package com.team4.myapp.attendance.service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.util.scheduler.dto.Statistics;
 
 public interface IAttendanceService {
 	
@@ -24,5 +24,6 @@ public interface IAttendanceService {
 	String selectCheckOut(String memberId);
 	void leaveEarly(String memberId);
 
-	int selectId(String memberId); 
+	int selectId(String memberId);
+	void insertToday(List<Statistics> mlist, String yesterday, String year, String month); 
 }

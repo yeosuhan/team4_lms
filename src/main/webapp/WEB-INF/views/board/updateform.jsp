@@ -51,31 +51,30 @@ $(document).ready(function(){
 	    <div class="form-group">
 	      <label class="control-label col-sm-2" for="title"><fmt:message key="SUBJECT"/></label>
 	      <div class="col-sm-8">
-	        <input type="text" name="title" id="title" class="form-control" placeholder="${board.title}" required>
+	        <input type="text" name="title" id="title" class="form-control" value="${board.title}" required>
 	      </div>
 	    </div>
 	    <div class="form-group">
 	      <label class="control-label col-sm-2" for="content"><fmt:message key="CONTENT"/></label>
 	      <div class="col-sm-8">
-	        <textarea name="content" rows="10" cols="100" class="form-control" placeholder="${board.content}"></textarea>
+	        <textarea name="content" rows="10" cols="100" class="form-control">${board.content}</textarea>
 	      </div>
-	    </div>
-	    <c:if test="${board.boardType=='reference'}">
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="photo"><fmt:message key="FILE"/></label>
-		      <div class="col-sm-8">
-			      <c:if test="${board.fileName!=null}">${board.fileName}&ensp; 
-			      <a id="updateFile" class="btn" style="color:white; background-color:grey">Edit</a>
-				      <p class="hide">
-				        <input type="file" id="i_file" name="file" value="${board.fileName}"><span id="droparea" class="help-block"><fmt:message key="FILESIZE_ERROR"/></span>
-				      </p>
-			      </c:if>
-			      <c:if test="${board.fileName==null}">
+	    </div>	    
+		<div class="form-group">
+		    <label class="control-label col-sm-2" for="photo"><fmt:message key="FILE"/></label>
+		    <div class="col-sm-8">
+			    <c:if test="${board.fileName!=null}">${board.fileName}&ensp; 
+			   		 <a id="updateFile" class="btn" style="color:white; background-color:grey">Edit</a>
+				    <p class="hide">
+				      <input type="file" id="i_file" name="file" value="${board.fileName}"><span id="droparea" class="help-block"><fmt:message key="FILESIZE_ERROR"/></span>
+				    </p>
+			    </c:if>
+			     <c:if test="${board.fileName==null}">
 			      	<input type="file" id="i_file" name="file" value="${board.fileName}"><span id="droparea" class="help-block"><fmt:message key="FILESIZE_ERROR"/></span>
-			      </c:if>
-		      </div>
-		    </div>
-	    </c:if>
+			     </c:if>
+		     </div>
+		  </div>
+	    
 	    <div class="form-group">
 	       <div class="col-sm-offset-2 col-sm-8">
 	         <input type="hidden" name="boardId" value="${board.boardId}">

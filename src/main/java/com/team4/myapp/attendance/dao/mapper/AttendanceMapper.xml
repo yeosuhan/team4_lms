@@ -97,4 +97,101 @@
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
 	</select>	
+	<select id="selectStatus" resultType="com.team4.myapp.util.scheduler.dto.Statistics">
+	<![CDATA[
+		SELECT
+			m.member_id AS memberId, 
+			a.attendance_status AS attendanceStatus
+		FROM
+			members m, attendance a
+		WHERE 
+			IDENTITY = 'student'
+		AND
+			m.member_id=a.member_id
+		AND
+			to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+	]]>
+	</select>
+	<update id="insertToday" parameterType="map">
+			UPDATE STATISTICS
+			SET
+			<choose>
+			<when test="attendanceStatus==0">
+				ABSENT = (
+						SELECT
+							(S.ABSENT+1) AS ABSENT
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(A.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=to_number(#{month})
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==1">
+				attendance = (
+						SELECT 
+							attendance+1 AS attendance
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==2">
+				late = (
+						SELECT 
+							late+1 AS late
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==3">
+				leave = (
+						SELECT 
+							leave+1 AS leave
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			</choose>
+	</update>
 </mapper>

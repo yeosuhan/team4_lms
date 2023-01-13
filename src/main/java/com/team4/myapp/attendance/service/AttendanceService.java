@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
 import com.team4.myapp.util.date.Today;
+import com.team4.myapp.util.scheduler.dto.Statistics;
 
 @Service
 public class AttendanceService implements IAttendanceService {
@@ -183,4 +183,15 @@ public class AttendanceService implements IAttendanceService {
 		// 총 외출 시간을 기반으로 근무시간 계산 후 -> 결석 여부 판단
 
 	}
+
+	//다음달 통계행 넣기
+
+
+	@Override
+	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
+		for(Statistics memberStatus : mlist) {
+			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
+		}	
+	}
+
 }

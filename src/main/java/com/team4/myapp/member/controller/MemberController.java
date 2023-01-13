@@ -75,13 +75,13 @@ public class MemberController {
 		List<Lecture> lectureList = lectureService.selectAllLecture();
 		model.addAttribute("lectureList", lectureList);
 		System.out.println(lectureList);
-		return "/lecture/lectureList";
+		return "lecture/lectureList";
 	}
 	
 	
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
-		return "/member/login";
+		return "member/login";
 	}
 }
