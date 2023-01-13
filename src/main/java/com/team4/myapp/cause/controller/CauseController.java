@@ -48,7 +48,7 @@ public class CauseController {
 	//사유서 작성폼 띄우기
 	@RequestMapping(value = "/cause/write", method = RequestMethod.GET)
 	public String causeForm(@RequestParam(value="attendanceId", required=false, defaultValue="0") int attendanceId, Model model) {
-		System.out.println("causeForm띄우기");
+		System.out.println("causeForm띄우기" + attendanceId);
 		//사유 카테고리 불러오기
 		if(attendanceId != 0) {
 			//attendance_id로 날짜와 카테고리 불러오기(달력에서 작성버튼 누름)
@@ -58,6 +58,7 @@ public class CauseController {
 		List<ReasonCategory> categoryList = reansonCategoryService.selectCategoryList();
 		model.addAttribute("attendanceId", attendanceId);
 		model.addAttribute("categoryList", categoryList);
+		System.out.println("~~~  ");
 		return "cause/write";
 	}
 	
@@ -185,6 +186,20 @@ public class CauseController {
 		
 		return "manager/list";
 	}
+	
+	//사유서 수정
+	   @RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
+	   public String updateCause(@PathVariable int causeId, @RequestParam(value="attendanceId", required=false, defaultValue="0") int attendanceId, Model model){
+	      if(attendanceId != 0) {
+	    	  System.out.println("~!!!!!  " + attendanceId);
+	    	  // attendanceId 로 causeId 조회하는 서비스 구현
+	      }
+		   
+		  CauseListDto cause= causeService.selectCauseDetail(causeId);
+	      logger.info("/cause/update : "+ cause.toString());
+	      model.addAttribute("list",cause);
+	      return "cause/update";
+	   }
 		
 	
 }

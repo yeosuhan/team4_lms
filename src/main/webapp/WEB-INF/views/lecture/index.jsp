@@ -3,13 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>뿌꾸 대학교 lms</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="<c:url value='/ld/css/style.css'/>" />
@@ -17,7 +10,7 @@
 <script src="<c:url value='/ld/js/popper.js'/>" /></script>
 <script src="<c:url value='/ld/js/bootstrap.min.js'/>" /></script>
 <script src="<c:url value='/ld/js/main.js'/>" /></script>
-<body>
+
 <section class="ftco-section">
 	<div class="container">
 		<div class="row justify-content-center">

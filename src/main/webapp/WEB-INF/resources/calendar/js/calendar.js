@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	console.log("!!!");
 	$.ajax({
-		type : 'GET',	 // get방식으로 통신
+		type : 'GET', // get방식으로 통신
 		url : "/attendance/list",
 		dataType : "json",
 		error : function() { // 통신 실패시
@@ -19,7 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
 				height : 400,
 				editable : true,
 				eventLimit : true, // allow "more" link when too many events
-				events : data
+				events : data,
+				eventClick : function(info) {
+					alert('Event: ' + info.event.title);
+					console.log(info.event);
+					console.log(info.event.attendanceStatus);
+					console.log(info.event.extendedProps.attendanceStatus);
+					// location.href =
+					// "/cause/write?attendanceId="+info.event.id;
+
+				},
 			});
 
 			calendar.render();

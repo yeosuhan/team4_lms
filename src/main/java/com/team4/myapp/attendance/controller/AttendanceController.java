@@ -54,21 +54,26 @@ public class AttendanceController {
 		checkin = attendanceService.selectCheckIn(memberId);
 		if (checkin == null) {
 			model.addAttribute("checkin", true);
-		} else model.addAttribute("checkin", false);
+			model.addAttribute("in", "-");
+		} else {
+			model.addAttribute("checkin", false);
+			model.addAttribute("in", checkin);
+		}
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkin != null && checkout == null)
+		if (checkin != null && checkout == null) {
 			model.addAttribute("checkout", true);
-		else {
-			checkout = "있음";
+			model.addAttribute("out", "-");
+		} else {
 			model.addAttribute("checkout", false);
+			model.addAttribute("out", checkout);
 		}
 
 		// 외출 여부 확인
 		boolean goOut = outService.selectOut(memberId);
 		model.addAttribute("goOut", goOut);
-		
+
 		// 외출 기록 및 총 시간 정보
 		OutListDto outListDto = null;
 		try {
@@ -83,7 +88,7 @@ public class AttendanceController {
 		System.out.println("aid : " + checkin);
 		System.out.println("time : " + checkout);
 		System.out.println("outListDto : " + outListDto);
-		
+
 		return "calendar/userCalendar";
 	}
 
