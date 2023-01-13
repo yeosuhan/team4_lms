@@ -1,5 +1,6 @@
 package com.team4.myapp.cause.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +25,8 @@ import com.team4.myapp.attendance.service.IAttendanceService;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 import com.team4.myapp.cause.service.ICauseService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.reasoncategory.model.ReasonCategory;
 import com.team4.myapp.reasoncategory.service.IReasonCategoryService;
 
@@ -82,6 +84,7 @@ public class CauseController {
 	}
 	
 	//사유서 목록 불러오기(유저)
+	@Auth(role = Role.STUDENT)
 	@RequestMapping(value = "/cause/list/{page}", method = RequestMethod.GET)
 	public String selectCauseList(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
@@ -107,12 +110,18 @@ public class CauseController {
 	}
 	
 	//사유서 목록 보기 (관리자)
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/list/{page}", method = RequestMethod.GET)
 	public String selectCauseListAdmin(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
 		session.setAttribute("page", page);
 		List<CauseListDto> causeList = causeService.selectCauseListAdmin(page);
 		model.addAttribute("causeList", causeList);
+		
+		//대기 수		
+		model.addAttribute("awaitNo", causeService.getSubmitStatusNo().get(0));
+		model.addAttribute("approveNo", causeService.getSubmitStatusNo().get(1));
+		model.addAttribute("rejectNo",causeService.getSubmitStatusNo().get(2));
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectCount();
@@ -123,7 +132,7 @@ public class CauseController {
 		}
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("page",page);
-		model.addAttribute("boardType","/cause/admin/list/");
+		model.addAttribute("boardType","/cause/admin/list");
 		
 		return "manager/list";
 	}
@@ -139,5 +148,43 @@ public class CauseController {
 		return cdlist;
 	}
 	
+	///-------------------------------------------------------------------------
+	
+	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
+	public String accept(CauseListDto cause, int page) {	
+			causeService.accept(cause.getCauseId(),cause.getCauseStatus());
+		return "redirect:/cause/admin/list/"+page;
+	}
+	
+	@RequestMapping(value="/cause/admin/date/{page}", method = RequestMethod.GET)
+	public String selectCauseListAdminDate(@PathVariable int page, String keyword, HttpSession session, Model model) {
+		//리스트 불러오기
+		List<CauseListDto> causeList = causeService.selectCauseListAdminDate(keyword,page);
+		model.addAttribute("causeList", causeList);
+		
+		//대기 수		
+		model.addAttribute("awaitNo", causeService.getSubmitStatusDateNo(keyword).get(0));
+		model.addAttribute("approveNo", causeService.getSubmitStatusDateNo(keyword).get(1));
+		model.addAttribute("rejectNo",causeService.getSubmitStatusDateNo(keyword).get(2));
+		
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(0));
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(1));
+		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(2));
+		
+		//전체 페이지 구하기(5페이지씩 구분)
+		int bbsCount = causeService.selectDateCount(keyword);
+		System.out.println("관리자 전체 행: "+ bbsCount);
+		int totalPageCount=0;
+		if(bbsCount > 0) {
+			totalPageCount = (int)Math.ceil(bbsCount/5.0);
+		}
+		model.addAttribute("totalPageCount",totalPageCount);
+		model.addAttribute("page",page);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("boardType","/cause/admin/date");
+		
+		return "manager/list";
+	}
+		
 	
 }

@@ -27,4 +27,13 @@ public interface IAttendanceRepository {
 	
 	void insertToday(@Param("memberId")String memberId, @Param("attendanceStatus")int attendanceStatus,@Param("yesterday") String yesterday, @Param("year") String year, @Param("month") String month);
 	List<Statistics> selectStatus(@Param("yesterday") String yesterday);
+	
+	List<Integer> selectCheckoutNull(String today);
+	String selectCheckInById(int attendanceId);
+	
+	void attendanceUcc(@Param("causeId") int causeId, @Param("submitStatus") int submitStatus);
+	void insertMonthSchedule(@Param("member") String member, @Param("year") int year, @Param("month") int month);
+
+	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
+			@Param("memberId") String memberId, @Param("today") String today);
 }

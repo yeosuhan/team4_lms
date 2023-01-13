@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team4.myapp.attendance.model.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.IOutService;
 
 @Controller
+@Auth(role = Role.STUDENT)
 public class AttendanceController {
 
 	@Autowired
@@ -69,7 +72,7 @@ public class AttendanceController {
 		// 외출 기록 및 총 시간 정보
 		OutListDto outListDto = null;
 		try {
-			outListDto = outService.getOutDetails(memberId);
+			outListDto = outService.getOutDetails(memberId, null);
 			model.addAttribute("outListDto", outListDto);
 		} catch (ParseException e) {
 			e.printStackTrace();

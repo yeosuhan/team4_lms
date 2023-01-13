@@ -194,4 +194,52 @@
 			</when>
 			</choose>
 	</update>
+	<select id="selectCheckoutNull" parameterType="string"
+		resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  from attendance
+			where CHECK_IN is not null and CHECK_OUT is null and to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+		]]>
+	</select>
+
+	<select id="selectCheckInById" parameterType="int"
+		resultType="string">
+      <![CDATA[
+         select to_char(CHECK_IN, 'HH24:mi:ss')       
+         from attendance
+         where ATTENDANCE_ID == #{attendanceId}
+      ]]>
+	</select>
+	
+	<update id="attendanceUcc" parameterType="hashmap">
+	<![CDATA[
+		UPDATE ATTENDANCE 
+			SET SUBMIT_STATUS = #{submitStatus}
+		WHERE ATTENDANCE_ID=(select ATTENDANCE_ID  from cause where CAUSE_ID=#{causeId})
+	]]>
+	</update>
+	
+	<insert id="insertMonthSchedule" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO STATISTICS(MEMBER_ID, YEAR, MONTH, ATTENDANCE, LATE, ABSENT, LEAVE) 
+			VALUES (#{member}, #{year}, #{month}, 0, 0, 0, 0)
+		]]>
+	</insert>
+
+	<update id="updateAttendanceStatusById" parameterType="map">
+		<choose>
+			<when test="attendanceId != null">
+				update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where ATTENDANCE_ID = #{attendanceId}
+			</when>
+			<otherwise>update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where MEMBER_ID = #{memberId} and
+				to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+			</otherwise>
+		</choose>
+	</update>
 </mapper>

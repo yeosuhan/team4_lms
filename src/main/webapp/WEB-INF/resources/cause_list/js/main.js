@@ -36,6 +36,8 @@ function DetailList(id){
 			$('#cd_status').text(data.causeStatusString);
 			$('#cd_content').text(data.content);
 			$('#cd_category').text(data.categoryString);	
+			$('#causeId').text(id);	
+			$('#causeId').val(id);
 		}	
 	});
 }

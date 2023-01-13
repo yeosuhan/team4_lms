@@ -87,4 +87,23 @@
 
 	<!-- 스케줄러 사용하기 위한 설정 -->
 	<task:annotation-driven />
+
+	<!-- interceptor 적용 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/member/login" />
+			<exclude-mapping path="/" />
+			<exclude-mapping path="/board/list/**" />
+			<beans:bean
+				class="com.team4.myapp.interceptor.LoginInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/member/login" />
+			<exclude-mapping path="/" />
+			<beans:bean
+				class="com.team4.myapp.interceptor.AuthInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
 </beans:beans>

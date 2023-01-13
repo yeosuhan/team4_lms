@@ -47,7 +47,7 @@
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn submit px-3"
-										style="background-color: #F9F6F1;">Sign In</button>
+										style="background-color: #F9F6F1;">LogIn</button>
 								</div>
 							</form>
 						</c:if>

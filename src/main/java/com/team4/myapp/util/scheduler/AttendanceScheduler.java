@@ -25,33 +25,25 @@ public class AttendanceScheduler {
 	IAttendanceRepository attendanceRepository;
 	// 초 분 시 일 월 요일
 	// 매일 오전 5시에 오늘의 출결 데이터가 초기화되어 삽입된다.
-	@Scheduled(cron = "0 0 5 * * 1-5")
+	@Scheduled(cron = "0 6 9 * * 1-5")
 	public void today_init() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		String today = sdf.format(new Date());
 		try {
 			attendanceService.insertAll();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			System.out.println(today + " today_init() 오늘 출석 데이터 삽입 실패,,, ! ! !");
 		}
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-		String today = sdf.format(new Date());
-
-		System.out.println(today);
-		System.out.println("오늘 출석 데이터 삽입 됨~~");
+		System.out.println(today + " today_init() 오늘 출석 데이터 삽입 됨~~");
 
 	}
 
-	// 매일 오후 11:59 에 이전 날의 출결, 외출 데이터를 확인하고, 총 근무시간을 통해 출결 상태를 update 한다.
-	@Scheduled(cron = "0 59 23 * * 1-5")
-	public void today_post() {
-		// 퇴근처리가 안된 경우 18:00 로 값을 넣는다.
-
-		// 외출 시간 계산
-		// 외출 값이 있을 경우 -> 마지막 외출의 check_out== null 이면 18:00로 update 한다.
-		// 총 외출 시간을 기반으로 근무시간 계산 후 -> 결석 여부 판단
-		System.out.println("오늘 출석 데이터 삽입 됨~~");
-
-	}
+	// 매월 말일 새벽12시 5분에 다음달 통계 넣어놔야됨 ex) member_id, 2023, 02, 0, 0, 0, 0
+	   @Scheduled(cron = "0 5 0 1 * ?")
+	   public void next_statistics() {
+		   attendanceService.next_statistics();		   
+	   }
 
 	// 매월 말일 새벽12시 5분에 다음달 통계 넣어놔야됨 ex) member_id, 2023, 02, 0, 0, 0, 0
 

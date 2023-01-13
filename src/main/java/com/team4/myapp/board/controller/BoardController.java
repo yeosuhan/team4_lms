@@ -27,8 +27,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.model.Board;
 import com.team4.myapp.board.service.IBoardService;
+<<<<<<< HEAD
 import com.team4.myapp.reply.model.Reply;
 import com.team4.myapp.reply.service.IReplyService;
+=======
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
+>>>>>>> branch 'main' of https://github.com/oti-team4/team4_lms.git
 
 @Controller
 public class BoardController {

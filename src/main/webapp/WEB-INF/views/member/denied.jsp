@@ -1,18 +1,9 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<fmt:setBundle basename="i18n/board" />
 
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>뿌꾸 대학교 lms</title>
+<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 
 <!-- home -->
 <link rel="icon" type="image/x-icon"
@@ -26,7 +17,6 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
 	rel="stylesheet" type="text/css" />
-
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<c:url value='/h/css/styles.css'/>" rel="stylesheet" />
 <script
@@ -35,13 +25,15 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
+<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
-<!-- Style -->
-<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="<c:url value='/cal/css/bootstrap.min.css'/>">
-<!-- Style -->
-<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
+<header class="masthead" style="border-bottom-color: green;">
+	<div class="container">
+		<div class="masthead-subheading">접근 권한이 없습니다.</div>
+		<div class="masthead-heading text-uppercase"></div>
+		<a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell
+			Me More</a>
+	</div>
+</header>
+
+<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
