@@ -38,6 +38,11 @@
 			}
 		});
 	}
+
+	function copy() {
+		navigator.clipboard.writeText(window.location.href);
+		alert("클립 보드에 복사되었습니다.");
+	}
 </script>
 <style>
 		* {
@@ -558,12 +563,6 @@
 		}
 				
 	</style>
-	<script>
-	function copy() {
-		navigator.clipboard.writeText(window.location.href);
-		alert("클립 보드에 복사되었습니다.");
-	}
-	</script>
 	<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 	
 	<div class="container">
