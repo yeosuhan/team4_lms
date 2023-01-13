@@ -3,8 +3,6 @@ package com.team4.myapp.attendance.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -260,6 +258,18 @@ public class AttendanceService implements IAttendanceService {
 		for(Statistics memberStatus : mlist) {
 			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
 		}	
+	}
+
+	@Override
+	public void todayPost(java.sql.Date date, String today) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

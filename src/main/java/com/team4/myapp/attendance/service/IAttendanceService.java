@@ -25,5 +25,6 @@ public interface IAttendanceService {
 	void leaveEarly(String memberId);
 
 	int selectId(String memberId);
-	void insertToday(List<Statistics> mlist, String yesterday, String year, String month); 
+	void insertToday(List<Statistics> mlist, String yesterday, String year, String month);
+	void next_statistics(); 
 }
