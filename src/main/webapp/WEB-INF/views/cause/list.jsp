@@ -29,9 +29,10 @@
 
 	<div class="container">
 		<div style="border-top: 1px solid gray;">
-			<h2 class="mb-5 mt-3">사유 리스트</h2>
+			<h1 class="mb-5 mt-3">사유 리스트</h1>
 		</div>
-		<div class="table-responsive">
+		<div class="table-responsive" style="border-top: 1px solid gray">
+		<br/>
 			<table class="table">
 				<tr>
 					<td align="left"><tag:paging

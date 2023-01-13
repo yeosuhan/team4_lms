@@ -23,9 +23,10 @@
 
 	<div class="container">
 		<div style="border-top: 1px solid gray;">
-			<h2 class="mb-5 mt-3">사유 리스트</h2>
+			<h1 class="mb-5 mt-3">사유 리스트</h1>
 		</div>
-		<div class="container">
+		<div class="container" style="border-top: 1px solid gray">
+		<br/>
 			<div class="row">		        
 		        <div class="col-xl-4 col-md-4">
 		            <div class="card bg-pattern">

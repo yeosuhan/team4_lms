@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>뿌꾸 대학교 lms</title>
-
+<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 
 <!-- home -->
 <link rel="icon" type="image/x-icon"
@@ -28,10 +23,14 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value='/h/js/scripts.js'/>"></script>
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-<body>
+<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 	<div class="content" style="border-bottom: 1px gray solid;">
-		<div class="container" style="margin-top: 103px;">
-			<div class="row justify-content-center">
+		<div class="container">
+			<div style="border-top: 1px solid gray;">
+				<h1 class="mb-5 mt-3">강의 출결 관리</h1>
+			</div>
+			<div class="row justify-content-center" style="border-top: 1px solid gray">
+				<p></p><br/>
 				<c:forEach var="lecture" items="${lectureList}">
 					<form action="<c:url value='/lecture/${lecture.lectureId}'/>"
 						method="get" class="form-horizontal" style="width: 100%;">
