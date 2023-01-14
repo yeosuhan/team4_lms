@@ -1,6 +1,7 @@
 package com.team4.myapp.cause.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ public class CauseService implements ICauseService{
 				e.printStackTrace();
 			}
 		}
-		
+		attendanceRepository.changeSubmitStatus(1, cause.getCategoryId());
 		causeRepository.insertCause(cause);
 
 	}
@@ -120,7 +121,7 @@ public class CauseService implements ICauseService{
 		return list;
 	}
 	
-	//사진파일 불러오기 용
+	//사진파일 불러오기용
 	@Transactional
 	public Cause selectFileDetail(int causeId) {
 		CauseListDto causeDto = causeRepository.selectCauseDetail(causeId);
@@ -133,10 +134,72 @@ public class CauseService implements ICauseService{
 	}
 
 	//사유서 수정하기
-	@Override
+	@Transactional
 	public void updateCause(Cause cause) {
+		
+		if(cause.getFile() != null && !cause.getFile().isEmpty()) {
+			cause.setFileName(cause.getFile().getOriginalFilename());
+			cause.setFileSize(cause.getFile().getSize());
+			cause.setFileContentType(cause.getFile().getContentType());
+			try {
+				cause.setFileData(cause.getFile().getBytes());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		causeRepository.updateCauseDetail(cause);
 	}
+	
+	//사유서 삭제하기
+	@Transactional
+	public void deleteCause(int causeId) {
+		causeRepository.deleteCause(causeId);
+		attendanceRepository.changeSubmitStatus(0, causeId);
+	}
 
+	@Override
+	public void accept(int causeId, int causeStatus) {
+		causeRepository.accept(causeId, causeStatus);	
+		attendanceRepository.attendanceUcc(causeId, causeStatus+1);	
+	}
+
+	@Override
+	public List<Integer> getSubmitStatusNo() {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusNo(0));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(1));
+		submitStatusList.add(causeRepository.getSubmitStatusNo(2));
+		return submitStatusList;
+	}
+
+	@Override
+	public List<CauseListDto> selectCauseListAdminDate(String date, int page) {
+		//페이징 처리
+				int start = ((page-1) * 5) +1;
+				
+				List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
+				for(CauseListDto i : list) {
+					String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+					String s2 = i.submitStatus(i.getCauseStatus());
+					i.setAttendanceStatusString(s1);
+					i.setCauseStatusString(s2);
+				}
+				
+				return list;
+	}
+
+	@Override
+	public List<Integer> getSubmitStatusDateNo(String date) {
+		List<Integer> submitStatusList= new ArrayList<Integer>();
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(0, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(1, date));
+		submitStatusList.add(causeRepository.getSubmitStatusDateNo(2, date));
+		return submitStatusList;
+	}
+
+	@Override
+	public int selectDateCount(String date) {
+		return causeRepository.selectDateCount(date);
+	}
 
 }

@@ -15,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class OutListDto {
 	private List<OutDto> outlist;
+	private long total;
 	private int hours;
 	private int minutes;
 	private int seconds;

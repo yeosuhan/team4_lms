@@ -12,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OutDto {
+	private int id;
 	private String checkIn;
 	private String checkOut;
 }

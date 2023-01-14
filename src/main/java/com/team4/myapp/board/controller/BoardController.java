@@ -27,6 +27,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.myapp.board.model.Board;
 import com.team4.myapp.board.service.IBoardService;
+import com.team4.myapp.reply.model.Reply;
+import com.team4.myapp.reply.service.IReplyService;
+import com.team4.myapp.interceptor.Auth;
+import com.team4.myapp.interceptor.Role;
+
 
 @Controller
 public class BoardController {
@@ -35,6 +40,8 @@ public class BoardController {
 	@Autowired
 	IBoardService boardService;
 	
+	@Autowired
+	IReplyService replyService;
 	// 작성 폼 열기
 	@RequestMapping(value = "/board/write/{boardType}", method = RequestMethod.GET)
 	public String writeArticle(@PathVariable String boardType, Locale locale, Model model) {
@@ -44,13 +51,11 @@ public class BoardController {
 
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	public String writeArticle(Board board, BindingResult results, RedirectAttributes redirectAttrs) {
-		System.out.println("444444444444444");
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
 			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
 			MultipartFile mfile = board.getFile();
-			System.out.println("3333333333333333333");
 			if(mfile!=null && !mfile.isEmpty()) {
 				board.setFileName(mfile.getOriginalFilename());
 				board.setFileSize(mfile.getSize());
@@ -59,11 +64,10 @@ public class BoardController {
 				boardService.insertFileArticle(board);
 			}else {
 				boardService.insertArticle(board);
-				System.out.println("22222222222222222");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("11111111111");
+			System.out.println("");
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
 		return "redirect:/board/list/"+board.getBoardType();
@@ -73,7 +77,7 @@ public class BoardController {
 	public String getListByCategory(@PathVariable String boardType, @PathVariable int page, HttpSession session, Model model) {
 		session.setAttribute("page", page);
 		model.addAttribute("boardType", boardType);
-
+		
 		List<Board> boardList = boardService.selectArticleListByCategory(boardType, page);
 		model.addAttribute("boardList", boardList);
 
@@ -96,8 +100,10 @@ public class BoardController {
 	@RequestMapping("/board/detail/{boardId}")
 	public String getBoardDetails(@PathVariable int boardId, Model model) {		
 		Board board = boardService.selectArticle(boardId);
+		List <Reply> reply = replyService.selectReply(boardId);
 		model.addAttribute("board", board);
 		model.addAttribute("boardType", board.getBoardType());
+		model.addAttribute("reply", reply);
 		return "board/boarddetail";
 	}
 	

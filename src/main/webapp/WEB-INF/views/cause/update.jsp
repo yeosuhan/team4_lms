@@ -59,17 +59,21 @@
 					<div class="form-row">
 						<div class="form-holder">내용</div>
 						<div class="form-holder">
-							<textarea name="content" maxlength="300"
-								class="form-control" style="resize: none; height: 70px">${list.content}</textarea>
+							<textarea maxlength="300" class="form-control" 
+								style="resize: none; height: 70px" name="content" placeholder="${list.content}">${list.content}</textarea>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-holder">첨부파일</div>
 						<div class="form-holder">
-							<input type="file" name="file" />${list.fileName}
+							<input type="file" name="file" /> 기존파일: ${list.fileName}
 						</div>
 					</div>
 					<input type="hidden" name="causeId" value="${list.causeId}"/>
+					<input type="hidden" name="fileName" value="${list.fileName}"/>
+					<input type="hidden" name="fileContentType" value="${list.fileContentType}"/>
+					<input type="hidden" name="fileSize" value="${list.fileSize}"/>
+					<input type="hidden" name="fileData" value="${list.fileData}"/>
 					<input type="submit" value="제출하기"/>
 				</div>
 			</div>

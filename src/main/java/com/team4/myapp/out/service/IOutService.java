@@ -11,5 +11,5 @@ public interface IOutService {
 	
 	void updateCheckOut(String memberId);
 	
-	OutListDto getOutDetails(String memberId) throws ParseException;
+	OutListDto getOutDetails(String memberId, String today) throws ParseException;
 }

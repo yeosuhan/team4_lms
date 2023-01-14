@@ -97,4 +97,158 @@
 			FROM ATTENDANCE WHERE ATTENDANCE_ID=#{attendanceId}
 		]]>
 	</select>	
+	
+	<update id="changeSubmitStatus" parameterType="map">
+		<![CDATA[
+			UPDATE (SELECT SUBMIT_STATUS FROM CAUSE, ATTENDANCE
+			WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID AND CAUSE_ID = #{causeId})
+			SET SUBMIT_STATUS = #{s_status}
+		]]>
+	</update>
+	
+	<select id="selectStatus" resultType="com.team4.myapp.util.scheduler.dto.Statistics">
+	<![CDATA[
+		SELECT
+			m.member_id AS memberId, 
+			a.attendance_status AS attendanceStatus
+		FROM
+			members m, attendance a
+		WHERE 
+			IDENTITY = 'student'
+		AND
+			m.member_id=a.member_id
+		AND
+			to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+	]]>
+	</select>
+	<update id="insertToday" parameterType="map">
+			UPDATE STATISTICS
+			SET
+			<choose>
+			<when test="attendanceStatus==0">
+				ABSENT = (
+						SELECT
+							(S.ABSENT+1) AS ABSENT
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(A.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=to_number(#{month})
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==1">
+				attendance = (
+						SELECT 
+							attendance+1 AS attendance
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==2">
+				late = (
+						SELECT 
+							late+1 AS late
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			<when test="attendanceStatus==3">
+				leave = (
+						SELECT 
+							leave+1 AS leave
+						FROM
+							STATISTICS S, ATTENDANCE A
+						WHERE
+							S.MEMBER_ID=A.MEMBER_ID 
+						AND
+							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+						AND
+							to_char(YEAR)=#{year}
+						AND
+							to_char(month)=#{month}
+						AND
+							A.MEMBER_ID = #{memberId}
+						)
+				WHERE member_id=#{memberId}
+			</when>
+			</choose>
+	</update>
+	<select id="selectCheckoutNull" parameterType="string"
+		resultType="int">
+		<![CDATA[
+			select ATTENDANCE_ID  from attendance
+			where CHECK_IN is not null and CHECK_OUT is null and to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+		]]>
+	</select>
+
+	<select id="selectCheckInById" parameterType="int"
+		resultType="string">
+      <![CDATA[
+         select to_char(CHECK_IN, 'HH24:mi:ss')       
+         from attendance
+         where ATTENDANCE_ID == #{attendanceId}
+      ]]>
+	</select>
+	
+	<update id="attendanceUcc" parameterType="hashmap">
+	<![CDATA[
+		UPDATE ATTENDANCE 
+			SET SUBMIT_STATUS = #{submitStatus}
+		WHERE ATTENDANCE_ID=(select ATTENDANCE_ID  from cause where CAUSE_ID=#{causeId})
+	]]>
+	</update>
+	
+	<insert id="insertMonthSchedule" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO STATISTICS(MEMBER_ID, YEAR, MONTH, ATTENDANCE, LATE, ABSENT, LEAVE) 
+			VALUES (#{member}, #{year}, #{month}, 0, 0, 0, 0)
+		]]>
+	</insert>
+
+	<update id="updateAttendanceStatusById" parameterType="map">
+		<choose>
+			<when test="attendanceId != null">
+				update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where ATTENDANCE_ID = #{attendanceId}
+			</when>
+			<otherwise>update attendance
+				set ATTENDANCE_STATUS =
+				#{attendanceStatus}
+				where MEMBER_ID = #{memberId} and
+				to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today}
+			</otherwise>
+		</choose>
+	</update>
 </mapper>

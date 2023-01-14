@@ -2,6 +2,37 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #A8A8A8}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .button {
+  background-color: #3e8e41;
+}
+</style>
 
 <!-- head 닫힘 -->
 </head>
@@ -11,8 +42,13 @@
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"
 		style="background-color: black;">
 		<div class="container">
-			<a class="navbar-brand" href="/attendance/main"><img
-				src="/images/logo/OTIUniversity.png" style="width: 100px" /></a>
+			<a class="navbar-brand"
+			<c:choose>
+					<c:when test="${sessionScope.memberid eq 'admin'}">href="/admin/main"</c:when>
+					<c:otherwise>href="/attendance/main"</c:otherwise>
+			</c:choose>>		
+			<img src="/images/logo/OTIUniversity.png" style="width: 150px; height: auto" />
+			</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -41,19 +77,16 @@
 								href="/member/login">로그인</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item">
-								<div class="btn-group">
-									<button type="button" class="btn btn-dark dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">${sessionScope.membername}님</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="/member/logout">로그아웃</a>
-									</div>
+							<li class="nav-item">								
+								<div class="dropdown">
+								  <button type="button" class="btn btn-dark dropdown-toggle">${sessionScope.membername}님</button>
+								  <div class="dropdown-content">
+								  	  <a class="dropdown-item" href="/member/logout">로그아웃</a>
+								  </div>
 								</div>
 							</li>
 						</c:otherwise>
 					</c:choose>
-
 				</ul>
 			</div>
 		</div>

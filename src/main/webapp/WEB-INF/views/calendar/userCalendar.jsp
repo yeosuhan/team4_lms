@@ -16,6 +16,10 @@
 	rel="stylesheet" />
 <link href="<c:url value='cal/fullcalendar/packages/daygrid/main.css'/>"
 	rel="stylesheet" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/cal/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
 
 <script src="<c:url value='/cal/js/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/cal/js/popper.min.js'/>"></script>
@@ -28,6 +32,9 @@
 	src="<c:url value='/cal/fullcalendar/packages/daygrid/main.js'/>"></script>
 <script src="<c:url value='/cal/js/main.js'/>"></script>
 <script src="<c:url value='/cal/js/calendar.js'/>"></script>
+
+
+
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 
@@ -66,7 +73,8 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">외출 기록</h5>
-					<p class="card-text">${outListDto.hours} 시간  ${outListDto.minutes} 분  ${outListDto.seconds}초</p>
+					<p class="card-text">${outListDto.hours}시간
+						${outListDto.minutes} 분 ${outListDto.seconds}초</p>
 					<div class="row" style="background-color: green; height: 100px;">
 						<div class="col-sm-6" style="background-color: yellow;">
 							<c:if test="${goOut == true && checkout == true}">
@@ -87,10 +95,7 @@
 						</div>
 						<div class="col-sm-6" style="background-color: red;">
 							<c:forEach var="outDto" items="${outListDto.outlist}">
-								<div>
-									외출시간 : ${outDto.checkIn}
-									복귀시간 : ${outDto.checkOut}
-								</div>
+								<div>외출시간 : ${outDto.checkIn} 복귀시간 : ${outDto.checkOut}</div>
 
 							</c:forEach>
 						</div>

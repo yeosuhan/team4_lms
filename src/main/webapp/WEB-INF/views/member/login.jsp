@@ -25,7 +25,7 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">OTI 대학교</h2>
+					<h2 class="heading-section"><a href="/" style="color: #fff">OTI 대학교</a></h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -33,7 +33,7 @@
 					<div class="login-wrap p-0">
 						<h3 class="mb-4 text-center">로그인 하세요</h3>
 						<c:if test="${empty sessionScope.userid}">
-							<form action="<c:url value='/admin/main'/>" method="post"
+							<form action="<c:url value='/member/login'/>" method="post"
 								class="form-horizontal">
 								<div class="form-group">
 									<input type="text" name=memberId class="form-control" placeholder="Username"
@@ -47,21 +47,22 @@
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn submit px-3"
-										style="background-color: #F9F6F1;">Sign In</button>
+										style="background-color: #F9F6F1;">LogIn</button>
 								</div>
 							</form>
 						</c:if>
-						<div class="form-group d-md-flex">
-							<div class="w-50">
-								<label class="checkbox-wrap checkbox-primary">Remember
-									Me <input type="checkbox" checked> <span
-									class="checkmark"></span>
-								</label>
+						<form>
+							<div class="form-group d-md-flex">
+								<div class="w-50">
+									<label class="checkbox-wrap checkbox-primary">Remember
+										Me <input type="checkbox" checked> <span
+										class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="/" style="color: #fff">Home</a>
+								</div>
 							</div>
-							<div class="w-50 text-md-right">
-								<a href="#" style="color: #fff">Forgot Password</a>
-							</div>
-						</div>
 						</form>
 
 					</div>
