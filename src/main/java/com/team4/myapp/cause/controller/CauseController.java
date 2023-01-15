@@ -72,16 +72,15 @@ public class CauseController {
 	//사유서 작성하기
 	@RequestMapping(value="/cause/write", method = RequestMethod.POST)
 	public String insertCauseWrite(CauseDto causeDto, BindingResult result, RedirectAttributes redirectAttrs, HttpSession session) {
-		logger.info("/cause/write : "+ causeDto.toString());
+		
 		try {
-			causeDto.toString();
 			MultipartFile file = causeDto.getFile();
 			if(file != null && !file.isEmpty()) {
-				logger.info("/cause/write : " + file.getOriginalFilename());
+				logger.info("/cause/write file: " + file.getOriginalFilename() + file.getSize());
 			}		
-			
 			causeService.insertCause(causeDto);
 			System.out.println("글쓰기 성공");
+			logger.info("/cause/write : "+ causeDto.toString());
 			return "redirect:/cause/list/"+ session.getAttribute("page");
 			
 		} catch(Exception e) {
@@ -151,6 +150,7 @@ public class CauseController {
 	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session, Model model) {
 		CauseListDto cdlist = causeService.selectCauseDetail(id);
 		logger.info(cdlist.toString());
+		model.addAttribute("cdlist", cdlist);
 		return cdlist;
 	}
 	
@@ -208,12 +208,13 @@ public class CauseController {
 	public String updateCause(@PathVariable int causeId, Model model){
 		CauseListDto cause= causeService.selectCauseDetail(causeId);
 		logger.info("/cause/update : "+ cause.toString());
+		
 		model.addAttribute("list",cause);
 		return "cause/update";
 	}
 	
 	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
-	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs, Model model) {
+	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs) {
 		logger.info("/cause/update : "+ cause.toString());
 		causeService.updateCause(cause);
 		

@@ -15,8 +15,7 @@ public interface ICauseRepository {
 	
 	void insertCause(Cause cause);
 	
-	List<CauseListDto> selectCauseList(@Param("memberId") String memberId,
-			@Param("start")int start, @Param("end") int end);
+	List<CauseListDto> selectCauseList(@Param("memberId") String memberId, @Param("start")int start, @Param("end") int end);
 	
 	List<CauseListDto> selectCauseAdmin(@Param("start")int start, @Param("end") int end);
 	
@@ -26,6 +25,8 @@ public interface ICauseRepository {
 	void accept(@Param("causeId") int causeId, @Param("causeStatus") int causeStatus);
 	int getSubmitStatusNo(int status);
 	List<CauseListDto> selectCauseListAdminDate(@Param("date") String date, @Param("start") int start, @Param("end") int i);
+	
 	Integer getSubmitStatusDateNo(@Param("status") int status, @Param("date") String date);
 	int selectDateCount(String date);
+	int selectCauseId(int attendanceId);
 }

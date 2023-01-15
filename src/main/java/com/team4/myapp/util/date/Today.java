@@ -11,5 +11,11 @@ public class Today {
 		
 		return today;
 	}
+	
+	public static String getAttendanceDay(Date attendanceDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		String day = sdf.format(attendanceDate);
+		return day;
+	}
 
 }

@@ -23,10 +23,10 @@ public interface IAttendanceRepository {
 	String selectCheckIn(@Param("memberId") String memberId, @Param("today") String today);
 	String selectCheckOut(@Param("memberId") String memberId, @Param("today") String today);
 	
-	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") Date attendanceDate);
+	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") String attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
 	
-	void changeSubmitStatus(@Param("s_status")int s_status, @Param("causeId")int causeId);
+	void changeSubmitStatus(@Param("causeId")int causeId, @Param("s_status")int s_status);
 	
 	void insertToday(@Param("memberId")String memberId, @Param("attendanceStatus")int attendanceStatus,@Param("yesterday") String yesterday, @Param("year") String year, @Param("month") String month);
 	List<Statistics> selectStatus(@Param("yesterday") String yesterday);
@@ -39,4 +39,7 @@ public interface IAttendanceRepository {
 
 	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
 			@Param("memberId") String memberId, @Param("today") String today);
-}
+	
+	int checkattendaceId(@Param("memberId") String memberId, @Param("attendanceDate") String attendanceDate);
+	
+	}
