@@ -38,7 +38,7 @@
 	                		SELECT  CAUSE_ID, CAUSE.WRITE_DATE, CAUSE.CAUSE_CONTENT, CATEGORY_ID, CAUSE.MEMBER_ID, ATTENDANCE.ATTENDANCE_STATUS, CAUSE.CAUSE_STATUS
 	                		FROM CAUSE, ATTENDANCE
 	                		WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID and CAUSE.MEMBER_ID = #{memberId}
-	                		ORDER BY WRITE_DATE DESC
+	                		ORDER BY CAUSE_ID DESC
 	                	) aa
 	        		) bb
 			WHERE RNUM BETWEEN #{start} AND #{end}
@@ -71,18 +71,41 @@
 	<select id="selectCauseDetail" parameterType="int" resultType="com.team4.myapp.cause.model.dto.CauseListDto">
 		<![CDATA[
 			SELECT 	CAUSE.CAUSE_ID 	AS	causeId,
-			   WRITE_DATE 	AS 		writeDate,
-			   CAUSE_CONTENT		AS 		content,
-			   CAUSE.CATEGORY_ID		AS 		categoryId,
-			   MEMBERS.MEMBER_ID		AS 	memberId,
-		       MEMBER_NAME		AS 		memberName,
-			   ATTENDANCE_STATUS 	AS attendanceStatus,
-			   CAUSE_STATUS 		AS 		causeStatus,
-			   ATTENDANCE_DATE	AS attendanceDate
+					   WRITE_DATE 	AS 		writeDate,
+					   CAUSE_CONTENT		AS 		content,
+					   CAUSE.CATEGORY_ID		AS 		categoryId,
+					   MEMBERS.MEMBER_ID		AS 	memberId,
+				       MEMBER_NAME		AS 		memberName,
+					   ATTENDANCE_STATUS 	AS attendanceStatus,
+					   CAUSE_STATUS 		AS 		causeStatus,
+					   FILE_SIZE AS fileSize,
+					   FILE_CONTENT_TYPE AS fileContentType,
+					   FILE_DATA 	AS 		fileData,
+					   FILE_NAME AS fileName,
+					   ATTENDANCE_DATE	AS attendanceDate
 			FROM CAUSE, ATTENDANCE, MEMBERS 
 			WHERE CAUSE.ATTENDANCE_ID = ATTENDANCE.ATTENDANCE_ID AND MEMBERS.MEMBER_ID = CAUSE.MEMBER_ID AND CAUSE.CAUSE_ID=#{causeId}
 		]]>
 	</select>
+	
+	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
+		<![CDATA[
+			UPDATE CAUSE
+				SET CAUSE_CONTENT=#{content}, 
+					FILE_NAME=#{fileName},
+					FILE_SIZE=#{fileSize},
+					FILE_CONTENT_TYPE=#{fileContentType},
+					FILE_DATA=#{fileData},
+					WRITE_DATE = SYSDATE
+			WHERE CAUSE_ID=#{causeId}
+		]]>
+	</update>
+	
+	<delete id="deleteCause" parameterType="int">
+		<![CDATA[
+			DELETE FROM CAUSE WHERE CAUSE_ID=#{causeId}
+		]]>
+	</delete>
 	
 	<update id="accept" parameterType="hashmap">
 	<![CDATA[

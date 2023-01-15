@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script>
+<%@ include file="/WEB-INF/views/fragment/head.jsp"%>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<c:url value='/cal/js/jquery-3.3.1.min.js'/>"></script>
+<script >
 	function writeReply(boardId) {
 		var content1 = $("#replyContent").val();
 		$.ajax({
@@ -33,8 +38,12 @@
 			}
 		});
 	}
+
+	function copy() {
+		navigator.clipboard.writeText(window.location.href);
+		alert("클립 보드에 복사되었습니다.");
+	}
 </script>
-<style>
 <style>
 		* {
 		  box-sizing: border-box;
@@ -43,6 +52,7 @@
 		body {
 		  margin: 0;
 		  font-family: Sans-serif;
+		 background-color: #efefef;
 		}
 		.dashboard {
 		  display: flex;
@@ -525,7 +535,7 @@
 		  background: #555;
 		}
 		
-		#thumb:hover {
+		#thumb:hover, #share:hover {
 		color: blue;
 		}
 		
@@ -551,11 +561,12 @@
 		  padding: 15px;
 		  text-align: center;
 		}
+				
+	</style>
+	<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
+	
+	<div class="container">
 
-</style>
-<%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
-
-<div class="container">
 	<div class="dashboard">
 		<div class="right-side">
 			<br /> <br />
@@ -564,14 +575,14 @@
 				<hr class="new-hr">
 				<div class="right-bottom">
 					<div class="check">
-						<h2>
+						<h1>
 							<c:if test="${board.boardType=='reference'}">
 								<fmt:message key="REFERENCE" />
 							</c:if>
 							<c:if test="${board.boardType=='community'}">
 								<fmt:message key="COMMUNITY" />
 							</c:if>
-						</h2>
+						</h1>
 					</div>
 					<div class="search-arrow">
 						<div class="buttons">
@@ -616,96 +627,89 @@
 										</div>
 									</div>
 								</div>
+
 							</div>
-						</div>
+	    				</div> 
+	    			</div>
+	    		</div>
+	    	</div>
+	    <div class="right-body">
+			<div class="message">
+				<div class="mes-date row">
+					<div class="col">
+						<fmt:setLocale value="en_us" scope="session" />
+						<fmt:formatDate value="${board.boardDate}" dateStyle="full" />
 					</div>
+					<div class="text-right col"><b> No. ${board.boardId}</b></div>
+
 				</div>
-			</div>
-			<div class="right-body">
-
-				<div class="message">
-					<div class="mes-date row">
-						<div class="col">
-							<fmt:setLocale value="en_us" scope="session" />
-							<fmt:formatDate value="${board.boardDate}" dateStyle="full" />
-						</div>
-						<div class="text-right col">
-							<b> No. ${board.boardId}</b>
-						</div>
-
-					</div>
-					<div class="title">
-						제목: ${board.title}
-						<div class="title-icons"></div>
-					</div>
-					<div class="from">
-						<span class="who">작성자: </span>${board.memberId}
-					</div>
+				<div class="title">
+					제목: ${board.title}
+					<div class="title-icons"></div>
+				</div>
+				<div class="from">
+					<span class="who">작성자: </span>${board.memberId}
+				</div>
 					<div class="row">
-						<c:if test="${board.boardType=='community'}">&emsp;좋아요 
-	        	<div class="col">
-								<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb"
-									onclick="location.href='/board/like/${board.boardId}'"></i>
-								${board.heartCount}
-							</div>
-						</c:if>
-						<div class="col text-right">
-							<span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i>
-							${board.viewCount}
-							<c:if test="${board.boardType=='reference'}">
-								<span> 다운로드 수 </span>
-								<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
-	          </c:if>
-						</div>
-					</div>
-					<div class="message-from" style="border-top: 1px solid gray;">
-						<p>${board.content}</p>
-					</div>
-					<c:if test="${board.boardType=='reference'}">
-						<div class="attachment-last">
-							<img src="https://i.ibb.co/FW9tsHK/attachment.png" />
-							<div class="att-write">첨부 파일 (80MB)</div>
-							<button class="btn1 buton0" data-toggle="modal"
-								data-target="#viewModal">
-								View <span class="tag"></span>
-							</button>
-							<button class="btn1 buton9"
-								onclick="location.href='<c:url value="/board/download/${board.boardId}/cnt"/>'">
-								Download</button>
-						</div>
-						<div class="son-images">
-							<div class="inside-img">
-								<c:if test="${!empty board.fileName}">
-									<tr>
-										<td><c:set var="len" value="${fn:length(board.fileName)}" />
-											<c:set var="filetype"
-												value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}" />
-											<c:if
-												test="${(filetype eq '.JPG') or (filetype eq '.JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}">
-												<img src='<c:url value="/board/download/${board.boardId}"/>'
-													class="img-thumbnail">
-												<br>
-												<div class="modal fade" id="viewModal">
-													<div class="modal-dialog modal-lg">
-														<div class="modal-content">
-															<img
-																src='<c:url value="/board/download/${board.boardId}"/>'
-																style="width: 800px">
-														</div>
-													</div>
+					<div class="col">
+						<c:if test="${board.boardType=='community'}">좋아요 
+			        		<i class="fa fa-thumbs-up" aria-hidden="true" id="thumb" onclick="location.href='/board/like/${board.boardId}'"></i> 
+			        		${board.heartCount}&emsp;
+			        	</c:if>
+			        	공유	        	
+			        	<i class="fa fa-share-alt" aria-hidden="true" id="share" onclick="copy()"></i> 	
+			        </div>	        			        
+			        <div class="col text-right">
+			          <span>조회수 </span><i class="fa fa-search-plus" aria-hidden="true"></i> ${board.viewCount}
+			          <c:if test="${board.boardType=='reference'}"><span> 다운로드 수 </span>
+			          	<i class="fa fa-download" aria-hidden="true"></i> ${board.fileDownloadCount}
+			          </c:if>
+			        </div>
+		        </div>	 
+		        <div class="message-from" style="border-top: 1px solid gray;">
+					<p>${board.content}</p>
+				</div>	        
+		        <div class="attachment-last">
+		          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
+		          <div class="att-write">
+		            	첨부 파일 (80MB)
+		          </div>
+		          <button class="btn1 buton0" data-toggle="modal" data-target="#viewModal"> View <span class="tag"></span>
+		          </button>
+		          <c:if test="${board.boardType=='reference'}">
+		          <button class="btn1 buton9" onclick="location.href='<c:url value="/board/download/${board.boardId}/cnt"/>'"> Download
+		          </button>   
+		          </c:if>       
+		        </div>
+		        <div class="son-images">
+			          <div class="inside-img">
+			            <c:if test="${!empty board.fileName}">
+							<tr>
+								<td>
+									<c:set var="len" value="${fn:length(board.fileName)}"/>
+									<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>					
+									<c:if test="${(filetype eq '.JPG') or (filetype eq '.JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}">													
+										<div class="dropdown">	
+											<img src='<c:url value="/board/download/${board.boardId}"/>' class="img-thumbnail"><br>
+										  	<div class="dropdown-content">
+										  		<img src='<c:url value="/board/download/${board.boardId}"/>'  width="400px">								 		 
+										 		 <div class="desc">${board.fileName}</div>
+										 	</div>
+										</div>
+										<div class="modal fade" id="viewModal">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<img src='<c:url value="/board/download/${board.boardId}"/>' style="width:800px">
 												</div>
-											</c:if> <a
-											href='<c:url value="/board/download/${board.boardId}/cnt"/>'>${board.fileName}
-												(<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)
-										</a></td>
-									</tr>
-								</c:if>
-							</div>
-						</div>
-					</c:if>
-					<div>
-						<br /> <br /> <br />
-					</div>
+											</div>
+										</div>
+									</c:if> <br/>								
+									<a <c:if test="${board.boardType=='reference'}">href='<c:url value="/board/download/${board.boardId}/cnt"/>'</c:if>>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
+								</td>
+							</tr>
+						</c:if>
+					  </div>
+				</div>	
 					<div class="content">
 						<form enctype="multipart/form-data" class="form-horizontal">
 							<div class="form-group">
@@ -715,7 +719,7 @@
 										class="form-control" id="replyContent"></textarea>
 								</div>
 								<div class="card-footer text-right">
-									<button class="butona btn" type="button"
+									<button class="butona btn btn-primary" type="button"
 										onclick="writeReply(${board.boardId})" style="width: 150px;">
 										Reply<span class="tag"> <img
 											src="https://i.ibb.co/GQf8frw/reply.png" />
@@ -737,7 +741,7 @@
 							</c:forEach>
 						</ul>
 						</form>
-					</div>
+					</div>					
 				</div>
 			</div>
 		</div>

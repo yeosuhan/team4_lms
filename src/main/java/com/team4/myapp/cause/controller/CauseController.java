@@ -1,13 +1,20 @@
 package com.team4.myapp.cause.controller;
 
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team4.myapp.attendance.model.Attendance;
 import com.team4.myapp.attendance.service.IAttendanceService;
+import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
 import com.team4.myapp.cause.service.ICauseService;
@@ -84,7 +92,6 @@ public class CauseController {
 	}
 	
 	//사유서 목록 불러오기(유저)
-	@Auth(role = Role.STUDENT)
 	@RequestMapping(value = "/cause/list/{page}", method = RequestMethod.GET)
 	public String selectCauseList(@PathVariable int page, HttpSession session, Model model) {
 		//리스트 불러오기
@@ -132,7 +139,7 @@ public class CauseController {
 		}
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("page",page);
-		model.addAttribute("boardType","/cause/admin/list");
+		model.addAttribute("boardType","/cause/admin/list/");
 		
 		return "manager/list";
 	}
@@ -142,13 +149,10 @@ public class CauseController {
 	@ResponseBody
 	@RequestMapping(value="/cause/detail/{id}", method=RequestMethod.GET)
 	public CauseListDto selectCauseDetail(@PathVariable int id, HttpSession session, Model model) {
-		System.out.println("aa"+id);
-		
 		CauseListDto cdlist = causeService.selectCauseDetail(id);
+		logger.info(cdlist.toString());
 		return cdlist;
 	}
-	
-	///-------------------------------------------------------------------------
 	
 	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
 	public String accept(CauseListDto cause, int page) {	
@@ -185,6 +189,48 @@ public class CauseController {
 		
 		return "manager/list";
 	}
+	
+	//사진 보여주기
+	@RequestMapping("/file/{causeId}")
+	public ResponseEntity<byte[]> getFile(@PathVariable int causeId){
+		Cause file = causeService.selectFileDetail(causeId);
+		logger.info("getFile "+ file.toString());
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mtypes = file.getFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(file.getFileSize());
+		headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
+		return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
+	}
+	
+	//사유서 수정
+	@RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
+	public String updateCause(@PathVariable int causeId, Model model){
+		CauseListDto cause= causeService.selectCauseDetail(causeId);
+		logger.info("/cause/update : "+ cause.toString());
+		model.addAttribute("list",cause);
+		return "cause/update";
+	}
+	
+	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
+	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs, Model model) {
+		logger.info("/cause/update : "+ cause.toString());
+		causeService.updateCause(cause);
 		
+		return "redirect:/cause/list/"+(Integer)session.getAttribute("page");
+	}
+	
+	//사유서 삭제
+	@RequestMapping(value="/cause/delete", method=RequestMethod.POST)
+	public String deleteCause(int causeId, HttpSession session) {
+		try {
+			causeService.deleteCause(causeId);
+			System.out.println("삭제 완료");
+			return "redirect:/cause/list"+"/" + (Integer)session.getAttribute("page");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "home";
+		}
+	}
 	
 }

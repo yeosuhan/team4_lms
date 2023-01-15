@@ -1,5 +1,7 @@
-<%@ page pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 <link
@@ -15,6 +17,10 @@
 <script src="<c:url value='/c/js/popper.min.js'/>"></script>
 <script src="<c:url value='/c/js/bootstrap.min.js'/>"></script>
 <script src="<c:url value='/c/js/main.js'/>"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/c/css/style.css'/>">
 
 
 <%@ include file="/WEB-INF/views/fragment/head.jsp"%>
@@ -78,50 +84,57 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">사유 신청서</h4>
-						<button type="button" class="close" data-dismiss="modal">X</button>
+						<button type="button" class="close close_modal" data-dismiss="modal"
+							aria-hidden="true">x</button>
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">날짜</div>
 							<div id="cd_date" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">이름</div>
 							<div id="cd_name" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">출석유형</div>
 							<div id="cd_attendance" class="col-6"></div>
 						</div>
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">상세 이유</div>
 							<div id="cd_category" class="col-6"></div>
 						</div>
 
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-6">내용</div>
 							<div id="cd_content" class="col-6"></div>
 						</div>
-						<div class="row">
-							<div class="col-6">첨부파일</div>
-							<div id="cd_file" class="col-6"></div>
-						</div>
-						<div class="row">
+
+						<div class="row mb-2">
 							<div class="col-6">처리</div>
 							<div id="cd_status" class="col-6"></div>
 						</div>
-					</div>
 
-					<!-- Modal footer -->
+						<div class="row">
+							<div class="col-6">첨부파일</div>
+							<div class="col-6">
+								<div id="cd_file" style="width: 100px; height: 100px"></div>
+							</div>
+						</div>
+					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-info">수정</button>
-						<button type="button" class="btn btn-info">삭제</button>
+						<button type="button" class="btn btn-info"  id="updateButton" value="${causeId}" >수정</button>
+						<form method="post" action="/cause/delete">
+							<input type="hidden" id="deleteCause" name="causeId" value=""/>
+							<button type="submit" class="btn btn-info" id="deleteButton" value="">삭제</button>
+						</form>
+		
+						<button type="button" class="btn btn-info close_modal">닫기</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 <%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
