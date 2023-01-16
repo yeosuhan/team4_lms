@@ -64,14 +64,17 @@ color: grey;
 					</c:forEach>									
 				</tbody>
 			</table>
-			<table class="table">
-				<tr>
-					<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
-						<c:if test="${boardType=='community'}"><td></td><td></td></c:if>
-					<td align="center">
+			<div>
+				<div class="row">
+					<div class="col-4">
+						<c:if test="${boardType=='reference'}">
+						<c:if test="${sessionScope.memberid=='admin'}">
+						</c:if></c:if>
+					</div>
+					<div class="col-4">
 						<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
-					</td>
-					<td align="right">
+					</div>
+					<div class="col-4 text-right">
 						<c:if test="${boardType=='community'}">
 							<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
 						</c:if>
@@ -80,9 +83,9 @@ color: grey;
 								<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
 							</c:if>
 						</c:if>
-					</td>
-				</tr>
-			</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
 import com.team4.myapp.out.dao.IOutRepository;
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
 import com.team4.myapp.util.scheduler.dto.Statistics;

@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
 import com.team4.myapp.interceptor.Auth;
 import com.team4.myapp.interceptor.Role;
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 import com.team4.myapp.out.service.IOutService;
 import com.team4.myapp.util.scheduler.dto.Statistics;
 
