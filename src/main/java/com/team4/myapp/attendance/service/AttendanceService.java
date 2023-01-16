@@ -263,5 +263,4 @@ public class AttendanceService implements IAttendanceService {
 	public Statistics selectStatistics(String memberId) {
 		return attendanceRepository.selectStatistics(memberId);
 	}
-
 }

@@ -39,8 +39,7 @@
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 
-<div class="container" style="margin-top: 100px; padding-top: 70px;">
-
+<div class="container" style="margin-top: 60px; padding-top: 70px;">
 	<div class="row" style="margin-bottom: 30px;">
 		<div class="col-sm-5">
 			<div class="card" style="border-radius: 20px;">
@@ -99,22 +98,17 @@
 
 			</div>
 		</div>
-<<<<<<< HEAD
-		<div class="col-sm-5">
-			<div class="card">
+		<div class="col-sm-4">
+			<div class="card" style="border-radius: 20px;">
 				<div class="card-body">
 					<h4 class="card-title">${statistics.year}년  ${statistics.month}월 출석 통계</h4>
 					<p class="card-text">총: ${statistics.attendance}/${statistics.attendance+statistics.absent+statistics.late+statistics.leave}일 </p>
-					<p class="card-text">출석: ${statistics.attendance}일 / 결석: ${statistics.absent}일 / 지각: ${statistics.late}일  / 조퇴: ${statistics.leave}일</p>
+					<p class="card-text">출석: ${statistics.attendance}일 | 결석: ${statistics.absent}일 | 지각: ${statistics.late}일  | 조퇴: ${statistics.leave}일</p>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-5">
-=======
-		<div class="col-sm-4"></div>
 		<div class="col-sm-3">
->>>>>>> branch 'main' of https://github.com/oti-team4/team4_lms.git
-			<div class="card">
+			<div class="card" style="border-radius: 20px;">
 				<div class="card-body">
 					<h5 class="card-title">외출 기록</h5>
 					<p class="card-text">${outListDto.hours}시간${outListDto.minutes}

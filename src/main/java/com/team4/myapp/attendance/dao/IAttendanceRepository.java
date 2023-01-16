@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.util.scheduler.dto.Statistics;
 
 public interface IAttendanceRepository {

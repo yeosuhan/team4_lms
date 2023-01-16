@@ -10,7 +10,7 @@ import com.team4.myapp.util.scheduler.dto.Statistics;
 public interface IAttendanceService {
 	
 	void insertAll();
-	void todayPost(Date date, String today) throws Exception;
+	void todayPost(Date date, String today);
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 	
