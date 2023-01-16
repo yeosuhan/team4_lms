@@ -250,26 +250,12 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
-	//다음달 통계행 넣기
-
-
 	@Override
 	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
-		for(Statistics memberStatus : mlist) {
-			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
-		}	
-	}
-
-	@Override
-	public void todayPost(java.sql.Date date, String today) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		for (Statistics memberStatus : mlist) {
+			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday,
+					year, month);
+		}
 	}
 
 }

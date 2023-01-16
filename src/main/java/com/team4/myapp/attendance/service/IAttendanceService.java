@@ -1,6 +1,6 @@
 package com.team4.myapp.attendance.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.team4.myapp.attendance.model.Attendance;

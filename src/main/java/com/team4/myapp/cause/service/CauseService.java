@@ -202,4 +202,9 @@ public class CauseService implements ICauseService{
 		return causeRepository.selectDateCount(date);
 	}
 
+	@Override
+	public int selectByAttendanceId(int attendaceId) {
+		return causeRepository.selectByAttendanceId(attendaceId);
+	}
+
 }
