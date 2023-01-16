@@ -25,8 +25,6 @@ public class AuthInterceptor implements HandlerInterceptor{
 		if(auth == null) return true;
 		
 		//@Auth가 있는 경우
-		System.out.println("=====================================================");
-		System.out.println("=========    AuthInterceptor   =============");
 		HttpSession session = request.getSession();
 		if (session == null) {
 			// 로그인 페이지로 이동
@@ -44,9 +42,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 		}
 		
 		// @Auth professor인 경우
-		System.out.println("=========    AuthInterceptor   ============= 나  : " + identity);
 		Role role = auth.role();
-		System.out.println("=========    AuthInterceptor   ============= 페이지 권한 :  " + role);
 		if(role != null) {
 			if(Role.PROFESSOR == role) {
 				if(identity != Role.PROFESSOR) {

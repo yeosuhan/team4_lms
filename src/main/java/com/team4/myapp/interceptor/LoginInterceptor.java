@@ -15,7 +15,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
-		if(!(handler instanceof HandlerMethod)) return true;	
+		if(!(handler instanceof HandlerMethod)) return true;
+		
 		String memberId = (String) request.getSession().getAttribute("memberid");
 		if(memberId == null || memberId.equals("")) {
 			try {

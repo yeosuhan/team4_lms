@@ -258,18 +258,6 @@ public class AttendanceService implements IAttendanceService {
 			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
 		}	
 	}
-
-	@Override
-	public void todayPost(java.sql.Date date, String today) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	// 이달의 출석 통계 가져오기
 	@Override
 	public Statistics selectStatistics(String memberId) {
