@@ -33,7 +33,11 @@
 	src="<c:url value='/cal/fullcalendar/packages/daygrid/main.js'/>"></script>
 <script src="<c:url value='/cal/js/main.js'/>"></script>
 <script src="<c:url value='/cal/js/calendar.js'/>"></script>
-
+<style>
+.card-div{
+	height: 200px;
+}
+</style>
 
 
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>

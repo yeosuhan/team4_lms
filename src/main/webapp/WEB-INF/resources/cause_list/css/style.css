@@ -75,3 +75,7 @@ h2 {
     margin-bottom: 15px; }
     .custom-table .box td, .custom-table .box th {
       border: none !important; }
+      
+     #cd_file{position:relative;}
+     #cd_file .big_img{position:absolute; left:0; top:0; display:none;}
+     #cd_file .big_img.on{display:block;}

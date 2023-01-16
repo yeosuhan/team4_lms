@@ -34,7 +34,6 @@
 <script src="<c:url value='/h/js/scripts.js'/>"></script>
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
-
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="<c:url value='/c/css/bootstrap.min.css'/>">
 

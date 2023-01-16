@@ -27,15 +27,16 @@
 		<![CDATA[
 			SELECT bb.CAUSE_ID 	AS		causeId,
 	        		WRITE_DATE 	AS 		writeDate,
+	        		ATTENDANCE_DATE 	AS		attendanceDate,
 	        		CAUSE_CONTENT		AS 		content,
 	        		CATEGORY_ID		AS 		categoryId,
 	       			bb.MEMBER_ID		AS 	memberId,
 	       		 	bb.ATTENDANCE_STATUS 	AS attendanceStatus,
 	       			bb.CAUSE_STATUS 		AS 		causeStatus,
 	        		RNUM+1 AS seq
-					FROM( SELECT aa.CAUSE_ID, aa.WRITE_DATE, aa.CAUSE_CONTENT, CATEGORY_ID, aa.MEMBER_ID, ATTENDANCE_STATUS, CAUSE_STATUS, ROWNUM AS RNUM
+					FROM( SELECT aa.CAUSE_ID, aa.WRITE_DATE, aa.ATTENDANCE_DATE, aa.CAUSE_CONTENT, CATEGORY_ID, aa.MEMBER_ID, ATTENDANCE_STATUS, CAUSE_STATUS, ROWNUM AS RNUM
 	            		FROM (
-	                		SELECT  CAUSE_ID, CAUSE.WRITE_DATE, CAUSE.CAUSE_CONTENT, CATEGORY_ID, CAUSE.MEMBER_ID, ATTENDANCE.ATTENDANCE_STATUS, CAUSE.CAUSE_STATUS
+	                		SELECT  CAUSE_ID, CAUSE.WRITE_DATE, ATTENDANCE_DATE, CAUSE.CAUSE_CONTENT, CATEGORY_ID, CAUSE.MEMBER_ID, ATTENDANCE.ATTENDANCE_STATUS, CAUSE.CAUSE_STATUS
 	                		FROM CAUSE, ATTENDANCE
 	                		WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID and CAUSE.MEMBER_ID = #{memberId}
 	                		ORDER BY CAUSE_ID DESC
@@ -88,7 +89,7 @@
 		]]>
 	</select>
 	
-	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
+	<update id="updateCauseFile" parameterType="com.team4.myapp.cause.model.Cause">
 		<![CDATA[
 			UPDATE CAUSE
 				SET CAUSE_CONTENT=#{content}, 
@@ -98,6 +99,12 @@
 					FILE_DATA=#{fileData},
 					WRITE_DATE = SYSDATE
 			WHERE CAUSE_ID=#{causeId}
+		]]>
+	</update>
+	
+	<update id="updateCauseContent" parameterType="string">
+		<![CDATA[
+			UPDATE CAUSE SET CAUSE_CONTENT = #{content}
 		]]>
 	</update>
 	

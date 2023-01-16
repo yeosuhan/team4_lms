@@ -82,7 +82,7 @@
 		]]>
 	</select>
 	
-	<insert id="insertFutureAttendance" parameterType="com.team4.myapp.attendance.model.Attendance">
+	<insert id="insertFutureAttendance" parameterType="map">
 		<![CDATA[
 			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID) 
 			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId})
@@ -99,10 +99,8 @@
 	</select>	
 	
 	<update id="changeSubmitStatus" parameterType="map">
-		<![CDATA[
-			UPDATE (SELECT SUBMIT_STATUS FROM CAUSE, ATTENDANCE
-			WHERE ATTENDANCE.ATTENDANCE_ID = CAUSE.ATTENDANCE_ID AND CAUSE_ID = #{causeId})
-			SET SUBMIT_STATUS = #{s_status}
+		<![CDATA[	
+			UPDATE ATTENDANCE SET SUBMIT_STATUS = #{s_status} WHERE ATTENDANCE_ID = #{attendanceId}
 		]]>
 	</update>
 	
@@ -251,6 +249,7 @@
 			</otherwise>
 		</choose>
 	</update>
+
 	<select id="selectStatistics" resultType="com.team4.myapp.util.scheduler.dto.Statistics">
 		<![CDATA[
 			SELECT
