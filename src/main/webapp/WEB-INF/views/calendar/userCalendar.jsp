@@ -17,7 +17,8 @@
 <link href="<c:url value='cal/fullcalendar/packages/daygrid/main.css'/>"
 	rel="stylesheet" />
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<c:url value='/cal/css/bootstrap.min.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/cal/css/bootstrap.min.css'/>">
 <!-- Style -->
 <link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
 
@@ -38,7 +39,7 @@
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 100px; padding-top: 70px;">
 
 	<div class="row" style="margin-bottom: 30px;">
 		<div class="col-sm-5">
@@ -118,5 +119,6 @@
 
 		<div id='calendar' style="margin-top: 20px;"></div>
 	</div>
+</div>
 
-	<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
+<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
