@@ -134,7 +134,6 @@ public class CauseController {
 
 		// 전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectCount();
-		System.out.println("관리자 전체 행: " + bbsCount);
 		int totalPageCount = 0;
 		if (bbsCount > 0) {
 			totalPageCount = (int) Math.ceil(bbsCount / 5.0);
@@ -175,13 +174,8 @@ public class CauseController {
 		model.addAttribute("approveNo", causeService.getSubmitStatusDateNo(keyword).get(1));
 		model.addAttribute("rejectNo", causeService.getSubmitStatusDateNo(keyword).get(2));
 
-		System.out.println("date-awaitNo: " + causeService.getSubmitStatusDateNo(keyword).get(0));
-		System.out.println("date-awaitNo: " + causeService.getSubmitStatusDateNo(keyword).get(1));
-		System.out.println("date-awaitNo: " + causeService.getSubmitStatusDateNo(keyword).get(2));
-
 		// 전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectDateCount(keyword);
-		System.out.println("관리자 전체 행: " + bbsCount);
 		int totalPageCount = 0;
 		if (bbsCount > 0) {
 			totalPageCount = (int) Math.ceil(bbsCount / 5.0);
