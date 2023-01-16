@@ -159,6 +159,7 @@ public class AttendanceService implements IAttendanceService {
 
 	// 날짜와 출석유형 조회하기
 	public Attendance selectDataAndCategory(int attendanceId) {
+		
 		return attendanceRepository.selectDataAndCategory(attendanceId);
 	}
 

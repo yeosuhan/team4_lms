@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.cause.dao.ICauseRepository;
 import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
+import com.team4.myapp.util.date.Today;
 
 @Service
 public class CauseService implements ICauseService{
@@ -29,37 +31,49 @@ public class CauseService implements ICauseService{
 	
 	//사유서 작성하기
 	@Override
-	@Transactional(rollbackFor= {Exception.class}, transactionManager="transactionManager")
+	@Transactional
 	public void insertCause(CauseDto causeDto) {
-
 		Cause cause = new Cause();
 		int aId = 0;
 		if(causeDto.getAttendanceId() == 0) {
-			//DB에 먼저 attendanceId 만들기
-			attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), causeDto.getAttendanceDate());
-			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString());
+			int check = attendanceRepository.checkattendaceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
+			if(check == 0) {
+				//attendanceID가 없는 경우
+				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
+			} 
+			
+			//attendanceId가 있음.
+			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
 			cause.setAttendanceId(aId);
+			System.out.println("attendanceId찾기완료: "+aId);
 		} else {
+			//attendanceId가 있는 경우
 			cause.setAttendanceId(causeDto.getAttendanceId());
 		}
-		//attendanceId가 있는 경우
 		cause.setContent(causeDto.getContent());
 		cause.setCategoryId(causeDto.getCategoryId());
 		cause.setMemberId(causeDto.getMemberId());
+		cause.toString();
 		//파일이 있는 경우
-		if(causeDto.getFile() != null && !causeDto.getFile().isEmpty()) {
-			cause.setFileName(causeDto.getFile().getOriginalFilename());
-			cause.setFileSize(causeDto.getFile().getSize());
-			cause.setFileContentType(causeDto.getFile().getContentType());
+		MultipartFile file = causeDto.getFile();
+		if(file != null && !file.isEmpty()) {
+			cause.setFileName(file.getOriginalFilename());
+			cause.setFileSize(file.getSize());
+			cause.setFileContentType(file.getContentType());
 			try {
-				cause.setFileData(causeDto.getFile().getBytes());
+				cause.setFileData(file.getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println("파일에러");
 			}
 		}
-		attendanceRepository.changeSubmitStatus(1, cause.getCategoryId());
 		causeRepository.insertCause(cause);
-
+		int causeId = causeRepository.selectCauseId(cause.getAttendanceId());
+		System.out.println("커즈 서비스: "+causeId);
+		attendanceRepository.changeSubmitStatus(causeId, 1);
+		
+		
+		
 	}
 	
 	//전체 행수 구하기
