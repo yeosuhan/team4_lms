@@ -66,12 +66,12 @@ color: grey;
 			</table>
 			<table class="table">
 				<tr>
-					<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
-						<c:if test="${boardType=='community'}"><td></td><td></td></c:if>
+					<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"></c:if></c:if>
+						<c:if test="${boardType=='community'}"></c:if>
 					<td align="center">
 						<jk:paging boardType="/board/list/${boardType}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
 					</td>
-					<td align="right">
+					<td align="right" style="width: 400px">
 						<c:if test="${boardType=='community'}">
 							<a href='<c:url value="/board/write/${boardType}"/>'><button type="button" class="btn btn-warning"><fmt:message key="WRITE_NEW_ARTICLE"/></button> </a>
 						</c:if>
