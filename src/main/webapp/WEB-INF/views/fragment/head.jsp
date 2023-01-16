@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
    content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>뿌꾸 대학교 lms</title>
+<title>OTI UNIVERSITY LMS</title>
 
 <!-- home -->
 <link rel="icon" type="image/x-icon"

@@ -89,7 +89,7 @@
 		]]>
 	</select>
 	
-	<update id="updateCauseDetail" parameterType="com.team4.myapp.cause.model.Cause">
+	<update id="updateCauseFile" parameterType="com.team4.myapp.cause.model.Cause">
 		<![CDATA[
 			UPDATE CAUSE
 				SET CAUSE_CONTENT=#{content}, 
@@ -99,6 +99,12 @@
 					FILE_DATA=#{fileData},
 					WRITE_DATE = SYSDATE
 			WHERE CAUSE_ID=#{causeId}
+		]]>
+	</update>
+	
+	<update id="updateCauseContent" parameterType="string">
+		<![CDATA[
+			UPDATE CAUSE SET CAUSE_CONTENT = #{content}
 		]]>
 	</update>
 	
@@ -158,10 +164,11 @@
 		]]>
 	</select> 
 	
-	<select id="selectCauseId" parameterType="int" resultType="int">
+	<select id="selectByAttendanceId" parameterType="int" resultType="int">
 		<![CDATA[
-			SELECT CAUSE.CAUSE_ID FROM CAUSE, ATTENDANCE WHERE CAUSE.ATTENDANCE_ID = ATTENDANCE.ATTENDANCE_ID 
-			AND ATTENDANCE.ATTENDANCE_ID = #{attendanceId}	
+			SELECT 	CAUSE.CAUSE_ID 
+			FROM CAUSE
+			WHERE ATTENDANCE_ID = #{attendaceId}
 		]]>
 	</select>
 	

@@ -93,14 +93,9 @@
 							</div>
 						</div>
 					</div>
-					<input type="hidden" name="causeId" value="${list.causeId}" /> 
-					<input type="hidden" name="fileName" value="${list.fileName}" /> 
-					<input type="hidden" name="fileContentType" value="${list.fileContentType}" /> 
-					<input type="hidden" name="fileSize" value="${list.fileSize}" /> 
-					<input type="hidden" name="fileData" value="${list.fileData}" /> 
-					
 				</div>
 				<div class="text-center">
+					<input type="hidden" name="causeId" value="${list.causeId}"/>
 					<input type="submit" class="btn btn-warning" value="<fmt:message key="SUBMIT"/>"/>
 				</div>
 			</div>

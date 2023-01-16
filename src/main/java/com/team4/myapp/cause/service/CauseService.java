@@ -38,7 +38,7 @@ public class CauseService implements ICauseService{
 		if(causeDto.getAttendanceId() == 0) {
 			Integer check = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
 			System.out.println("check: "+check);
-			if(check.equals(null)) {
+			if(check == null) {
 				//attendanceID가 없는 경우
 				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
 			} 
@@ -159,8 +159,11 @@ public class CauseService implements ICauseService{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			causeRepository.updateCauseFile(cause);
+		} else {
+			causeRepository.updateCauseContent(cause.getContent());
 		}
-		causeRepository.updateCauseDetail(cause);
+		
 	}
 	
 	//사유서 삭제하기
@@ -213,6 +216,11 @@ public class CauseService implements ICauseService{
 	@Override
 	public int selectDateCount(String date) {
 		return causeRepository.selectDateCount(date);
+	}
+
+	@Override
+	public int selectByAttendanceId(int attendaceId) {
+		return causeRepository.selectByAttendanceId(attendaceId);
 	}
 
 }

@@ -74,6 +74,7 @@ public class CauseController {
 	public String insertCauseWrite(CauseDto causeDto, BindingResult result, RedirectAttributes redirectAttrs, HttpSession session) {
 		
 		try {
+			causeDto.toString();
 			MultipartFile file = causeDto.getFile();
 			if(file != null && !file.isEmpty()) {
 				logger.info("/cause/write file: " + file.getOriginalFilename() + file.getSize());
@@ -203,21 +204,32 @@ public class CauseController {
 		return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
 	}
 	
-	//사유서 수정
-	@RequestMapping(value="/cause/update/{causeId}", method=RequestMethod.GET)
-	public String updateCause(@PathVariable int causeId, Model model){
-		CauseListDto cause= causeService.selectCauseDetail(causeId);
-		logger.info("/cause/update : "+ cause.toString());
-		
-		model.addAttribute("list",cause);
-		return "cause/update";
+	// 사유서 수정
+	@RequestMapping(value = "/cause/update/{causeId}", method = RequestMethod.GET)
+	public String updateCause(@PathVariable int causeId,
+         @RequestParam(value = "attendanceId", required = false, defaultValue = "0") int attendanceId, Model model) {
+		CauseListDto cause = null;
+		if (attendanceId != 0) {
+			System.out.println("~!!!!!  " + attendanceId);
+			// attendanceId 로 causeId 조회하는 서비스 구현
+			int cid = causeService.selectByAttendanceId(attendanceId);
+			cause = causeService.selectCauseDetail(cid);
+		} else {
+			cause = causeService.selectCauseDetail(causeId);         
+		}
+	  logger.info("/cause/update : " + cause.toString());
+	  model.addAttribute("list", cause);
+	  return "cause/update";
 	}
 	
 	@RequestMapping(value="/cause/update", method=RequestMethod.POST)
 	public String updateCause(Cause cause, BindingResult result, HttpSession session, RedirectAttributes redurectAttrs) {
 		logger.info("/cause/update : "+ cause.toString());
+	
 		causeService.updateCause(cause);
-		
+		if(session.getAttribute("page") == null) {
+			session.setAttribute("page", 1);
+		}
 		return "redirect:/cause/list/"+(Integer)session.getAttribute("page");
 	}
 	

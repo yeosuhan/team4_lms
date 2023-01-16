@@ -38,6 +38,11 @@
 			}
 		});
 	}
+
+	function copy() {
+		navigator.clipboard.writeText(window.location.href);
+		alert("클립 보드에 복사되었습니다.");
+	}
 </script>
 <style>
 		* {
@@ -558,12 +563,6 @@
 		}
 				
 	</style>
-	<script>
-	function copy() {
-		navigator.clipboard.writeText(window.location.href);
-		alert("클립 보드에 복사되었습니다.");
-	}
-	</script>
 	<%@ include file="/WEB-INF/views/fragment/nav.jsp" %>
 	
 	<div class="container">
@@ -720,7 +719,7 @@
 										class="form-control" id="replyContent"></textarea>
 								</div>
 								<div class="card-footer text-right">
-									<button class="butona btn" type="button"
+									<button class="butona btn btn-primary" type="button"
 										onclick="writeReply(${board.boardId})" style="width: 150px;">
 										Reply<span class="tag"> <img
 											src="https://i.ibb.co/GQf8frw/reply.png" />
