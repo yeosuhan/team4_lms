@@ -160,7 +160,7 @@ public class BoardController {
 	@RequestMapping(value="/board/delete", method=RequestMethod.POST)
 	public String deleteArticle(Board board, HttpSession session, Model model) {
 		try {	
-			boardService.deleteArticle(board.getBoardId()); //, board.getReplyNumber());
+			boardService.deleteArticle(board.getBoardId());
 			return "redirect:/board/list/" + board.getBoardType() + "/" + (Integer)session.getAttribute("page");			
 		}catch(Exception e){
 			model.addAttribute("message", e.getMessage());
