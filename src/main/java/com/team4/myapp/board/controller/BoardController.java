@@ -35,7 +35,6 @@ import com.team4.myapp.interceptor.Role;
 
 @Controller
 public class BoardController {
-	static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
 	IBoardService boardService;
@@ -50,7 +49,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
-	public String writeArticle(Board board, BindingResult results, RedirectAttributes redirectAttrs) {
+	public String writeArticle(Board board, RedirectAttributes redirectAttrs) {
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
@@ -131,22 +130,13 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/update/{boardId}", method=RequestMethod.GET)
 	public String updateArticle(@PathVariable int boardId, Model model) {
-		//List<BoardCategory> categoryList = categoryService.selectAllCategory();
-		//model.addAttribute("categoryList", categoryList);
 		Board board = boardService.selectArticle(boardId);
-		//model.addAttribute("boardType", board.getBoardType());
 		model.addAttribute("board", board);
 		return "board/updateform";
 	}
 
 	@RequestMapping(value="/board/update", method=RequestMethod.POST)
 	public String updateArticle(Board board, RedirectAttributes redirectAttrs) {
-		//String dbPassword = boardService.getPassword(board.getBoardId());
-		//if(!board.getPassword().equals(dbPassword)) {
-//			throw new RuntimeException("게시글 비밀번호가 다릅니다.");
-			//redirectAttrs.addFlashAttribute("passwordError", "게시글 비밀번호가 다릅니다");
-			//return "redirect:/board/update/" + board.getBoardId();
-		//}
 		try{
 			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
 			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
@@ -184,6 +174,7 @@ public class BoardController {
 		try {
 			List<Board> boardList = boardService.searchListByContentKeyword(keyword, boardType, page);
 			model.addAttribute("boardList", boardList);
+			session.setAttribute("page", page);
 	
 			// 검색 결과 페이징 처리
 			int bbsCount = boardService.selectTotalArticleCountByKeyword(keyword, boardType);
@@ -207,20 +198,5 @@ public class BoardController {
 		boardService.addHeartCount(boardId);
 		return "redirect:/board/detail/"+boardId;
 	}
-
-	
-	// 유저의 출결 현황 조회 - 출결 데이터  json으로 반환하기
-	//@ResponseBody
-	//@RequestMapping(value = "/attendance/list", method = RequestMethod.GET)
-	//public List<CalendarDto> getUserAttendanceList() {
-		//List<CalendarDto> list = new ArrayList<CalendarDto>();
-		
-		//CalendarDto a1 = new CalendarDto(new Timestamp(System.currentTimeMillis()),
-				//new Timestamp(System.currentTimeMillis()), "출석");
-		
-		//list.add(a1);
-		//System.out.println(a1);
-		//return list;
-	//}
 
 }

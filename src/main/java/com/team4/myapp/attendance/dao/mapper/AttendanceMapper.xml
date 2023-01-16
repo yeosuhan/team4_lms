@@ -76,7 +76,7 @@
 	<select id="selectCheckOut" parameterType="map"
 		resultType="string">
 		<![CDATA[
-			select to_char(CHECK_OUT) 			
+			select to_char(CHECK_OUT, 'YYYY/MM/dd HH24:mi:ss')  
 			from attendance
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>
@@ -250,4 +250,20 @@
 		</choose>
 	</update>
 
+	<select id="selectStatistics" resultType="com.team4.myapp.util.scheduler.dto.Statistics">
+		<![CDATA[
+			SELECT
+				YEAR as year,
+				MONTH as month,
+				ATTENDANCE as attendance,
+				LATE as late,
+				ABSENT as absent,
+				LEAVE as leave
+			FROM 
+				STATISTICS
+			WHERE
+				MEMBER_ID = #{memberId}
+		]]>
+	</select>
+	
 </mapper>

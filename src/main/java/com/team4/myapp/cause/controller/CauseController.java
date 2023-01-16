@@ -38,8 +38,6 @@ import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.reasoncategory.model.ReasonCategory;
 import com.team4.myapp.reasoncategory.service.IReasonCategoryService;
 
-
-
 @Controller
 public class CauseController {
 	static final Logger logger = LoggerFactory.getLogger(CauseController.class);
@@ -132,7 +130,6 @@ public class CauseController {
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectCount();
-		System.out.println("관리자 전체 행: "+ bbsCount);
 		int totalPageCount=0;
 		if(bbsCount > 0) {
 			totalPageCount = (int)Math.ceil(bbsCount/5.0);
@@ -178,7 +175,6 @@ public class CauseController {
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectDateCount(keyword);
-		System.out.println("관리자 전체 행: "+ bbsCount);
 		int totalPageCount=0;
 		if(bbsCount > 0) {
 			totalPageCount = (int)Math.ceil(bbsCount/5.0);

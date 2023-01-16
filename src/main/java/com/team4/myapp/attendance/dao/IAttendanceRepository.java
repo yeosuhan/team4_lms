@@ -1,13 +1,9 @@
 package com.team4.myapp.attendance.dao;
 
-import java.sql.Date;
 import java.util.List;
 
-
 import org.apache.ibatis.annotations.Param;
-
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.util.scheduler.dto.Statistics;
 
 public interface IAttendanceRepository {
@@ -40,4 +36,5 @@ public interface IAttendanceRepository {
 	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
 			@Param("memberId") String memberId, @Param("today") String today);
 	
+	Statistics selectStatistics(@Param("memberId")String memberId);
 	}

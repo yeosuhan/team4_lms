@@ -123,12 +123,12 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-info" id="updateButton" value="${causeId}"><fmt:message key="UPDATE"/></button>
+						<button type="button" class="btn btn-warning" id="updateButton" value="${causeId}"><fmt:message key="UPDATE"/></button>
 						<form method="post" action="/cause/delete" id="causeDelete">
 							<input type="hidden" id="deleteCause" name="causeId" value="" />
-							<button type="button" class="btn btn-info" id="deleteButton" value=""><fmt:message key="DELETE"/></button>
+							<button type="button" class="btn btn-warning" id="deleteButton" value=""><fmt:message key="DELETE"/></button>
 						</form>
-						<button type="button" class="btn btn-info close_modal"><fmt:message key="CLOSE"/></button>
+						<button type="button" class="btn btn-warning close_modal"><fmt:message key="CLOSE"/></button>
 					</div>
 				</div>
 			</div>

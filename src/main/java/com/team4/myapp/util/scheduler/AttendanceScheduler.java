@@ -57,14 +57,14 @@ public class AttendanceScheduler {
 		}
 	}
 
-	// 매월 말일 새벽12시 5분에 다음달 통계 넣어놔야됨 ex) member_id, 2023, 02, 0, 0, 0, 0
+	// 매월 초 새벽12시 5분에 다음달 통계 넣어놔야됨 ex) member_id, 2023, 02, 0, 0, 0, 0
 	@Scheduled(cron = "0 5 0 1 * ?")
 	public void next_statistics() {
 		attendanceService.next_statistics();
 	}
 
 	// 월~금 새벽 12시 5분에 어제 출결을 통계에 넣어야함
-	@Scheduled(cron = "0 10 14 * * 1-5")
+	@Scheduled(cron = "0 10 12 * * 2-6")
 	public void today_statistics() {
 		// 오늘 날짜
 		LocalDate todayLocalDate = LocalDate.now();

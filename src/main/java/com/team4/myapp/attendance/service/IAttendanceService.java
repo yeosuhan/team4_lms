@@ -10,7 +10,7 @@ import com.team4.myapp.util.scheduler.dto.Statistics;
 public interface IAttendanceService {
 	
 	void insertAll();
-	void todayPost(Date date, String today) throws Exception;
+	void todayPost(Date date, String today);
 	
 	List<CalendarDto> selectMemberAttendance(String memberId, int month);
 	
@@ -26,5 +26,6 @@ public interface IAttendanceService {
 
 	int selectId(String memberId);
 	void insertToday(List<Statistics> mlist, String yesterday, String year, String month);
-	void next_statistics(); 
+	void next_statistics();
+	Statistics selectStatistics(String memberId); 
 }

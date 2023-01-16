@@ -55,6 +55,7 @@ function DetailList(id){
 				$('#deleteButton').hide();
 			} else{
 				$('#updateButton').show();
+				$('#deleteButton').show();
 			}
 			
 			// 사진 띄우기

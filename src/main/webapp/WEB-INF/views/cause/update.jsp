@@ -51,7 +51,7 @@
 			<div class="inner" style="padding:40px 30px; display: block;">
 				<div class="form-content2">
 					<div class="form-header">
-						<h3>사유서 수정</h3>
+						<h3><fmt:message key="CAUSE_UPDATE"/></h3>
 					</div>
 					<div class="form-row2">
 						<div class="form-holder form-tit"><fmt:message key="ATTENDANCE_STATUS"/></div>
