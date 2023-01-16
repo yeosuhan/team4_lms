@@ -54,20 +54,20 @@ public class AttendanceController {
 		checkin = attendanceService.selectCheckIn(memberId);
 		if (checkin == null) {
 			model.addAttribute("checkin", true);
-			model.addAttribute("in", "-");
+			model.addAttribute("in", "출근 전");
 		} else {
 			model.addAttribute("checkin", false);
-			model.addAttribute("in", checkin);
+			model.addAttribute("in", checkin.substring(10));
 		}
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
 		if (checkin != null && checkout == null) {
 			model.addAttribute("checkout", true);
-			model.addAttribute("out", "-");
+			model.addAttribute("out", "퇴근 전");
 		} else {
 			model.addAttribute("checkout", false);
-			model.addAttribute("out", checkout);
+			model.addAttribute("out", checkout.substring(10));
 		}
 
 		// 외출 여부 확인
@@ -143,6 +143,9 @@ public class AttendanceController {
 			outService.insertCheckIn(memberId);
 			System.out.println("외출 가능 ~");
 		}
+		System.out.println("goOut : " + goOut);
+		System.out.println("checkin : " + checkin);
+		System.out.println("checkout : " + checkout);
 		return "redirect:/attendance/main";
 	}
 

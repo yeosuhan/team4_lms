@@ -55,18 +55,15 @@ public class CalendarDto {
 		else if(attendance.getAttendanceStatus() != 1 && attendance.getSubmitStatus() == 0) {
 			// 작성페이지
 			url = "/cause/write";
-			System.out.println("작성화면으로");
 		} 
 		else if(attendance.getAttendanceStatus() != 1 && (attendance.getSubmitStatus() == 2 
 				|| attendance.getSubmitStatus() == 3)) {
 			// 리스트 페이지
 			url = "/cause/list/1";
-			System.out.println("목록화면으로");
 		}
 		else if(attendance.getAttendanceStatus() != 1 && attendance.getSubmitStatus() == 1){
 			// 수정페이지
 			url = "/cause/update/0?attendanceId=" + attendance.getAttendanceId();
-			System.out.println("수정화면으로");
 		}  
 		return new CalendarDto(attendance.getCheckIn(), attendance.getCheckOut(), status, attendance.getAttendanceId()+"",
 				attendance.getAttendanceStatus(), attendance.getSubmitStatus(), attendance.getMemberName(), color, color, url);

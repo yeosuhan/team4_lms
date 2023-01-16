@@ -35,50 +35,60 @@
 
 	<div class="row" style="margin-bottom: 30px;">
 		<div class="col-sm-5">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">${sessionScope.membername}님</h5>
-					<p class="card-text">오늘 하루도 화이팅 :)</p>
-					<div class="row" style=" height: 100px;">
-						<div class="col-sm-6">
-							<h3>출근 시간</h3>
-							<p>${in}</p>
-							
-						</div>
-						<div class="col-sm-6">
-							<h3>퇴근 시간</h3>
-							<p>${out}</p>
-						</div>
-						<div style="display: flex; float: left; justify-content: space-between;	">
-						<%-- 							<c:if test="${checkin == true}"> --%>
+			<div class="card" style="border-radius: 20px;">
+				<div class="card-body row">
+					<div class="col-sm-6">
+						<h5 class="card-title">${sessionScope.membername}님</h5>
+						<p class="card-text">오늘 하루도 화이팅 :)</p>
+					</div>
+					<div class="col-sm-6"
+						style="display: flex; float: left; justify-content: space-between;">
+						<c:if test="${checkin == true}">
 							<form action="/attendance/checkin" method="POST">
-								<button type="submit" class="btn btn-primary">출석</button>
+								<button type="submit" class="btn btn-primary"
+									style="background-color: #000069; border-color: #000069">출석</button>
 							</form>
-							<%-- 							</c:if> --%>
+						</c:if>
 
-							<%-- 							<c:if test="${checkout == true}"> --%>
+						<c:if test="${checkout == true && goOut == true}">
 							<form action="/attendance/checkout" method="POST">
-								<button type="submit" class="btn btn-primary">퇴근</button>
+								<button type="submit" class="btn btn-primary"
+									style="background-color: #B9062F; border-color: #B9062F">퇴근</button>
 							</form>
-							<%-- 							</c:if> --%>
-							<%-- 							<c:if test="${goOut == true && checkout == true}"> --%>
+						</c:if>
+						<c:if test="${goOut == true && checkout == true}">
 							<form action="/attendance/out" method="POST">
 								<button type="submit" class="btn btn-primary">외출</button>
 							</form>
-							<%-- 							</c:if> --%>
-							<%-- 							<c:if test="${goOut == false && checkout == true}"> --%>
+						</c:if>
+						<c:if
+							test="${goOut == false && checkin == false && checkout == true}">
 							<form action="/attendance/comback" method="POST">
 								<button type="submit" class="btn btn-primary">복귀</button>
 							</form>
-							<%-- 							</c:if> --%>
-							<%-- 							<c:if test="${checkout == true}"> --%>
+						</c:if>
+						<c:if test="${checkout == true}">
 							<form action="/attendance/leave" method="POST">
-								<button type="submit" class="btn btn-primary">조퇴</button>
+								<button type="submit" class="btn btn-primary"
+									style="background-color: #506EA5; border-color: #506EA5;">조퇴</button>
 							</form>
-							<%-- 							</c:if> --%></div>
+						</c:if>
 					</div>
 
+					<div class="row" style="height: 100px; margin-top: 10px;">
+						<div class="col-sm-6">
+							<h3>출근 시간</h3>
+							<h4 style="color: gray">${in}</h4>
+
+						</div>
+						<div class="col-sm-6">
+							<h3>퇴근 시간</h3>
+							<h4 style="color: gray">${out}</h4>
+						</div>
+
+					</div>
 				</div>
+
 			</div>
 		</div>
 		<div class="col-sm-4"></div>
@@ -86,23 +96,20 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">외출 기록</h5>
-					<p class="card-text">${outListDto.hours}시간
-						${outListDto.minutes} 분 ${outListDto.seconds}초</p>
+					<p class="card-text">${outListDto.hours}시간${outListDto.minutes}
+						분 ${outListDto.seconds}초</p>
 					<div class="row">
-						<div >
-							<c:forEach var="outDto" items="${outListDto.outlist}">
-								<div>${outDto.checkIn}   -   ${outDto.checkOut}</div>
-
-							</c:forEach>
+						<c:forEach var="outDto" items="${outListDto.outlist}">
+							<div class="col-sm-5">${outDto.checkIn}</div>
+							<div class="col-sm-2">~</div>
+							<div class="col-sm-5">${outDto.checkOut}</div>
+						</c:forEach>
 					</div>
-
 				</div>
 			</div>
 		</div>
+
+		<div id='calendar' style="margin-top: 20px;"></div>
 	</div>
 
-	<div id='calendar' style="margin-top: 20px;"></div>
-</div>
-
-<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
-
+	<%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
