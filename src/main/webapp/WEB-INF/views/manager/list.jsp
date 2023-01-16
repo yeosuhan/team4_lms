@@ -126,7 +126,7 @@
 												<tag:search-paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" keyword="${keyword}" />														
 											</c:if>
 										</td>	
-										<td></td>								
+										<td style="width:250px"></td>								
 									</tr> 
 								</table>
 							</div>
