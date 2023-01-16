@@ -76,7 +76,7 @@
 	<select id="selectCheckOut" parameterType="map"
 		resultType="string">
 		<![CDATA[
-			select to_char(CHECK_OUT) 			
+			select to_char(CHECK_OUT, 'YYYY/MM/dd HH24:mi:ss')  
 			from attendance
 			where (MEMBER_ID = #{memberId}) and (to_char(ATTENDANCE_DATE, 'YYYY-MM-DD') = #{today})
 		]]>

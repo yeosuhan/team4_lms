@@ -63,7 +63,7 @@ public class AttendanceController {
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkin != null && checkout == null) {
+		if (checkout == null) {
 			model.addAttribute("checkout", true);
 			model.addAttribute("out", "퇴근 전");
 		} else {

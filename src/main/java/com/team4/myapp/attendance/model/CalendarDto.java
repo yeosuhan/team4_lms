@@ -42,7 +42,7 @@ public class CalendarDto {
 			break;
 		case 2:
 			status = "지각";
-			color = "#FFFDA2";
+			color = "#efca66";
 			break;
 		case 3:
 			status = "조퇴";
