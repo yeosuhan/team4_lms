@@ -26,5 +26,6 @@ public interface IAttendanceService {
 
 	int selectId(String memberId);
 	void insertToday(List<Statistics> mlist, String yesterday, String year, String month);
-	void next_statistics(); 
+	void next_statistics();
+	Statistics selectStatistics(String memberId); 
 }

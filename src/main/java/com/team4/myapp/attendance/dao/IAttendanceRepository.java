@@ -39,4 +39,6 @@ public interface IAttendanceRepository {
 
 	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
 			@Param("memberId") String memberId, @Param("today") String today);
+
+	Statistics selectStatistics(@Param("memberId")String memberId);
 }

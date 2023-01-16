@@ -68,7 +68,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-2"></div>
+		<div class="col-sm-5">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">${statistics.year}년  ${statistics.month}월 출석 통계</h4>
+					<p class="card-text">총: ${statistics.attendance}/${statistics.attendance+statistics.absent+statistics.late+statistics.leave}일 </p>
+					<p class="card-text">출석: ${statistics.attendance}일 / 결석: ${statistics.absent}일 / 지각: ${statistics.late}일  / 조퇴: ${statistics.leave}일</p>
+				</div>
+			</div>
+		</div>
 		<div class="col-sm-5">
 			<div class="card">
 				<div class="card-body">

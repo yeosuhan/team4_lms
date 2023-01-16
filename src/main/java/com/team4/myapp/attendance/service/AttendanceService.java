@@ -240,6 +240,7 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 
+	//다음달 통계행 넣기
 	@Override
 	public void next_statistics() {
 		List<String> members = memberRepository.selectAllStudent();
@@ -249,10 +250,8 @@ public class AttendanceService implements IAttendanceService {
 			attendanceRepository.insertMonthSchedule(member, year, month);
 		}
 	}
-
-	//다음달 통계행 넣기
-
-
+	
+	//어제 출결 통계에 넣기
 	@Override
 	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
 		for(Statistics memberStatus : mlist) {
@@ -270,6 +269,11 @@ public class AttendanceService implements IAttendanceService {
 	public int selectAttendanceId(String memberId, java.sql.Date attendanceDate) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	// 이달의 출석 통계 가져오기
+	@Override
+	public Statistics selectStatistics(String memberId) {
+		return attendanceRepository.selectStatistics(memberId);
 	}
 
 }
