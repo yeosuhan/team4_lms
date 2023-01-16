@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.util.scheduler.dto.Statistics;
 
 public interface IAttendanceService {

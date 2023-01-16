@@ -66,7 +66,7 @@
 		    <br/>
 		    <div class="row">
 		        <div class="col-lg-12">
-		            <div class="card">
+		            <div>
 		                <div class="card-body">
 		                    <div class="table-responsive">
 								<table class="table">
@@ -116,7 +116,7 @@
 								</table>
 								<table class="table">
 									<tr>
-										<td>page</td>
+										<td style="width: 250px"></td>
 										<td align="center">
 											<c:if test="${keyword==null}">
 												<tag:paging totalPageCount="${totalPageCount}" nowPage="${page}" boardType="${boardType}" />

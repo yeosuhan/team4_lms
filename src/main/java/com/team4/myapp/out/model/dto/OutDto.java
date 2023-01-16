@@ -1,6 +1,4 @@
-package com.team4.myapp.out.model;
-
-import java.util.List;
+package com.team4.myapp.out.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +11,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class OutListDto {
-	private List<OutDto> outlist;
-	private long total;
-	private int hours;
-	private int minutes;
-	private int seconds;
+public class OutDto {
+	private int id;
+	private String checkIn;
+	private String checkOut;
 }
