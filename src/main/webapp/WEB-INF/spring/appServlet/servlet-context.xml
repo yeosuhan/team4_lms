@@ -15,26 +15,14 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/m/**"
-		location="/WEB-INF/resources/member/" />
-	<resources mapping="/c/**"
-		location="/WEB-INF/resources/cause_list/" />
-	<resources mapping="/b/**"
-		location="/WEB-INF/resources/boardres/" />
-
-	<resources mapping="/images/**"
-		location="/WEB-INF/resources/images/" />
-
-	<resources mapping="/cal/**"
-		location="/WEB-INF/resources/calendar/" />
-
-	<resources mapping="/cd/**"
-		location="/WEB-INF/resources/cause_detail/" />
-	<resources mapping="/h/**"
-		location="/WEB-INF/resources/home/" />
-
-	<resources mapping="/ld/**"
-		location="/WEB-INF/resources/lec_detail/" />
+	<resources mapping="/m/**" location="/WEB-INF/resources/member/" />
+	<resources mapping="/c/**" location="/WEB-INF/resources/cause_list/" />
+	<resources mapping="/b/**" location="/WEB-INF/resources/boardres/" />
+	<resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+	<resources mapping="/cal/**" location="/WEB-INF/resources/calendar/" />
+	<resources mapping="/cd/**" location="/WEB-INF/resources/cause_write/" />
+	<resources mapping="/h/**" location="/WEB-INF/resources/home/" />
+	<resources mapping="/ld/**" location="/WEB-INF/resources/lec_detail/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
@@ -56,7 +44,8 @@
 		base-package=" com.team4.myapp.util.scheduler" />
 	<context:component-scan
 		base-package=" com.team4.myapp.board.controller" />
-
+	<context:component-scan
+		base-package=" com.team4.myapp.reply.controller" />
 	<view-controller path="/" view-name="home" />
 
 	<beans:bean id="multipartResolver"

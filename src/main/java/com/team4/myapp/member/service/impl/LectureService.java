@@ -24,9 +24,7 @@ public class LectureService implements ILectureService {
 
 	@Override
 	public List<CalendarDto> selectAttendanceList(int lectureId, String today) {
-		List<Attendance> mlist = lectureRepository.selectAttendanceList(lectureId, today);
-		System.out.println("mlist: " + mlist);
-		
+		List<Attendance> mlist = lectureRepository.selectAttendanceList(lectureId, today);		
 		List<CalendarDto> malist = new ArrayList<CalendarDto>();
 		for(Attendance att : mlist) {
 			malist.add(CalendarDto.toCalendarDto(att));

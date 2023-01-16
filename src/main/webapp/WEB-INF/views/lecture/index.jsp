@@ -67,8 +67,8 @@
 						</div>
 					</div>
 					<div class="events-container">
-					<!-- 여기에 출석 테이블 들어감 -->
-					</div>	
+						<!-- 여기에 출석 테이블 들어감 -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -76,4 +76,3 @@
 </section>
 
 <%@ include file="/WEB-INF/views/fragment/footer.jsp"%>
-

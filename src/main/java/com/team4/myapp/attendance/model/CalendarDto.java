@@ -2,8 +2,6 @@ package com.team4.myapp.attendance.model;
 
 import java.sql.Timestamp;
 
-import com.team4.myapp.attendance.model.Attendance;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +19,11 @@ public class CalendarDto {
 	private int attendanceStatus;
 	private int submitStatus;
 	private String memberName;
+	private int lectureId;
 	private String backgroundColor;
 	private String borderColor;
 	private String url;
-
+	
 	public static CalendarDto toCalendarDto(Attendance attendance) {
 		String status = "";
 		String color = "";
@@ -66,6 +65,7 @@ public class CalendarDto {
 			url = "/cause/update/0?attendanceId=" + attendance.getAttendanceId();
 		}  
 		return new CalendarDto(attendance.getCheckIn(), attendance.getCheckOut(), status, attendance.getAttendanceId()+"",
-				attendance.getAttendanceStatus(), attendance.getSubmitStatus(), attendance.getMemberName(), color, color, url);
+				attendance.getAttendanceStatus(), attendance.getSubmitStatus(), attendance.getMemberName(), attendance.getLectureId(), color, color, url);
+
 	}
 }

@@ -16,6 +16,10 @@
 	rel="stylesheet" />
 <link href="<c:url value='cal/fullcalendar/packages/daygrid/main.css'/>"
 	rel="stylesheet" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value='/cal/css/bootstrap.min.css'/>">
+<!-- Style -->
+<link rel="stylesheet" href="<c:url value='/cal/css/style.css'/>">
 
 <script src="<c:url value='/cal/js/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/cal/js/popper.min.js'/>"></script>
@@ -28,6 +32,9 @@
 	src="<c:url value='/cal/fullcalendar/packages/daygrid/main.js'/>"></script>
 <script src="<c:url value='/cal/js/main.js'/>"></script>
 <script src="<c:url value='/cal/js/calendar.js'/>"></script>
+
+
+
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
 
 

@@ -3,8 +3,6 @@ package com.team4.myapp.attendance.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +21,7 @@ import com.team4.myapp.out.dao.IOutRepository;
 import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
+import com.team4.myapp.util.scheduler.dto.Statistics;
 
 @Service
 public class AttendanceService implements IAttendanceService {
@@ -250,4 +249,13 @@ public class AttendanceService implements IAttendanceService {
 			attendanceRepository.insertMonthSchedule(member, year, month);
 		}
 	}
+
+	@Override
+	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
+		for (Statistics memberStatus : mlist) {
+			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday,
+					year, month);
+		}
+	}
+
 }
