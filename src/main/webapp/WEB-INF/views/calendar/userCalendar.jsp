@@ -108,6 +108,28 @@
 					<h4 class="card-title">${statistics.year}년  ${statistics.month}월 출석 통계</h4>
 					<p class="card-text">총: ${statistics.attendance}/${statistics.attendance+statistics.absent+statistics.late+statistics.leave}일 </p>
 					<p class="card-text">출석: ${statistics.attendance}일 | 결석: ${statistics.absent}일 | 지각: ${statistics.late}일  | 조퇴: ${statistics.leave}일</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar"
+							style="width: ${(statistics.attendance/(statistics.attendance+statistics.absent+statistics.late+statistics.leave))*100}%"
+							aria-valuemin="0" aria-valuemax="100">출석</div>
+						<div
+							class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+							role="progressbar"
+							style="width: ${(statistics.absent/(statistics.attendance+statistics.absent+statistics.late+statistics.leave))*100}%"
+							aria-valuemin="0" aria-valuemax="100">결석</div>
+						<div
+							class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+							role="progressbar"
+							style="width: ${(statistics.late/(statistics.attendance+statistics.absent+statistics.late+statistics.leave))*100}%"
+							aria-valuemin="0" aria-valuemax="100">지각</div>
+						<div
+							class="progress-bar progress-bar-striped bg-primary progress-bar-animated"
+							role="progressbar"
+							style="width: ${(statistics.leave/(statistics.attendance+statistics.absent+statistics.late+statistics.leave))*100}%"
+							aria-valuemin="0" aria-valuemax="100">조퇴</div>
+					</div>
 				</div>
 			</div>
 		</div>
