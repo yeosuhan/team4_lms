@@ -1,13 +1,4 @@
 $(function() {
-
-/*
- * $('.js-check-all').on('click', function() {
- * 
- * if ( $(this).prop('checked') ) { $('th
- * input[type="checkbox"]').each(function() { $(this).prop('checked', true); }) }
- * else { $('th input[type="checkbox"]').each(function() {
- * $(this).prop('checked', false); }) } });
- */
 	
 	$('.close_modal').on('click', function() {
 	      $('#myModal').modal('hide');
@@ -17,11 +8,7 @@ $(function() {
       console.log("수정할 게시물 번호: "+$('#updateButton').val());
       location.href="/cause/update/"+$('#updateButton').attr("value");
    });
-   
-   $(function(){
-		$("#startCal").datepicker();
-		$("#endCal").datepicker();
-   });
+
 
 
 });
@@ -63,13 +50,12 @@ function DetailList(id){
 				}
 			});
 			
-			
-//			//승인상태에 따라 버튼 달라짐.
-//			if(data.causeStatus != 0){
-//				console.log("aa"+data.causeStatus);
-//				$('#updateButton').hide();
-//				console.log();
-//			}
+			if(data.causeStatus == 1 || data.causeStatus == 2){
+				$('#updateButton').hide();
+				$('#deleteButton').hide();
+			} else{
+				$('#updateButton').show();
+			}
 			
 			// 사진 띄우기
 			if(data.fileSize > 0){

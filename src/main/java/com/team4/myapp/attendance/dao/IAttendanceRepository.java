@@ -26,7 +26,7 @@ public interface IAttendanceRepository {
 	void insertFutureAttendance(@Param("memberId")String memberId, @Param("attendanceDate") String attendanceDate);
 	Attendance selectDataAndCategory(int attendanceId);
 	
-	void changeSubmitStatus(@Param("causeId")int causeId, @Param("s_status")int s_status);
+	void changeSubmitStatus(@Param("attendanceId")int attendanceId, @Param("s_status")int s_status);
 	
 	void insertToday(@Param("memberId")String memberId, @Param("attendanceStatus")int attendanceStatus,@Param("yesterday") String yesterday, @Param("year") String year, @Param("month") String month);
 	List<Statistics> selectStatus(@Param("yesterday") String yesterday);
@@ -39,7 +39,5 @@ public interface IAttendanceRepository {
 
 	void updateAttendanceStatusById(@Param("attendanceId") Integer attendanceId,  @Param("attendanceStatus") int attendanceStatus,
 			@Param("memberId") String memberId, @Param("today") String today);
-	
-	int checkattendaceId(@Param("memberId") String memberId, @Param("attendanceDate") String attendanceDate);
 	
 	}

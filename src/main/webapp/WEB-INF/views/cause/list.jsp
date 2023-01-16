@@ -37,14 +37,6 @@
 		<div class="table-responsive" style="border-top: 1px solid gray">
 			<br />
 			<table class="table">
-				<tr>	
-					<td align="right">
-						<form method="get">
-							<input type="date" name="cal2" id="searchCal"/>
-							<input type="submit" value="조회" />
-						</form>
-					</td>
-				</tr>
 				<tr>
 					<td align="right">
 						<a href='<c:url value="/cause/write"/>'>

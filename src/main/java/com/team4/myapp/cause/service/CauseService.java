@@ -36,8 +36,9 @@ public class CauseService implements ICauseService{
 		Cause cause = new Cause();
 		int aId = 0;
 		if(causeDto.getAttendanceId() == 0) {
-			int check = attendanceRepository.checkattendaceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
-			if(check == 0) {
+			Integer check = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
+			System.out.println("check: "+check);
+			if(check.equals(null)) {
 				//attendanceID가 없는 경우
 				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
 			} 
@@ -68,9 +69,7 @@ public class CauseService implements ICauseService{
 			}
 		}
 		causeRepository.insertCause(cause);
-		int causeId = causeRepository.selectCauseId(cause.getAttendanceId());
-		System.out.println("커즈 서비스: "+causeId);
-		attendanceRepository.changeSubmitStatus(causeId, 1);
+		attendanceRepository.changeSubmitStatus(cause.getAttendanceId(), 1);
 		
 		
 		
