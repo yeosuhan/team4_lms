@@ -19,6 +19,7 @@ import com.team4.myapp.interceptor.Auth;
 import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.out.model.OutListDto;
 import com.team4.myapp.out.service.IOutService;
+import com.team4.myapp.util.scheduler.dto.Statistics;
 
 @Controller
 @Auth(role = Role.STUDENT)
@@ -82,7 +83,11 @@ public class AttendanceController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
+		// 통계
+		Statistics statistics = attendanceService.selectStatistics(memberId);
+		System.out.println("Statistics: " + statistics);
+		model.addAttribute("statistics", statistics);
+		
 		// 복귀 여부 확인
 		System.out.println("goOut : " + goOut);
 		System.out.println("aid : " + checkin);
@@ -159,5 +164,5 @@ public class AttendanceController {
 		if (!result)
 			outService.updateCheckOut(memberId);
 		return "redirect:/attendance/main";
-	}
+	}	
 }

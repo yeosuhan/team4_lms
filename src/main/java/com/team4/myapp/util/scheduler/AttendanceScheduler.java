@@ -64,7 +64,7 @@ public class AttendanceScheduler {
 	}
 
 	// 월~금 새벽 12시 5분에 어제 출결을 통계에 넣어야함
-	@Scheduled(cron = "0 10 14 * * 1-5")
+	@Scheduled(cron = "0 10 12 * * 2-6")
 	public void today_statistics() {
 		// 오늘 날짜
 		LocalDate todayLocalDate = LocalDate.now();
