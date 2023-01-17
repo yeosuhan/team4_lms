@@ -42,7 +42,7 @@ function DetailList(id){
 			$('#deleteButton').on('click',function(){
 				var check = confirm("정말 지우시겠습니까?");
 				if(check){
-					 console.log("삭제할 게시물 번호: "+$('#deletCause').val());
+					 console.log("삭제할 게시물 번호: "+$('#deleteCause').val());
 					 $('#deleteCause').attr("value",data.causeId);
 					 $('#causeDelete').submit();
 				} else {

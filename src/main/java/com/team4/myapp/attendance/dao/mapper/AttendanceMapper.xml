@@ -84,8 +84,8 @@
 	
 	<insert id="insertFutureAttendance" parameterType="map">
 		<![CDATA[
-			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID) 
-			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId})
+			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID, ATTENDANCE_STATUS) 
+			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId}, #{attendanceStatus})
 		]]>
 	</insert>
 	

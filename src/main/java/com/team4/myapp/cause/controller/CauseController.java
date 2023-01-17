@@ -69,10 +69,9 @@ public class CauseController {
 	
 	//사유서 작성하기
 	@RequestMapping(value="/cause/write", method = RequestMethod.POST)
-	public String insertCauseWrite(CauseDto causeDto, BindingResult result, RedirectAttributes redirectAttrs, HttpSession session) {
+	public String insertCauseWrite(CauseDto causeDto, RedirectAttributes redirectAttrs, HttpSession session) {
 		
 		try {
-			causeDto.toString();
 			MultipartFile file = causeDto.getFile();
 			if(file != null && !file.isEmpty()) {
 				logger.info("/cause/write file: " + file.getOriginalFilename() + file.getSize());

@@ -28,8 +28,8 @@ public class CauseListDto {
 	private String attendanceStatusString;
 	private String memberName;
 	private int submitStatus;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-	private Date attendanceDate;
+
+	private String attendanceDate;
 	private byte[] fileData;
 	private String fileName;
 	private long fileSize;
