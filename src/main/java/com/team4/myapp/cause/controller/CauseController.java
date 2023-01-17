@@ -153,7 +153,7 @@ public class CauseController {
 	
 	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
 	public String accept(CauseListDto cause, int page) {	
-			causeService.accept(cause.getCauseId(),cause.getCauseStatus());
+		causeService.accept(cause.getCauseId(),cause.getCauseStatus());
 		return "redirect:/cause/admin/list/"+page;
 	}
 	
@@ -167,10 +167,6 @@ public class CauseController {
 		model.addAttribute("awaitNo", causeService.getSubmitStatusDateNo(keyword).get(0));
 		model.addAttribute("approveNo", causeService.getSubmitStatusDateNo(keyword).get(1));
 		model.addAttribute("rejectNo",causeService.getSubmitStatusDateNo(keyword).get(2));
-		
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(0));
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(1));
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(2));
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectDateCount(keyword);
