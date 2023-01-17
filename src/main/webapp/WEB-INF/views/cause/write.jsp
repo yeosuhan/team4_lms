@@ -61,7 +61,7 @@ position:relative;
 								</c:when>
 								<c:otherwise>
 									<select name="attendanceStatus">
-										<option value="0" selected><fmt:message key="ABSENT"/></option>
+										<option value="0"><fmt:message key="ABSENT"/></option>
 										<option value="2"><fmt:message key="TARDY"/></option>
 										<option value="3"><fmt:message key="LEAVE_EARLY"/></option>
 									</select>
