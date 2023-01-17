@@ -94,8 +94,7 @@ public class CauseService implements ICauseService{
 			String s2 = i.submitStatus(i.getCauseStatus());
 			i.setAttendanceStatusString(s1);
 			i.setCauseStatusString(s2);
-		}
-		
+		}		
 		return list;
 	}
 
@@ -111,8 +110,7 @@ public class CauseService implements ICauseService{
 			String s2 = i.submitStatus(i.getCauseStatus());
 			i.setAttendanceStatusString(s1);
 			i.setCauseStatusString(s2);
-		}
-		
+		}		
 		return list;
 	}
 
@@ -187,17 +185,16 @@ public class CauseService implements ICauseService{
 	@Override
 	public List<CauseListDto> selectCauseListAdminDate(String date, int page) {
 		//페이징 처리
-				int start = ((page-1) * 5) +1;
+		int start = ((page-1) * 5) +1;
 				
-				List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
-				for(CauseListDto i : list) {
-					String  s1 = i.attendanceStatus(i.getAttendanceStatus());
-					String s2 = i.submitStatus(i.getCauseStatus());
-					i.setAttendanceStatusString(s1);
-					i.setCauseStatusString(s2);
-				}
-				
-				return list;
+		List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
+		for(CauseListDto i : list) {
+			String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+			String s2 = i.submitStatus(i.getCauseStatus());
+			i.setAttendanceStatusString(s1);
+			i.setCauseStatusString(s2);
+		}				
+		return list;
 	}
 
 	@Override
