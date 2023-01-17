@@ -78,7 +78,7 @@
 								<button type="submit" class="btn btn-primary">복귀</button>
 							</form>
 						</c:if>
-						<c:if test="${checkout == true}">
+						<c:if test="${checkout == true && goOut == true }">
 							<form action="/attendance/leave" method="POST">
 								<button type="submit" class="btn btn-primary"
 									style="background-color: #506EA5; border-color: #506EA5;">조퇴</button>

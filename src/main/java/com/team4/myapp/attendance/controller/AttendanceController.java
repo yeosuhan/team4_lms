@@ -63,10 +63,10 @@ public class AttendanceController {
 
 		// 퇴근 여부 확인
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkout == null) {
+		if (checkin != null && checkout == null) {
 			model.addAttribute("checkout", true);
 			model.addAttribute("out", "퇴근 전");
-		} else {
+		} else if(checkin != null && checkout != null) {
 			model.addAttribute("checkout", false);
 			model.addAttribute("out", checkout.substring(10));
 		}
@@ -109,9 +109,10 @@ public class AttendanceController {
 	@RequestMapping(value = "/attendance/checkout", method = RequestMethod.POST)
 	public String checkOut(HttpSession session) {
 		String memberId = (String) session.getAttribute("memberid");
+		String checkin = attendanceService.selectCheckIn(memberId);
 		String checkout = null;
 		checkout = attendanceService.selectCheckOut(memberId);
-		if (checkout == null) {
+		if (checkin != null && checkout == null) {
 			attendanceService.updateCheckOut(memberId);
 		}
 

@@ -39,6 +39,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 		if(memberId == null) {
 			// 로그인 화면으로 이동하기
 			response.sendRedirect("/member/login");
+			return false;
 		}
 		
 		// @Auth professor인 경우
