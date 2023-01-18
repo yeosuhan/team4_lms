@@ -231,9 +231,9 @@ public class AttendanceService implements IAttendanceService {
 				if (!result) { // 출근 시간 미달인 경우 그 상태만 수정한다.
 					System.out.println(" 미달 ~~~~~~");
 					attendanceRepository.updateAttendanceStatusById(null, 0, mid, today); // 결석 처리
-				} else {
+				} /*else {
 					attendanceRepository.updateAttendanceStatusById(null, -1, mid, today); // 가존 상태 유지
-				}
+				}*/
 
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -256,6 +256,7 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
 		for(Statistics memberStatus : mlist) {
+			System.out.println(" >> " + memberStatus);
 			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
 		}	
 	}
