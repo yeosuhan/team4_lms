@@ -69,10 +69,9 @@ public class CauseController {
 	
 	//사유서 작성하기
 	@RequestMapping(value="/cause/write", method = RequestMethod.POST)
-	public String insertCauseWrite(CauseDto causeDto, BindingResult result, RedirectAttributes redirectAttrs, HttpSession session) {
+	public String insertCauseWrite(CauseDto causeDto, RedirectAttributes redirectAttrs, HttpSession session) {
 		
 		try {
-			causeDto.toString();
 			MultipartFile file = causeDto.getFile();
 			if(file != null && !file.isEmpty()) {
 				logger.info("/cause/write file: " + file.getOriginalFilename() + file.getSize());
@@ -152,12 +151,14 @@ public class CauseController {
 		return cdlist;
 	}
 	
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
 	public String accept(CauseListDto cause, int page) {	
-			causeService.accept(cause.getCauseId(),cause.getCauseStatus());
+		causeService.accept(cause.getCauseId(),cause.getCauseStatus());
 		return "redirect:/cause/admin/list/"+page;
 	}
 	
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/date/{page}", method = RequestMethod.GET)
 	public String selectCauseListAdminDate(@PathVariable int page, String keyword, HttpSession session, Model model) {
 		//리스트 불러오기
@@ -168,10 +169,6 @@ public class CauseController {
 		model.addAttribute("awaitNo", causeService.getSubmitStatusDateNo(keyword).get(0));
 		model.addAttribute("approveNo", causeService.getSubmitStatusDateNo(keyword).get(1));
 		model.addAttribute("rejectNo",causeService.getSubmitStatusDateNo(keyword).get(2));
-		
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(0));
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(1));
-		System.out.println("date-awaitNo: "+causeService.getSubmitStatusDateNo(keyword).get(2));
 		
 		//전체 페이지 구하기(5페이지씩 구분)
 		int bbsCount = causeService.selectDateCount(keyword);

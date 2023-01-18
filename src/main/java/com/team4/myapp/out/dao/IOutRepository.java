@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.team4.myapp.out.model.OutDto;
+import com.team4.myapp.out.model.dto.OutDto;
 
 public interface IOutRepository {
 	OutDto selectLastOut(@Param("memberId") String memberId, @Param("today") String today);

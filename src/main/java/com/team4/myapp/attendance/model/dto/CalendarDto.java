@@ -1,6 +1,8 @@
-package com.team4.myapp.attendance.model;
+package com.team4.myapp.attendance.model.dto;
 
 import java.sql.Timestamp;
+
+import com.team4.myapp.attendance.model.Attendance;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,7 +3,7 @@
 <mapper namespace="com.team4.myapp.out.dao.IOutRepository">
 
 	<select id="selectLastOut" parameterType="map"
-		resultType="com.team4.myapp.out.model.OutDto">
+		resultType="com.team4.myapp.out.model.dto.OutDto">
 			<![CDATA[
 				select 
 					ex.OUT_ID as id,
@@ -37,7 +37,7 @@
 	</update>
 
 	<select id="selectOutList" parameterType="map"
-		resultType="com.team4.myapp.out.model.OutDto">
+		resultType="com.team4.myapp.out.model.dto.OutDto">
 		select 
 		to_char(CHECK_IN, 'HH24:mi:ss') as checkIn,
 		to_char(CHECK_OUT, 'HH24:mi:ss') as checkOut

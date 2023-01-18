@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team4.myapp.out.dao.IOutRepository;
-import com.team4.myapp.out.model.OutDto;
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 import com.team4.myapp.util.date.Today;
 
 @Service

@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.attendance.service.IAttendanceService;
 import com.team4.myapp.interceptor.Auth;
 import com.team4.myapp.interceptor.Role;
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 import com.team4.myapp.out.service.IOutService;
 import com.team4.myapp.util.scheduler.dto.Statistics;
 
@@ -66,7 +66,7 @@ public class AttendanceController {
 		if (checkin != null && checkout == null) {
 			model.addAttribute("checkout", true);
 			model.addAttribute("out", "퇴근 전");
-		} else if(checkin != null && checkout != null) {
+		} else if (checkin != null && checkout != null) {
 			model.addAttribute("checkout", false);
 			model.addAttribute("out", checkout.substring(10));
 		}
@@ -87,7 +87,7 @@ public class AttendanceController {
 		Statistics statistics = attendanceService.selectStatistics(memberId);
 		System.out.println("Statistics: " + statistics);
 		model.addAttribute("statistics", statistics);
-		
+
 		// 복귀 여부 확인
 		System.out.println("goOut : " + goOut);
 		System.out.println("aid : " + checkin);
@@ -115,7 +115,6 @@ public class AttendanceController {
 		if (checkin != null && checkout == null) {
 			attendanceService.updateCheckOut(memberId);
 		}
-
 		return "redirect:/attendance/main";
 	}
 
@@ -165,5 +164,5 @@ public class AttendanceController {
 		if (!result)
 			outService.updateCheckOut(memberId);
 		return "redirect:/attendance/main";
-	}	
+	}
 }

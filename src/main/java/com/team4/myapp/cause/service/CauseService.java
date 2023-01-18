@@ -40,7 +40,7 @@ public class CauseService implements ICauseService{
 			System.out.println("check: "+check);
 			if(check == null) {
 				//attendanceID가 없는 경우
-				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
+				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()), causeDto.getAttendanceStatus());
 			} 
 			
 			//attendanceId가 있음.
@@ -70,12 +70,8 @@ public class CauseService implements ICauseService{
 		}
 		causeRepository.insertCause(cause);
 		attendanceRepository.changeSubmitStatus(cause.getAttendanceId(), 1);
-		
-		
-		
-	}
+	}	
 	
-	//전체 행수 구하기
 	@Override
 	public int selectCauseCount(String memberId) {
 		return causeRepository.selectCauseCount(memberId);
@@ -85,7 +81,7 @@ public class CauseService implements ICauseService{
 	public int selectCount() {
 		return causeRepository.selectCount();
 	}
-
+	
 	//사유서 리스트 보기(학생)
 	@Override
 	public List<CauseListDto> selectCauseList(String memberId, int page) {

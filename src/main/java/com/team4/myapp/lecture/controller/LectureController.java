@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.interceptor.Auth;
 import com.team4.myapp.interceptor.Role;
 import com.team4.myapp.member.service.ILectureService;

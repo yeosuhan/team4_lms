@@ -67,7 +67,7 @@ color: grey;
 			</table>
 			<table class="table">
 		<tr>
-			<td align="left">page</td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
+			<td align="left"></td><c:if test="${boardType=='reference'}"><c:if test="${sessionScope.memberid=='admin'}"><td><td></td></td></c:if></c:if>
 				<c:if test="${boardType=='community'}"><td></td><td></td></c:if>
 			<td align="left">
 			<c:if test="${totalPageCount==0}">검색 결과가 없습니다. </c:if>

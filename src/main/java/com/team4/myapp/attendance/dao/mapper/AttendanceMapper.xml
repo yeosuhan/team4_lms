@@ -84,8 +84,8 @@
 	
 	<insert id="insertFutureAttendance" parameterType="map">
 		<![CDATA[
-			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID) 
-			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId})
+			INSERT INTO ATTENDANCE(ATTENDANCE_ID, ATTENDANCE_DATE, MEMBER_ID, ATTENDANCE_STATUS) 
+			VALUES (attendance_seq.nextval, #{attendanceDate}, #{memberId}, #{attendanceStatus})
 		]]>
 	</insert>
 	
@@ -123,83 +123,72 @@
 			UPDATE STATISTICS
 			SET
 			<choose>
-			<when test="attendanceStatus==0">
-				ABSENT = (
-						SELECT
-							(S.ABSENT+1) AS ABSENT
-						FROM
-							STATISTICS S, ATTENDANCE A
-						WHERE
-							S.MEMBER_ID=A.MEMBER_ID 
-						AND
-							to_char(A.attendance_date,'YYYY-MM-DD')=#{yesterday}
-						AND
-							to_char(YEAR)=#{year}
-						AND
-							to_char(month)=to_number(#{month})
-						AND
-							A.MEMBER_ID = #{memberId}
-						)
-				WHERE member_id=#{memberId}
-			</when>
-			<when test="attendanceStatus==1">
-				attendance = (
-						SELECT 
-							attendance+1 AS attendance
-						FROM
-							STATISTICS S, ATTENDANCE A
-						WHERE
-							S.MEMBER_ID=A.MEMBER_ID 
-						AND
-							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
-						AND
-							to_char(YEAR)=#{year}
-						AND
-							to_char(month)=#{month}
-						AND
-							A.MEMBER_ID = #{memberId}
-						)
-				WHERE member_id=#{memberId}
-			</when>
-			<when test="attendanceStatus==2">
-				late = (
-						SELECT 
-							late+1 AS late
-						FROM
-							STATISTICS S, ATTENDANCE A
-						WHERE
-							S.MEMBER_ID=A.MEMBER_ID 
-						AND
-							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
-						AND
-							to_char(YEAR)=#{year}
-						AND
-							to_char(month)=#{month}
-						AND
-							A.MEMBER_ID = #{memberId}
-						)
-				WHERE member_id=#{memberId}
-			</when>
-			<when test="attendanceStatus==3">
-				leave = (
-						SELECT 
-							leave+1 AS leave
-						FROM
-							STATISTICS S, ATTENDANCE A
-						WHERE
-							S.MEMBER_ID=A.MEMBER_ID 
-						AND
-							to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
-						AND
-							to_char(YEAR)=#{year}
-						AND
-							to_char(month)=#{month}
-						AND
-							A.MEMBER_ID = #{memberId}
-						)
-				WHERE member_id=#{memberId}
-			</when>
+				<when test="attendanceStatus==0">
+					ABSENT = (
+							SELECT
+								(S.ABSENT+1) AS ABSENT
+							FROM
+								STATISTICS S, ATTENDANCE A
+							WHERE
+								S.MEMBER_ID = A.MEMBER_ID 
+							AND
+								to_char(A.attendance_date,'YYYY-MM-DD')=#{yesterday}
+							AND to_char(YEAR)= #{year}
+							AND month= to_number(#{month})
+							AND S.member_id = #{memberId}
+							)
+					
+				</when>
+				<when test="attendanceStatus==1">
+					attendance = (
+							SELECT 
+								attendance+1 AS attendance
+							FROM
+								STATISTICS S, ATTENDANCE A
+							WHERE
+								S.MEMBER_ID = A.MEMBER_ID 
+							AND
+								to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+							AND to_char(YEAR)= #{year}
+							AND month= to_number(#{month})
+							AND S.member_id = #{memberId}
+							)
+					
+				</when>
+				<when test="attendanceStatus==2">
+					late = (
+							SELECT 
+								late+1 AS late
+							FROM
+								STATISTICS S, ATTENDANCE A
+							WHERE
+								S.MEMBER_ID=A.MEMBER_ID 
+							AND
+								to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+							AND to_char(YEAR)= #{year}
+							AND month= to_number(#{month})
+							AND S.member_id = #{memberId}
+							)
+				</when>
+				<when test="attendanceStatus==3">
+					leave = (
+							SELECT 
+								leave+1 AS leave
+							FROM
+								STATISTICS S, ATTENDANCE A
+							WHERE
+								S.MEMBER_ID=A.MEMBER_ID 
+							AND
+								to_char(a.attendance_date,'YYYY-MM-DD')=#{yesterday}
+							AND to_char(YEAR)= #{year}
+							AND month= to_number(#{month})
+							AND S.member_id = #{memberId}
+							)
+				</when>
 			</choose>
+			WHERE member_id=#{memberId}
+					AND to_char(YEAR)= #{year}
+					AND month= to_number(#{month})
 	</update>
 	<select id="selectCheckoutNull" parameterType="string"
 		resultType="int">

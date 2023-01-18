@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.attendance.model.Attendance;
-import com.team4.myapp.attendance.model.CalendarDto;
+import com.team4.myapp.attendance.model.dto.CalendarDto;
 import com.team4.myapp.member.dao.IMemberRepository;
 import com.team4.myapp.out.dao.IOutRepository;
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 import com.team4.myapp.out.service.OutService;
 import com.team4.myapp.util.date.Today;
 import com.team4.myapp.util.scheduler.dto.Statistics;
@@ -231,9 +231,9 @@ public class AttendanceService implements IAttendanceService {
 				if (!result) { // 출근 시간 미달인 경우 그 상태만 수정한다.
 					System.out.println(" 미달 ~~~~~~");
 					attendanceRepository.updateAttendanceStatusById(null, 0, mid, today); // 결석 처리
-				} else {
+				} /*else {
 					attendanceRepository.updateAttendanceStatusById(null, -1, mid, today); // 가존 상태 유지
-				}
+				}*/
 
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -256,6 +256,7 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
 		for(Statistics memberStatus : mlist) {
+			System.out.println(" >> " + memberStatus);
 			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
 		}	
 	}
