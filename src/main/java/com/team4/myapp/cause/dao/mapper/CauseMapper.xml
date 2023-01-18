@@ -102,9 +102,10 @@
 		]]>
 	</update>
 	
-	<update id="updateCauseContent" parameterType="string">
+	<update id="updateCauseContent" parameterType="map">
 		<![CDATA[
 			UPDATE CAUSE SET CAUSE_CONTENT = #{content}
+			WHERE CAUSE_ID=#{causeId}
 		]]>
 	</update>
 	

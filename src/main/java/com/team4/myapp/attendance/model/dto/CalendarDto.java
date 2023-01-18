@@ -55,7 +55,7 @@ public class CalendarDto {
 		if(attendance.getAttendanceStatus() == 1) url = "/attendance/main";
 		else if(attendance.getAttendanceStatus() != 1 && attendance.getSubmitStatus() == 0) {
 			// 작성페이지
-			url = "/cause/write";
+			url = "/cause/write?attendanceId=" + attendance.getAttendanceId();
 		} 
 		else if(attendance.getAttendanceStatus() != 1 && (attendance.getSubmitStatus() == 2 
 				|| attendance.getSubmitStatus() == 3)) {

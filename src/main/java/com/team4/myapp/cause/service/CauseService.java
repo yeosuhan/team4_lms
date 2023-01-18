@@ -46,7 +46,7 @@ public class CauseService implements ICauseService{
 			
 			//attendanceId가 있음.
 			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
-			cause.setAttendanceId(check);
+			cause.setAttendanceId(aId);
 			System.out.println("attendanceId찾기완료: "+aId);
 		} else {
 			//attendanceId가 있는 경우
@@ -156,7 +156,7 @@ public class CauseService implements ICauseService{
 			}
 			causeRepository.updateCauseFile(cause);
 		} else {
-			causeRepository.updateCauseContent(cause.getContent());
+			causeRepository.updateCauseContent(cause.getContent(), cause.getCauseId());
 		}
 		
 	}
