@@ -666,8 +666,8 @@
 			          </c:if>
 			        </div>
 		        </div>	 
-		        <div class="message-from" style="border-top: 1px solid gray;">
-					<p>${board.content}</p>
+		        <div class="message-from" style="border-top: 1px solid gray;"><br/>
+					<p style="color: black;">${board.content}</p>
 				</div>	        
 		        <div class="attachment-last">
 		          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
