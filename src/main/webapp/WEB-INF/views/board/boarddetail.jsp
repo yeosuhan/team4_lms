@@ -576,10 +576,10 @@
 				<div class="right-bottom">
 					<div class="check">
 						<h1>
-							<c:if test="${board.boardType=='reference'}">
+							<c:if test="${board.boardType eq 'reference'}">
 								<fmt:message key="REFERENCE" />
 							</c:if>
-							<c:if test="${board.boardType=='community'}">
+							<c:if test="${board.boardType eq 'community'}">
 								<fmt:message key="COMMUNITY" />
 							</c:if>
 						</h1>
