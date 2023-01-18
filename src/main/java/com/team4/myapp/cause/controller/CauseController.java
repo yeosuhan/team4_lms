@@ -149,12 +149,14 @@ public class CauseController {
 		return cdlist;
 	}
 	
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/accept", method=RequestMethod.POST)
 	public String accept(CauseListDto cause, int page) {	
 		causeService.accept(cause.getCauseId(),cause.getCauseStatus());
 		return "redirect:/cause/admin/list/"+page;
 	}
 	
+	@Auth(role = Role.PROFESSOR)
 	@RequestMapping(value="/cause/admin/date/{page}", method = RequestMethod.GET)
 	public String selectCauseListAdminDate(@PathVariable int page, String keyword, HttpSession session, Model model) {
 		//리스트 불러오기
