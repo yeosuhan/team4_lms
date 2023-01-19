@@ -2,7 +2,7 @@ package com.team4.myapp.out.service;
 
 import java.text.ParseException;
 
-import com.team4.myapp.out.model.OutListDto;
+import com.team4.myapp.out.model.dto.OutListDto;
 
 public interface IOutService {
 	boolean selectOut(String memberId);

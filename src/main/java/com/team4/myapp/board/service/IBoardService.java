@@ -15,9 +15,6 @@ public interface IBoardService {
 	Board getFile(int boardId);
 	Board getFileCount(int boardId);
 	
-	void replyArticle(Board board);
-	void replyArticle(Board board, BoardUploadFile file);
-	
 	void updateArticle(Board board);
 	
 	Board selectDeleteArticle(int boardId);

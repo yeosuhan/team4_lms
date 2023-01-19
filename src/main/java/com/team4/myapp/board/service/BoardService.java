@@ -8,13 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.team4.myapp.board.dao.IBoardRepository;
 import com.team4.myapp.board.model.Board;
-import com.team4.myapp.board.model.BoardUploadFile;
+import com.team4.myapp.reply.dao.IReplyRepository;
 
 @Service
 public class BoardService implements IBoardService {
 
 	@Autowired
 	IBoardRepository boardRepository;
+	
+	@Autowired
+	IReplyRepository replyRepository;
 
 	@Transactional
 	public void insertArticle(Board board) {
@@ -48,30 +51,7 @@ public class BoardService implements IBoardService {
 	public Board getFileCount(int boardId) {
 		boardRepository.updateDownloadCount(boardId);
 		return boardRepository.selectArticle(boardId);
-	}
-	
-	@Transactional
-	public void replyArticle(Board board) {
-		//boardRepository.updateReplyNumber(board.getMasterId(), board.getReplyNumber());
-		//board.setBoardId(boardRepository.selectMaxArticleNo()+1);
-		//board.setReplyNumber(board.getReplyNumber()+1);
-		//board.setReplyStep(board.getReplyStep()+1);
-		//boardRepository.replyArticle(board);
-	}
-
-	@Transactional
-	public void replyArticle(Board board, BoardUploadFile file) {
-		//boardRepository.updateReplyNumber(board.getMasterId(), board.getReplyNumber());
-		//board.setBoardId(boardRepository.selectMaxArticleNo()+1);
-		//board.setReplyNumber(board.getReplyNumber()+1);
-		//board.setReplyStep(board.getReplyStep()+1);
-		//boardRepository.replyArticle(board);
-        if(file != null && file.getFileName() != null && !file.getFileName().equals("")) {
-        	file.setBoardId(board.getBoardId());
-        	file.setFileId(boardRepository.selectMaxFileId()+1);
-        	//////boardRepository.insertFileData(file);
-        }
-	}
+	}	
 	
 	@Transactional
 	public void updateArticle(Board board) {
@@ -87,16 +67,7 @@ public class BoardService implements IBoardService {
 	}
 	
 	@Transactional
-	public void deleteArticle(int boardId) { //, int replyNumber) {
-		//if(replyNumber>0) {
-			//boardRepository.deleteReplyFileData(boardId);
-			//boardRepository.deleteArticleByBoardId(boardId);
-		//}else if(replyNumber==0){
-			//boardRepository.deleteFileData(boardId);
-			//boardRepository.deleteArticleByMasterId(boardId);
-		//}else {
-			//throw new RuntimeException("WRONG_REPLYNUMBER");
-		//}
+	public void deleteArticle(int boardId) {
 		boardRepository.deleteArticleByBoardId(boardId);
 	}
 

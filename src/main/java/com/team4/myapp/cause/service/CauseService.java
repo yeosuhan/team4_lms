@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team4.myapp.attendance.dao.IAttendanceRepository;
 import com.team4.myapp.cause.dao.ICauseRepository;
 import com.team4.myapp.cause.model.Cause;
 import com.team4.myapp.cause.model.dto.CauseDto;
 import com.team4.myapp.cause.model.dto.CauseListDto;
+import com.team4.myapp.util.date.Today;
 
 @Service
 public class CauseService implements ICauseService{
@@ -29,40 +31,48 @@ public class CauseService implements ICauseService{
 	
 	//사유서 작성하기
 	@Override
-	@Transactional(rollbackFor= {Exception.class}, transactionManager="transactionManager")
+	@Transactional
 	public void insertCause(CauseDto causeDto) {
-
 		Cause cause = new Cause();
 		int aId = 0;
 		if(causeDto.getAttendanceId() == 0) {
-			//DB에 먼저 attendanceId 만들기
-			attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), causeDto.getAttendanceDate());
-			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), causeDto.getAttendanceDate().toString());
+			//attendanceId조회
+			Integer check = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
+			System.out.println("check: "+check);
+			if(check == null) {
+				//attendanceID가 없는 경우
+				attendanceRepository.insertFutureAttendance(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()), causeDto.getAttendanceStatus());
+			} 
+			
+			//attendanceId가 있음.
+			aId = attendanceRepository.selectAttendanceId(causeDto.getMemberId(), Today.getAttendanceDay(causeDto.getAttendanceDate()));
 			cause.setAttendanceId(aId);
+			System.out.println("attendanceId찾기완료: "+aId);
 		} else {
+			//attendanceId가 있는 경우
 			cause.setAttendanceId(causeDto.getAttendanceId());
 		}
-		//attendanceId가 있는 경우
 		cause.setContent(causeDto.getContent());
 		cause.setCategoryId(causeDto.getCategoryId());
 		cause.setMemberId(causeDto.getMemberId());
+		cause.toString();
 		//파일이 있는 경우
-		if(causeDto.getFile() != null && !causeDto.getFile().isEmpty()) {
-			cause.setFileName(causeDto.getFile().getOriginalFilename());
-			cause.setFileSize(causeDto.getFile().getSize());
-			cause.setFileContentType(causeDto.getFile().getContentType());
+		MultipartFile file = causeDto.getFile();
+		if(file != null && !file.isEmpty()) {
+			cause.setFileName(file.getOriginalFilename());
+			cause.setFileSize(file.getSize());
+			cause.setFileContentType(file.getContentType());
 			try {
-				cause.setFileData(causeDto.getFile().getBytes());
+				cause.setFileData(file.getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println("파일에러");
 			}
 		}
-		attendanceRepository.changeSubmitStatus(1, cause.getCategoryId());
 		causeRepository.insertCause(cause);
-
-	}
+		attendanceRepository.changeSubmitStatus(cause.getAttendanceId(), 1);
+	}	
 	
-	//전체 행수 구하기
 	@Override
 	public int selectCauseCount(String memberId) {
 		return causeRepository.selectCauseCount(memberId);
@@ -72,7 +82,7 @@ public class CauseService implements ICauseService{
 	public int selectCount() {
 		return causeRepository.selectCount();
 	}
-
+	
 	//사유서 리스트 보기(학생)
 	@Override
 	public List<CauseListDto> selectCauseList(String memberId, int page) {
@@ -85,8 +95,7 @@ public class CauseService implements ICauseService{
 			String s2 = i.submitStatus(i.getCauseStatus());
 			i.setAttendanceStatusString(s1);
 			i.setCauseStatusString(s2);
-		}
-		
+		}		
 		return list;
 	}
 
@@ -102,8 +111,7 @@ public class CauseService implements ICauseService{
 			String s2 = i.submitStatus(i.getCauseStatus());
 			i.setAttendanceStatusString(s1);
 			i.setCauseStatusString(s2);
-		}
-		
+		}		
 		return list;
 	}
 
@@ -146,8 +154,11 @@ public class CauseService implements ICauseService{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			causeRepository.updateCauseFile(cause);
+		} else {
+			causeRepository.updateCauseContent(cause.getContent(), cause.getCauseId());
 		}
-		causeRepository.updateCauseDetail(cause);
+		
 	}
 	
 	//사유서 삭제하기
@@ -175,17 +186,16 @@ public class CauseService implements ICauseService{
 	@Override
 	public List<CauseListDto> selectCauseListAdminDate(String date, int page) {
 		//페이징 처리
-				int start = ((page-1) * 5) +1;
+		int start = ((page-1) * 5) +1;
 				
-				List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
-				for(CauseListDto i : list) {
-					String  s1 = i.attendanceStatus(i.getAttendanceStatus());
-					String s2 = i.submitStatus(i.getCauseStatus());
-					i.setAttendanceStatusString(s1);
-					i.setCauseStatusString(s2);
-				}
-				
-				return list;
+		List<CauseListDto> list = causeRepository.selectCauseListAdminDate(date, start, start+4);
+		for(CauseListDto i : list) {
+			String  s1 = i.attendanceStatus(i.getAttendanceStatus());
+			String s2 = i.submitStatus(i.getCauseStatus());
+			i.setAttendanceStatusString(s1);
+			i.setCauseStatusString(s2);
+		}				
+		return list;
 	}
 
 	@Override

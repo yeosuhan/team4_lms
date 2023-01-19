@@ -33,7 +33,11 @@
 	src="<c:url value='/cal/fullcalendar/packages/daygrid/main.js'/>"></script>
 <script src="<c:url value='/cal/js/main.js'/>"></script>
 <script src="<c:url value='/cal/js/calendar.js'/>"></script>
-
+<style>
+.card-div {
+	height: 200px;
+}
+</style>
 
 
 <%@ include file="/WEB-INF/views/fragment/nav.jsp"%>
@@ -56,7 +60,6 @@
 									style="background-color: #000069; border-color: #000069">출석</button>
 							</form>
 						</c:if>
-
 						<c:if test="${checkout == true && goOut == true}">
 							<form action="/attendance/checkout" method="POST">
 								<button type="submit" class="btn btn-primary"
@@ -74,7 +77,7 @@
 								<button type="submit" class="btn btn-primary">복귀</button>
 							</form>
 						</c:if>
-						<c:if test="${checkout == true}">
+						<c:if test="${checkout == true && goOut == true }">
 							<form action="/attendance/leave" method="POST">
 								<button type="submit" class="btn btn-primary"
 									style="background-color: #506EA5; border-color: #506EA5;">조퇴</button>
@@ -101,9 +104,14 @@
 		<div class="col-sm-4">
 			<div class="card" style="border-radius: 20px;">
 				<div class="card-body">
-					<h4 class="card-title">${statistics.year}년  ${statistics.month}월 출석 통계</h4>
-					<p class="card-text">총: ${statistics.attendance}/${statistics.attendance+statistics.absent+statistics.late+statistics.leave}일 </p>
-					<p class="card-text">출석: ${statistics.attendance}일 | 결석: ${statistics.absent}일 | 지각: ${statistics.late}일  | 조퇴: ${statistics.leave}일</p>
+					<h4 class="card-title">${statistics.year}년
+						${statistics.month}월 출석 통계</h4>
+					<p class="card-text">총:
+						${statistics.attendance}/${statistics.attendance+statistics.absent+statistics.late+statistics.leave}일
+					</p>
+					<p class="card-text">출석: ${statistics.attendance}일 | 결석:
+						${statistics.absent}일 | 지각: ${statistics.late}일 | 조퇴:
+						${statistics.leave}일</p>
 					<div class="progress">
 						<div
 							class="progress-bar progress-bar-striped bg-success progress-bar-animated"

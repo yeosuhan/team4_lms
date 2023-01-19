@@ -64,7 +64,7 @@ public class AttendanceScheduler {
 	}
 
 	// 월~금 새벽 12시 5분에 어제 출결을 통계에 넣어야함
-	@Scheduled(cron = "0 10 12 * * 2-6")
+	@Scheduled(cron = "0 5 0 * * 2-6")
 	public void today_statistics() {
 		// 오늘 날짜
 		LocalDate todayLocalDate = LocalDate.now();
@@ -74,7 +74,12 @@ public class AttendanceScheduler {
 		String year = yesterdayLocalDate.format(DateTimeFormatter.ofPattern("yyyy"));
 		String month = yesterdayLocalDate.format(DateTimeFormatter.ofPattern("MM"));
 		String yesterday = yesterdayLocalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
 		List<Statistics> mlist = attendanceRepository.selectStatus(yesterday);
-		attendanceService.insertToday(mlist, yesterday, year, month);
+		try {
+			attendanceService.insertToday(mlist, yesterday, year, month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

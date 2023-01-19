@@ -26,20 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 		
 		//@Auth가 있는 경우
 		HttpSession session = request.getSession();
-		if (session == null) {
-			// 로그인 페이지로 이동
-			 response.sendRedirect("/member/login");
-			return false;
-		}
-		
-		// 세션이 존재하므로 유효한 유저인지 확인한다.
-		String memberId = (String) session.getAttribute("memberid");
 		Role identity = (Role) session.getAttribute("identity");
-		
-		if(memberId == null) {
-			// 로그인 화면으로 이동하기
-			response.sendRedirect("/member/login");
-		}
 		
 		// @Auth professor인 경우
 		Role role = auth.role();
@@ -51,8 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 					return false;
 				}
 			}
-		}
-		
+		}		
 		// 다음 인터셉터로 넘어가는 것을 허용한다.
 		return true;
 	}
