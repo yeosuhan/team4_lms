@@ -34,7 +34,8 @@ public class LectureController {
 	// 관리자가 출결 조회
 	@ResponseBody
 	@RequestMapping(value="/lecture", method = RequestMethod.GET)
-	public List<CalendarDto> getAttendanceList(@RequestParam String day, @RequestParam String month, @RequestParam String year,HttpSession session) {
+	public List<CalendarDto> getAttendanceList(@RequestParam String day, @RequestParam String month,
+			@RequestParam String year,HttpSession session) {
 		if(month.equals("January")) {
 			month = "01";
 		} else if(month.equals("February")) {

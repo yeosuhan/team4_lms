@@ -41,7 +41,7 @@ public class AttendanceScheduler {
 	}
 
 	// 매일 오후 11:50 에 오늘의 출결, 외출 데이터를 확인하고, 총 근무시간을 통해 출결 상태를 update 한다.
-	@Scheduled(cron = "0 50 11 * * 1-5")
+	@Scheduled(cron = "0 50 23 * * 1-5")
 	public void today_post() {
 		// 퇴근처리가 안된 경우 18:00 로 값을 넣는다.
 		Date date = new Date();

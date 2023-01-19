@@ -251,16 +251,19 @@ public class AttendanceService implements IAttendanceService {
 		}
 	}
 	
-	//어제 출결 통계에 넣기
-	@Override
-	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
-		for(Statistics memberStatus : mlist) {
-			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
-		}	
-	}
 	// 이달의 출석 통계 가져오기
 	@Override
 	public Statistics selectStatistics(String memberId) {
 		return attendanceRepository.selectStatistics(memberId);
+	}
+	//어제 출결 통계에 넣기
+	@Override
+	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
+		for(Statistics memberStatus : mlist) {
+			if(memberStatus.getSubmitStatus() ==2) {
+				attendanceRepository.insertToday(memberStatus.getMemberId(), 1, yesterday, year, month);
+			}
+			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
+		}	
 	}
 }

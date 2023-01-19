@@ -110,11 +110,9 @@
 				console.log('통신실패');
 			},
 			success : function(data) {
-				console.log("성공~");
 				show_events(data);
 			}
 		});
-		// show_events(event.data.events, event.data.month, event.data.day);
 	}
 
 	// Event handler for when a month is clicked

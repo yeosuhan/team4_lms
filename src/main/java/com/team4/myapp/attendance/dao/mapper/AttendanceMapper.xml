@@ -157,7 +157,7 @@
 						AND
 							to_char(YEAR)=#{year}
 						AND
-							to_char(month)=#{month}
+							to_char(month)=to_number(#{month})
 						AND
 							A.MEMBER_ID = #{memberId}
 						)
@@ -176,7 +176,7 @@
 						AND
 							to_char(YEAR)=#{year}
 						AND
-							to_char(month)=#{month}
+							to_char(month)=to_number(#{month})
 						AND
 							A.MEMBER_ID = #{memberId}
 						)
@@ -195,7 +195,7 @@
 						AND
 							to_char(YEAR)=#{year}
 						AND
-							to_char(month)=#{month}
+							to_char(month)=to_number(#{month})
 						AND
 							A.MEMBER_ID = #{memberId}
 						)

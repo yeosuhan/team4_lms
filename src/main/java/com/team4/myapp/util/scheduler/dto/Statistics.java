@@ -1,6 +1,7 @@
 package com.team4.myapp.util.scheduler.dto;
 
 public class Statistics {
+	private int submitStatus;
 	private int attendanceStatus;
 	private String memberId;
 	private int year;
@@ -9,7 +10,12 @@ public class Statistics {
 	private int absent;
 	private int late;
 	private int leave;
-	
+	public int getSubmitStatus() {
+		return submitStatus;
+	}
+	public void setSubmitStatus(int submitStatus) {
+		this.submitStatus = submitStatus;
+	}
 	public int getAttendanceStatus() {
 		return attendanceStatus;
 	}
@@ -58,11 +64,12 @@ public class Statistics {
 	public void setLeave(int leave) {
 		this.leave = leave;
 	}
-	
 	@Override
 	public String toString() {
-		return "Statistics [attendanceStatus=" + attendanceStatus + ", memberId=" + memberId + ", year=" + year
-				+ ", month=" + month + ", attendance=" + attendance + ", absent=" + absent + ", late=" + late
-				+ ", leave=" + leave + "]";
+		return "Statistics [submitStatus=" + submitStatus + ", attendanceStatus=" + attendanceStatus + ", memberId="
+				+ memberId + ", year=" + year + ", month=" + month + ", attendance=" + attendance + ", absent=" + absent
+				+ ", late=" + late + ", leave=" + leave + "]";
 	}
+	
+	
 }
