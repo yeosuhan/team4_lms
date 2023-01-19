@@ -256,7 +256,6 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public void insertToday(List<Statistics> mlist, String yesterday, String year, String month) {
 		for(Statistics memberStatus : mlist) {
-			System.out.println(" >> " + memberStatus);
 			attendanceRepository.insertToday(memberStatus.getMemberId(), memberStatus.getAttendanceStatus(), yesterday, year, month);
 		}	
 	}

@@ -576,10 +576,10 @@
 				<div class="right-bottom">
 					<div class="check">
 						<h1>
-							<c:if test="${board.boardType=='reference'}">
+							<c:if test="${board.boardType eq 'reference'}">
 								<fmt:message key="REFERENCE" />
 							</c:if>
-							<c:if test="${board.boardType=='community'}">
+							<c:if test="${board.boardType eq 'community'}">
 								<fmt:message key="COMMUNITY" />
 							</c:if>
 						</h1>
@@ -666,8 +666,8 @@
 			          </c:if>
 			        </div>
 		        </div>	 
-		        <div class="message-from" style="border-top: 1px solid gray;">
-					<p>${board.content}</p>
+		        <div class="message-from" style="border-top: 1px solid gray;"><br/>
+					<p style="color: black;">${board.content}</p>
 				</div>	        
 		        <div class="attachment-last">
 		          <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
